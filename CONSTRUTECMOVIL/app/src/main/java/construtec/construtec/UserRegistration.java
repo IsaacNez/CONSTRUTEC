@@ -14,22 +14,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
 
-public class UserInterface extends AppCompatActivity
+public class UserRegistration extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    TextView username;
-    TextView emailuser;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_interface);
+        setContentView(R.layout.activity_user_registration);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        Intent example = getIntent();
-
-
-
+        Intent received = getIntent();
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,8 +42,6 @@ public class UserInterface extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-
     }
 
     @Override
@@ -64,11 +57,7 @@ public class UserInterface extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.user_interface, menu);
-        username = (TextView) findViewById(R.id.Name_User);
-        emailuser = (TextView) findViewById(R.id.textView);
-        username.setText("Carlos");
-        emailuser.setText("carlos@tec.ac.cr");
+        getMenuInflater().inflate(R.menu.user_registration, menu);
         return true;
     }
 
@@ -92,20 +81,19 @@ public class UserInterface extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-
-        FragmentManager fragmgr = getFragmentManager();
-        if (id == R.id.nav_first_layout) {
-            fragmgr.beginTransaction()
-                    .replace(R.id.content_frame, new FirstFragment())
+        FragmentManager fragmentManager = getFragmentManager();
+        if (id == R.id.nav_re) {
+            fragmentManager.beginTransaction()
+                    .replace(R.id.registration_frame,new RegistrateEngineer())
                     .commit();
             // Handle the camera action
-        } else if (id == R.id.nav_second_layout) {
-            fragmgr.beginTransaction()
-                    .replace(R.id.content_frame, new SecondFragment())
+        } else if (id == R.id.nav_rc) {
+            fragmentManager.beginTransaction()
+                    .replace(R.id.registration_frame, new RegistrateCustomer())
                     .commit();
-        } else if (id == R.id.nav_third_layout) {
-            fragmgr.beginTransaction()
-                    .replace(R.id.content_frame, new ThirdFragment())
+        } else if (id == R.id.nav_ru) {
+            fragmentManager.beginTransaction()
+                    .replace(R.id.registration_frame, new RegistrateNormalUser())
                     .commit();
         }
 

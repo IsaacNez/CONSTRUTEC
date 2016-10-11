@@ -49,6 +49,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
+    private TextView _newRegister;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +57,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
-
+        _newRegister = (TextView) findViewById(R.id.RegisterNewClient);
         mPasswordView = (EditText) findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -83,6 +84,14 @@ public class LoginActivity extends AppCompatActivity {
                     Intent user = new Intent(LoginActivity.this,UserInterface.class);
                     startActivity(user);
                 }
+            }
+        });
+
+        _newRegister.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent register = new Intent(LoginActivity.this,UserRegistration.class);
+                startActivity(register);
             }
         });
 
