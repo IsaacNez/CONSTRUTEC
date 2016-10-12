@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import com.loopj.android.http.*;
 import android.app.LoaderManager.LoaderCallbacks;
 
 import android.content.CursorLoader;
@@ -31,8 +32,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import cz.msebera.android.httpclient.Header;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -50,6 +57,9 @@ public class LoginActivity extends AppCompatActivity {
     private View mProgressView;
     private View mLoginFormView;
     private TextView _newRegister;
+    String userName="";
+    Integer userCode=0;
+    JSONArray userRole;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +91,7 @@ public class LoginActivity extends AppCompatActivity {
                 if(ID.matches("@|[a-zA-Z]+|$|!|#|%|&")||mPasswordView.getText().toString().matches("")){
                     Toast.makeText(LoginActivity.this,"User ID or password doesn't match",Toast.LENGTH_LONG).show();
                 }else{
+                    //getUser();
                     Intent user = new Intent(LoginActivity.this,UserInterface.class);
                     startActivity(user);
                 }
@@ -94,6 +105,27 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(register);
             }
         });
+
+    }
+
+    public void getUser(){
+        AsyncHttpClient httpClient = new AsyncHttpClient();
+        httpClient.get("",null, new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                try {
+                    JSONObject newObject = response;
+                    userName = newObject.getString("U_Name");
+                    userCode = newObject.getInt("U_Code");
+                    userRole = newObject.getJSONArray("Role");
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
+        httpClient.cancelAllRequests(true);
 
     }
 

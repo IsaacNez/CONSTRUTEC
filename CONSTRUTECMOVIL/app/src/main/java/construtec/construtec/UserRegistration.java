@@ -15,6 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class UserRegistration extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -88,6 +89,7 @@ public class UserRegistration extends AppCompatActivity
         int id = item.getItemId();
         FragmentManager fragmentManager = getFragmentManager();
         if (id == R.id.nav_re) {
+            Toast.makeText(getApplicationContext(),"Create a new profile as an enginner",Toast.LENGTH_LONG);
             TGre = (TextView) findViewById(R.id.greetings);
             Thint = (TextView) findViewById(R.id.hint);
             TGre.setVisibility(View.INVISIBLE);
@@ -97,6 +99,7 @@ public class UserRegistration extends AppCompatActivity
                     .commit();
             // Handle the camera action
         } else if (id == R.id.nav_rc) {
+            Toast.makeText(getApplicationContext(),"Create a new profile as a customer",Toast.LENGTH_LONG);
             TGre = (TextView) findViewById(R.id.greetings);
             Thint = (TextView) findViewById(R.id.hint);
             TGre.setVisibility(View.INVISIBLE);
@@ -105,6 +108,7 @@ public class UserRegistration extends AppCompatActivity
                     .replace(R.id.registration_frame, new RegistrateCustomer())
                     .commit();
         } else if (id == R.id.nav_ru) {
+            Toast.makeText(getApplicationContext(),"Create a new profile as customer service",Toast.LENGTH_LONG);
             TGre = (TextView) findViewById(R.id.greetings);
             Thint = (TextView) findViewById(R.id.hint);
             TGre.setVisibility(View.INVISIBLE);

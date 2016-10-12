@@ -14,6 +14,7 @@
             android:layout_height="wrap_content"
             android:hint="Write your ID"
             android:id="@+id/E_ID"
+            android:inputType="number"
             android:layout_gravity="left|top" />
 
         <EditText

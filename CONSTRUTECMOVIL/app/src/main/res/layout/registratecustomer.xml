@@ -12,6 +12,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:hint="Write your ID"
+            android:inputType="number"
             android:id="@+id/Cu_ID"
             android:layout_gravity="left|top" />
 
