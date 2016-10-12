@@ -14,10 +14,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 public class UserRegistration extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
+    TextView Thint;
+    TextView TGre;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,15 +85,27 @@ public class UserRegistration extends AppCompatActivity
         int id = item.getItemId();
         FragmentManager fragmentManager = getFragmentManager();
         if (id == R.id.nav_re) {
+            TGre = (TextView) findViewById(R.id.greetings);
+            Thint = (TextView) findViewById(R.id.hint);
+            TGre.setVisibility(View.INVISIBLE);
+            Thint.setVisibility(View.INVISIBLE);
             fragmentManager.beginTransaction()
                     .replace(R.id.registration_frame,new RegistrateEngineer())
                     .commit();
             // Handle the camera action
         } else if (id == R.id.nav_rc) {
+            TGre = (TextView) findViewById(R.id.greetings);
+            Thint = (TextView) findViewById(R.id.hint);
+            TGre.setVisibility(View.INVISIBLE);
+            Thint.setVisibility(View.INVISIBLE);
             fragmentManager.beginTransaction()
                     .replace(R.id.registration_frame, new RegistrateCustomer())
                     .commit();
         } else if (id == R.id.nav_ru) {
+            TGre = (TextView) findViewById(R.id.greetings);
+            Thint = (TextView) findViewById(R.id.hint);
+            TGre.setVisibility(View.INVISIBLE);
+            Thint.setVisibility(View.INVISIBLE);
             fragmentManager.beginTransaction()
                     .replace(R.id.registration_frame, new RegistrateNormalUser())
                     .commit();

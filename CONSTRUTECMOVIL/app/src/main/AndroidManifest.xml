@@ -28,7 +28,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".UserRegistration"
-            android:label="@string/title_activity_user_registration"
+            android:label="Registration Process"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

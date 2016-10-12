@@ -2,13 +2,44 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Second Layout"
-        android:id="@+id/textView2"
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="80dp" />
+        android:layout_alignParentStart="true"
+        android:layout_margin="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Create a new Stage"
+            android:id="@+id/textView4"
+            android:layout_gravity="center_horizontal|top" />
+
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/_stageDescription"
+            android:hint="Describe the stage"
+            android:layout_gravity="center"
+            android:layout_marginTop="-30dp" />
+
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/_stageName"
+            android:hint="Stage Name"
+            android:layout_gravity="center_horizontal|top"
+            android:layout_marginTop="120dp" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="CREATE!"
+            android:id="@+id/create"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_marginTop="-80dp" />
+
+    </FrameLayout>
 </RelativeLayout>

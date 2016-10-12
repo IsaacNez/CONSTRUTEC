@@ -1,6 +1,7 @@
 package construtec.construtec;
 
 import android.app.FragmentManager;
+import android.content.ClipData;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -69,6 +70,7 @@ public class UserInterface extends AppCompatActivity
         emailuser = (TextView) findViewById(R.id.textView);
         username.setText("Carlos");
         emailuser.setText("carlos@tec.ac.cr");
+
         return true;
     }
 
@@ -106,6 +108,30 @@ public class UserInterface extends AppCompatActivity
         } else if (id == R.id.nav_third_layout) {
             fragmgr.beginTransaction()
                     .replace(R.id.content_frame, new ThirdFragment())
+                    .commit();
+        } else if (id == R.id.nav_assign_stage){
+            fragmgr.beginTransaction()
+                    .replace(R.id.content_frame, new AssignStage())
+                    .commit();
+        }else if (id == R.id.nav_assign_products){
+            fragmgr.beginTransaction()
+                    .replace(R.id.content_frame, new AssignProduct())
+                    .commit();
+        }else if (id == R.id.nav_gen_budget){
+            fragmgr.beginTransaction()
+                    .replace(R.id.content_frame, new GenBudget())
+                    .commit();
+        }else if (id == R.id.nav_send_order){
+            fragmgr.beginTransaction()
+                    .replace(R.id.content_frame, new SendOrder())
+                    .commit();
+        }else if (id == R.id.nav_search_date){
+            fragmgr.beginTransaction()
+                    .replace(R.id.content_frame, new SearchByDate())
+                    .commit();
+        }else if (id == R.id.nav_search_product){
+            fragmgr.beginTransaction()
+                    .replace(R.id.content_frame, new SearchByProduct())
                     .commit();
         }
 

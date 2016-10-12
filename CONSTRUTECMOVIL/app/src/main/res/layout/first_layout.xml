@@ -2,13 +2,22 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent">
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Update Database"
+        android:id="@+id/_callEPATEC"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="First Layout"
-        android:id="@+id/textView2"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="80dp" />
+        android:text="To update the database please press the button"
+        android:id="@+id/textView3"
+        android:layout_marginBottom="51dp"
+        android:gravity="center_horizontal"
+        android:layout_above="@+id/_callEPATEC"
+        android:layout_alignParentStart="true" />
 </RelativeLayout>

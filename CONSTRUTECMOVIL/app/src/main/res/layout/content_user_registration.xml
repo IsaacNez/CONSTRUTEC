@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Welcome to the Registration Process"
-            android:id="@+id/textView7"
+            android:id="@+id/greetings"
             android:layout_gravity="top|center"
             android:gravity="center_horizontal" />
 
@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Slice to right to choose between the options presented"
-            android:id="@+id/textView8"
+            android:id="@+id/hint"
             android:layout_gravity="center"
             android:gravity="center_horizontal" />
     </FrameLayout>

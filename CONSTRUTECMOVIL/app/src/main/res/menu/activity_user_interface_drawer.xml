@@ -4,16 +4,40 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_first_layout"
-            android:icon="@drawable/ic_menu_camera_interface"
-            android:title="First Layout" />
+            android:icon="@drawable/ic_update_black_24dp"
+            android:title="Registrate materials" />
         <item
             android:id="@+id/nav_second_layout"
-            android:icon="@drawable/ic_menu_gallery_interface"
-            android:title="Second Layout" />
+            android:icon="@drawable/ic_create_black_24dp"
+            android:title="Create a new Stage" />
         <item
             android:id="@+id/nav_third_layout"
-            android:icon="@drawable/ic_menu_slideshow_interface"
-            android:title="Third Layout" />
+            android:icon="@drawable/ic_create_black_24dp"
+            android:title="Create a new Project" />
+        <item
+            android:id="@+id/nav_assign_stage"
+            android:icon="@drawable/ic_add_box_black_24dp"
+            android:title="Assign stages"/>
+        <item
+            android:id="@+id/nav_assign_products"
+            android:icon="@drawable/ic_add_box_black_24dp"
+            android:title="Assign products"/>
+        <item
+            android:id="@+id/nav_gen_budget"
+            android:icon="@drawable/ic_attach_money_black_24dp"
+            android:title="Calculate budget"/>
+        <item
+            android:id="@+id/nav_send_order"
+            android:icon="@drawable/ic_menu_send_interface"
+            android:title="Send order"/>
+        <item
+            android:id="@+id/nav_search_date"
+            android:icon="@drawable/ic_search_black_24dp"
+            android:title="Search by date"/>
+        <item
+            android:id="@+id/nav_search_product"
+            android:icon="@drawable/ic_search_black_24dp"
+            android:title="Search by product"/>
 
     </group>
 
