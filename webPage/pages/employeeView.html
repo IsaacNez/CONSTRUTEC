@@ -2,16 +2,26 @@
 <html lang="en">
 <head>
   <title>EMPLOYEES</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="/css/index.css">  
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="/angular-1.5.8/angular.js"></script>
+    <script src="/angular-1.5.8/angular.min.js"></script>
+    
+    <script src="/js/jquery-3.1.0.js"  type="text/javascript"></script>
+    <script src="/js/employeesView.js"  type="text/javascript"></script>
+    <link rel="stylesheet" href="/css/index.css">  
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+    
+    
+  
+    
 </head>
-<body >
-<div ng-app="employeeView" >
+<body ng-app="employeeView" >
+<div>
     <nav class="navbar navbar-inverse">
       <div class="container-fluid">
         <div class="navbar-header">
@@ -19,13 +29,12 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
-          </button>
-//FALTA PONER NOMBRE        
-          <a class="navbar-brand" href="#">Welcome </a>
+          </button>    
+          <h2 class="navbar-brand" href="#">Welcome</h2>
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="/index.html">Home</a></li>
+            <li class="active"><a href="/pages/employeeView.html">Home</a></li>
            <li class="dropdown">
               <a class="dropdown-toggle" data-toggle="dropdown" href="#">Create<span class="caret"></span></a>
               <ul class="dropdown-menu">
@@ -34,7 +43,14 @@
                 <li id="newProject"><a href="#">New Project</a></li>
               </ul>
             </li>
-            <li><a href="#">Materials</a></li>
+            <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#">Add<span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li id="newEmployee"><a href="#">Stage to Project</a></li>
+                <li id="newStage"><a href="#">Materials to Stage</a></li>
+              </ul>
+            </li>
+
           </ul>
 
           <ul class="nav navbar-nav navbar-right">
@@ -46,46 +62,54 @@
     </nav>
 </div>
     
-<div id="employeeModal" class="modal" ng-controller="employeeCtrl" style="overflow-y: scroll;">
+<div id="employeeModal" class="modal"  style="overflow-y: scroll;">
   <!-- Modal content -->
   <div class="modal-content">
     <div class="modal-header">
       <span id="close1" class="close">×</span>
-      <h2>New Employee</h2>
+      <h2>New User</h2>
       
     </div>
     <div class="modal-body">
             <div class="form-group has-feedback" style="margin: 20px 0px 0px 0px;">
-                <input id=E_Name type="text" ng-model="employeeName" class="form-control" placeholder="Name">
+                <label for="E_Name" >Write a user name</label>
+                <input id=E_Name type="text" ng-model="E_Name" class="form-control" placeholder="Name">
                 <span class="glyphicon glyphicon-user form-control-feedback"></span>
             </div>
             <div class="form-group has-feedback" style="margin: 20px 0px 0px 0px;">
-                <input id=E_LName type="text" ng-model="employeeLName" class="form-control" placeholder="Last Name">
+                <label for="E_LName" >Write a user last name</label>
+                <input id=E_LName type="text" ng-model="E_LName" class="form-control" placeholder="Last Name">
                 <span class="glyphicon glyphicon-user form-control-feedback"></span>
             </div>
            <div class="form-group has-feedback" style="margin: 20px 0px 0px 0px;">
-            <input id=E_ID type="number" ng-model="employeeID" class="form-control" placeholder="ID">
+            <label for="E_ID" >Write a user ID</label>
+            <input id=E_ID type="number" ng-model="E_ID" class="form-control" placeholder="ID">
                 <span class="glyphicon glyphicon-link form-control-feedback"></span>
             </div>
             <div class="form-group has-feedback" style="margin: 20px 0px 0px 0px;">
-            <input id=E_Code type="number" ng-model="employeeCode" class="form-control" placeholder="Code">
+            <label for="E_Code" >Write a user code</label>
+            <input id=E_Code type="number" ng-model="E_Code" class="form-control" placeholder="Code">
                 <span class="glyphicon glyphicon-option-horizontal form-control-feedback"></span>
             </div>
             <div class="form-group has-feedback" style="margin: 20px 0px 0px 0px;">
-            <input id=E_Phone type="number" ng-model="employeePhone" class="form-control" placeholder="Phone">
+            <label for="E_Phone" >Write a user phone</label>    
+            <input id=E_Phone type="number" ng-model="E_Phone" class="form-control" placeholder="Phone">
                 <span class="glyphicon glyphicon-phone form-control-feedback"></span>
             </div>
             <div class="form-group has-feedback" style="margin: 20px 0px 0px 0px;">
-            <input id=E_Charge type="text" ng-model="employeeCharge" class="form-control" placeholder="Charge">
-                <span class="glyphicon glyphicon-wrench form-control-feedback"></span>
+                <label for="sel1">Select user Role</label>
+                <select type="text"  name="R_ID" ng-model="R_ID" placeholder="Select User Role" class="form-control" id="sel1" >
+                    <option ng-repeat="item in Roles">{{item.R_ID}}</option>
+                </select>
             </div>
             <div class="form-group has-feedback" style="margin: 20px 0px 0px 0px;">
-                <input id=E_Password type="password" ng-model="employeePass" class="form-control" placeholder="Password">
+                <label for="E_Password">Write a password</label>
+                <input id=E_Password type="password" ng-model="E_Password" class="form-control" placeholder="Password">
                 <span class="glyphicon glyphicon-lock form-control-feedback"></span>
             </div>
 
             <div align="center">
-                <button  ng-click="checkUser()" style="margin: 20px 0px 0px 0px; width:50%" type="submit" class="btn btn-primary btn-block btn-flat">Create Employee</button>
+                <button  ng-click="checkUser()" style="margin: 20px 0px 0px 0px; width:50%" type="submit" class="btn btn-primary btn-block btn-flat">Create User</button>
             </div>
     </div>
     <div class="modal-footer">
@@ -102,30 +126,125 @@
     </div>
     <div class="modal-body">
             <div class="form-group has-feedback" style="margin: 20px 0px 0px 0px;">
-                
-                <input id=S_Name type="text" ng-model="stageName" class="form-control" placeholder="Stage Name">
+                <label for="S_Name">Write a stage name</label>
+                <input id=S_Name type="text" ng-model="S_Name" class="form-control" placeholder="Stage Name">
                 <span class="glyphicon glyphicon-pencil form-control-feedback"></span>
             </div>
             <div class="form-group has-feedback" style="margin: 20px 0px 0px 0px;">
-                <input id=S_Description type="text" ng-model="stageDescription" class="form-control" placeholder="Description">
+                <label for="S_Description">Write a stage description</label>
+                <input id=S_Description type="text" ng-model="S_Description" class="form-control" placeholder="Description">
                 <span class="glyphicon glyphicon-list-alt form-control-feedback"></span>
             </div>
-           
+<!--           
            <div class="form-group has-feedback" style="margin: 20px 0px 0px 0px;">
-            
-            <input id=S_DateStart type="date" ng-model="stageStart" class="form-control" placeholder="Start Day">
-                Start Date
+            <label for="S_DateStart">Start date of Stage</label>
+            <input id=S_DateStart type="date" ng-model="S_DateStart" class="form-control" placeholder="Start Day">
+                
                 <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
             </div>
             
             <div class="form-group has-feedback" style="margin: 20px 0px 0px 0px;">
-            <input id=S_DateEnd type="date" ng-model="stageEnd" class="form-control" placeholder="End Day">
-                Finish Date
+            <label for="S_DateEnd">End date of Stage</label>
+            <input id=S_DateEnd type="date" ng-model="S_DateEnd" class="form-control" placeholder="End Day">
+               
                 <span class="glyphicon glyphicon-log-out form-control-feedback"></span>
             </div>
             <div class="form-group has-feedback" style="margin: 20px 0px 0px 0px;">
-            <input id=S_Status type="number" ng-model="stageStatus" class="form-control" placeholder="Status">
-                <span class="glyphicon glyphicon-thumbs-up form-control-feedback"></span>
+                <label for="S_Status">Write a stage status</label>    
+                <input id=S_Status type="text" ng-model="S_Status" class="form-control" placeholder="Status">
+                    <span class="glyphicon glyphicon-thumbs-up form-control-feedback"></span>
+            </div>
+            
+                
+            </div>
+            
+-->         
+            <div align="center">
+                <button  ng-click="createStage()" style="margin: 20px 20px 20px 20px; width:50%" type="submit" class="btn btn-primary btn-block btn-flat">Create Stage</button>
+            </div>
+  
+  </div>
+
+</div> 
+</div>
+    
+<div id="projectModal" class="modal" ng-controller= "projectCtrl" style="overflow-y: scroll;">
+
+  <div class="modal-content">
+    <div class="modal-header">
+      <span id="close3" class="close">×</span>
+      <h2>New Project</h2>
+    </div>
+    <div class="modal-body" >
+           
+           <div class="form-group has-feedback" style="margin: 20px 0px 0px 0px;">
+                <label for="P_name" >Write a project name</label>
+                <input id=P_Name type="text" ng-model="P_Name" class="form-control" placeholder="Name">
+                <span class="glyphicon glyphicon-user form-control-feedback"></span>
+            </div>
+            
+           <div class="form-group has-feedback" style="margin: 20px 0px 0px 0px;">
+            <label for="P_ID" >Write a project ID</label>
+            <input id=P_ID type="number" ng-model="P_ID" class="form-control" placeholder="ID">
+                <span class="glyphicon glyphicon-link form-control-feedback"></span>
+            </div>
+            
+            <div class="form-group has-feedback" style="margin: 20px 0px 0px 0px;">
+                <label for="P_Location" >Write a project location</label>
+                <input id=P_Location type="text" ng-model="P_Location" class="form-control" placeholder="Location">
+                <span class="glyphicon glyphicon-map-marker form-control-feedback"></span>
+            </div>
+        
+            <div class="form-group has-feedback" style="margin: 20px 0px 0px 0px;">
+                <label for="sel1">Select Engineer or Architect:</label>
+                <select type="text"  name="U_ID" ng-model="U_ID" placeholder="Select User" class="form-control" id="sel1" >
+                    <option ng-repeat="item in Users">{{item.U_ID}}</option>
+                </select>
+            </div>
+            <div align="center">
+                <button  ng-click="createProject()" style="margin: 20px 20px 20px 20px; width:50%" type="submit" class="btn btn-primary btn-block btn-flat">Create Project</button>
+            </div>   
+      </div>
+    </div>
+</div>
+
+<div id="stagePojectModal" class="modal"  ng-controller="stagePojectCtrl" style="overflow-y: scroll;" >
+  <!-- Modal content -->
+  <div class="modal-content">
+    <div class="modal-header">
+      <span id="close2" class="close">×</span>
+      <h2> Add Stage</h2>
+    </div>
+    <div class="modal-body">
+            <div class="form-group has-feedback" style="margin: 20px 0px 0px 0px;">
+                <label for="sel1">Select a Project</label>
+                <select type="text"  name="P_ID" ng-model="P_ID" placeholder="Select Project" class="form-control" id="P_ID" >
+                    <option ng-repeat="item in Projects">{{item.P_ID}}</option>
+                </select>
+            </div>
+            <div class="form-group has-feedback" style="margin: 20px 0px 0px 0px;">
+                <label for="S_ID">Select a Stage</label>
+                <select type="text"  name="S_ID" ng-model="S_ID" placeholder="Select Project" class="form-control" id="S_ID" >
+                    <option ng-repeat="item in Projects">{{item.P_ID}}</option>
+                </select>
+            </div>       
+           <div class="form-group has-feedback" style="margin: 20px 0px 0px 0px;">
+            <label for="S_DateStart">Start date of Stage</label>
+            <input id=S_DateStart type="date" ng-model="S_DateStart" class="form-control" placeholder="Start Day">
+                
+                <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
+            </div>
+            
+            <div class="form-group has-feedback" style="margin: 20px 0px 0px 0px;">
+            <label for="S_DateEnd">End date of Stage</label>
+            <input id=S_DateEnd type="date" ng-model="S_DateEnd" class="form-control" placeholder="End Day">
+               
+                <span class="glyphicon glyphicon-log-out form-control-feedback"></span>
+            </div>
+            <div class="form-group has-feedback" style="margin: 20px 0px 0px 0px;">
+                <label for="S_Status">Write a stage status</label>    
+                <input id=S_Status type="text" ng-model="S_Status" class="form-control" placeholder="Status">
+                    <span class="glyphicon glyphicon-thumbs-up form-control-feedback"></span>
             </div>
             
                 
@@ -133,16 +252,26 @@
             
          
             <div align="center">
-                <button  ng-click="createProduct()" style="margin: 20px 0px 0px 0px; width:50%" type="submit" class="btn btn-primary btn-block btn-flat">Create Stage</button>
+                <button  ng-click="addStage()" style="margin: 20px 20px 20px 20px; width:50%" type="submit" class="btn btn-primary btn-block btn-flat">Add Stage</button>
             </div>
-    </div>
-    <div class="modal-footer">
-    </div>
+  
   </div>
 
+</div>     
     
-<div id="projectModal" class="modal" ng-controller="projectCtrl" style="overflow-y: scroll;">
-  <!-- Modal content -->
+
+
+    
+
+</body>
+</html>
+
+
+
+
+<!--
+<div id="projectModal" class="modal" ng-controller= "projectCtrl" style="overflow-y: scroll;">
+  <!-- Modal content 
   <div class="modal-content">
     <div class="modal-header">
       <span id="close3" class="close">×</span>
@@ -162,6 +291,24 @@
                 <input id=P_Location type="text" ng-model="P_Location" class="form-control" placeholder="Location">
                 <span class="glyphicon glyphicon-map-marker form-control-feedback"></span>
             </div>
+            
+
+
+            <div class="row-fluid">
+            <select class="selectpicker" data-show-subtext="true" data-live-search="true" ng-repeat = "item in Users" id = "U_ID"  ng-model = "U_ID">
+                <option data-subtext=item.U_name>item.U_ID</option>
+           
+            </select>
+
+            </div>
+            Stages
+            <select id="CuisineList"></select>
+        
+            <select class="selectpicker" multiple ng-repeat= "item in prueba" id = "S_List" ng-model = "S_List" >
+              <option>prueba.pop()</option>
+       
+            </select>
+
               <div class="panel-group" id="accordion">
                   <div class="panel panel-default">
                     <div class="panel-heading">
@@ -215,7 +362,7 @@
                                         <td><a href="#" class="btn btn-warning"><i class="fa fa-angle-left"></i> Clean All </a></td>
                                         <td colspan="2" class="hidden-xs"></td>
                                         <td class="hidden-xs text-center"><strong>Total $1.99</strong></td>
-                                        <td><a ng-click="add Stage()"  class="btn btn-success btn-block">Add Stage <i class="fa fa-angle-right"></i></a></td>
+                                        <td><a ng-click="addStage()"  class="btn btn-success btn-block">Add Stage <i class="fa fa-angle-right"></i></a></td>
                                     </tr>
                                 </tfoot>
                             </table>
@@ -232,79 +379,8 @@
             </div>
     </div>
     
-  </div>
-
-    
-    
-
-<script>
-// Get the modal
-var modalEmployees = document.getElementById('employeeModal');
-var modalStages = document.getElementById('stageModal');
-var modalProject = document.getElementById('projectModal');
-
-// Get the button that opens the modal
-var employee = document.getElementById("newEmployee");
-var stage = document.getElementById("newStage");
-var project = document.getElementById("newProject");
-    
-// Get the <span> element that closes the modal
-var span1 = document.getElementById("close1");
-var span2 = document.getElementById("close2");
-var span3 = document.getElementById("close3");
-
-// When the user clicks the button, open the modal
-employee.onclick = function() {
-    modalEmployees.style.display = "block";
-}
-
-span1.onclick = function() {
-    modalEmployees.style.display = "none";
-}
-
-window.onclick = function(event) {
-    if (event.target == modalEmployees) {
-        modalEmployees.style.display = "none";
-    }
-}
-
-
-stage.onclick = function() {
-    modalStages.style.display = "block";
-}
-
-// When the user clicks on <span> (x), close the modal
-span2.onclick = function() {
-    modalStages.style.display = "none";
-}
-
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-    if (event.target == modalStages) {
-        modalStages.style.display = "none";
-    }
-}
-
-project.onclick = function() {
-    modalProject.style.display = "block";
-}
-
-// When the user clicks on <span> (x), close the modal
-span3.onclick = function() {
-    modalProject.style.display = "none";
-}
-
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-    if (event.target == modalProject) {
-        modalProject.style.display = "none";
-    }
-}
+  </div>-->
 
 
 
-</script>
-    
 
-</body>
-</html>
