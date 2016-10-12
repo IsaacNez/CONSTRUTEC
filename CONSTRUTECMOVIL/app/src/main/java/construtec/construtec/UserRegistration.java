@@ -26,7 +26,10 @@ public class UserRegistration extends AppCompatActivity
         setContentView(R.layout.activity_user_registration);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        Intent received = getIntent();
+        Intent example = getIntent();
+
+
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -42,7 +45,7 @@ public class UserRegistration extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view_registration);
         navigationView.setNavigationItemSelectedListener(this);
     }
 
