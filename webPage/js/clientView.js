@@ -53,11 +53,16 @@ var stageForm = angular.module('clientView',[])
         
     }
     
+    $http.get($scope.url+'/api/dbComment/get')
+            .then( function (response) {    
+              $scope.commentlist = response.data;           
+        });
+    
     $scope.addComment = function () {
-        var Comment = {
-            "C_ID": $scope.id,
-            "C_Description": $scope.name,
-            "S_Name": $scope.name
+        var Comment = { 
+            "C_Name": $scope.C_Name,
+            "C_Description": $scope.C_Description,
+            "S_Name": 1
       
         }
         console.log(Comment); $http.post('http://isaac:7549/api/dbComment/post',Comment).
@@ -67,6 +72,27 @@ var stageForm = angular.module('clientView',[])
         error(function (data, status, headers, config) {
             alert('error adding comment')
         });
+    }
+    
+        // get all products from the EPA-TEC core
+    $scope.getComments = function () {        
+       $http.get($scope.url+'/api/dbComment/get')
+            .then( function (response) {
+            $scope.commentlist = response.data;
+         });
+       
+        success(function (data, status, headers, config) {
+            
+            alert(JSON.stringify(data));
+            console.log(JSON.stringify(data));
+        }).
+        error(function (data, status, headers, config) {
+            alert('error searching comments')
+        });   
+        
+       
+        
+        
     }
 
     
