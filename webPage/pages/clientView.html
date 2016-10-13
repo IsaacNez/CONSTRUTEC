@@ -98,9 +98,13 @@
             </div>
         <div  id="comment_box">
             <h3>Comments</h3>
+            
+            <!-- Style of the css to the all comment box --->
             <style type="text/css">#comment_box #comment_form{padding-bottom:1em}#comment_box .hcb-link{cursor:pointer}#comment_box .hcb-icon{border:0px transparent none}#comment_box textarea {display:block;width:100%;-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;width: 100%}#comment_box blockquote{margin:10px;overflow:hidden}#comment_box .hcb-err{color:red}#comment_box .hcb-comment-tb{margin:0}#comment_box .comment{position:relative}#comment_box .comment .likes{position:absolute;top:0;right:0;opacity:0.8}#comment_box .comment .hcb-comment-tb a{visibility:hidden}#comment_box .comment:hover .hcb-comment-tb a{visibility:visible}#comment_box .gravatar{padding-right:2px}#comment_box input{margin-left:0}</style>
             <p id="hcb_msg"></p>
             <div id="comment_form">
+                
+                <!-- Comment Box form --->
                 <form id="hcb_form" onsubmit="return hcb.submit()" action="//www.htmlcommentbox.com/post" method="post">
                     <input type="hidden" name="page" value="http://127.0.0.1:8213/pages/clientView.html?commentContent=asdasd&amp;name=ad#" id="hcb_form_page">
                     <input type="hidden" id="hcb_refer" name="refer" value="http://127.0.0.1:8213/pages/clientView.html?commentContent=asdasd&amp;name=ad##comment_box">
@@ -113,26 +117,34 @@
                         <div class="hcb-shadow-tl"></div> 
                         <div class="hcb-shadow-tr"></div> 
                         </div> 
-                        <div class="hcb-shadow-m"><input id="hcb_form_name" class="hcb-shadow-r" name="name" type="text" value="" placeholder="Name"></div> <div class="hcb-shadow-b"> <div class="hcb-shadow-bl"></div> <div class="hcb-shadow-br"></div> </div><div class="hcb-shadow-clear"></div> </div><div class="hcb-wrapper"><div class="hcb-shadow-t"> <div class="hcb-shadow-tl"></div> <div class="hcb-shadow-tr"></div> </div> 
+                        
+                        <!-- Comment box where the user insert the name --->
+                        <div class="hcb-shadow-m"><input id="hcb_form_name" ng-model="C_Name" class="hcb-shadow-r" name="name" type="text" value="" placeholder="Name"></div> <div class="hcb-shadow-b"> <div class="hcb-shadow-bl"></div> <div class="hcb-shadow-br"></div> </div><div class="hcb-shadow-clear"></div> </div><div class="hcb-wrapper"><div class="hcb-shadow-t"> <div class="hcb-shadow-tl"></div> <div class="hcb-shadow-tr"></div> </div> 
                     <div class="hcb-shadow-m">
-                        <textarea onkeypress="hcb.delta(event)" class="commentbox hcb-shadow-r" name="content" id="hcb_form_content" rows="4" placeholder="Enter your comment here"></textarea></div> 
+                        
+                        <!-- Comment box where the user insert the comments about the stage from the project --->
+                        <textarea onkeypress="hcb.delta(event)" ng-model="C_Description" class="commentbox hcb-shadow-r" name="content" id="hcb_form_content" rows="4" placeholder="Enter your comment here"></textarea></div> 
                     <div class="hcb-shadow-b"> 
                         <div class="hcb-shadow-bl"></div> 
                         <div class="hcb-shadow-br"></div> </div>
                     <div class="hcb-shadow-clear"></div></div>
-                    <div><input class="submit btn" id="hcb_submit" type="submit" value="Comment">&nbsp;<span class="home-desc" style="font-size:10px">&nbsp;</span></div>
+                    
+                    <!-- Button that send the information to the data base --->
+                    <div><input class="submit btn" id="hcb_submit" ng-click="addComment()" type="submit" value="Comment">&nbsp;<span class="home-desc" style="font-size:10px">&nbsp;</span></div>
+                    
+                    <!-- Show all comments from the data base --->
+                    <div class="comment" ng-repeat="item in commentlist " id="comment_11251793"><span class="date">(within the last minute) </span><span class="author"><b class="author-name">{{item.C_Name}} </b> said:</span> <blockquote>{{item.C_Description}}  </blockquote><p class="hcb-comment-tb"><a class="hcb-flag" href="javascript:hcb.flag('11251793')"><img src="//www.htmlcommentbox.com/static/images/flag.png"> flag</a> <a class="hcb-like" href="javascript:hcb.like('11251793')"><img src="//www.htmlcommentbox.com/static/images/like.png"> like</a> <a class="hcb-reply" href="javascript:hcb.reply('11251793')"><img src="//www.htmlcommentbox.com/static/images/reply.png"> reply</a> </p><div class="likes" style="display:none"><span>0 </span><img src="//www.htmlcommentbox.com/static/images/like.png"></div></div>
+                    
+                    
                 </form></div>
+            <!-- Show a message to user if are not comments --->
             <div id="comments_list">
                 <p id="no_comments">No one has commented yet. Be the first!</p></div></div>
         
+        <!-- Script for the the comment box --->
         <script  type="text/javascript" id="hcb"> /*<!--*/ if(!window.hcb_user){hcb_user={};} (function(){var s=document.createElement("script"), l=hcb_user.PAGE || (""+window.location).replace(/'/g,"%27"), h="//www.htmlcommentbox.com";s.setAttribute("type","text/javascript");s.setAttribute("src", h+"/jread?page="+encodeURIComponent(l).replace("+","%2B")+"&opts=16862&num=10&ts=1476347274296");if (typeof s!="undefined") document.getElementsByTagName("head")[0].appendChild(s);})(); /*-->*/ </script>
         
-<form action = ""  >
-    Comments: <textarea rows = "10" cols = "30" name = "commentContent"></textarea><br/>
-    Name : <input type="text" name = "name"><br/>
-    <input type = "submit" value="Publish"><br/>
-    
-</form>
+
     
     </div>
     <div class="modal-footer">
