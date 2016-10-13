@@ -52,6 +52,22 @@ var stageForm = angular.module('clientView',[])
         
         
     }
+    
+    $scope.addComment = function () {
+        var Comment = {
+            "C_ID": $scope.id,
+            "C_Description": $scope.name,
+            "S_Name": $scope.name
+      
+        }
+        console.log(Comment); $http.post('http://isaac:7549/api/dbComment/post',Comment).
+        success(function (data, status, headers, config) {
+            alert('Comment has been posted');
+        }).
+        error(function (data, status, headers, config) {
+            alert('error adding comment')
+        });
+    }
 
     
 }]);
