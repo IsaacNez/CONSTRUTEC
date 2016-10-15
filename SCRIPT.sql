@@ -38,6 +38,7 @@ CREATE TABLE PROJECTXSTAGE(
     S_Name varchar(255) NOT NULL,
     PXS_DateStart Date not null,
     PXS_DateEnd Date not null,
+    PXS_Status varchar(255) not null,
     PXS_Budget int not null default 0
 
 );
@@ -214,7 +215,7 @@ returns table(gpd_id int,
              from project as prj left outer join projectxstage as pxs on (prj.p_id = pxs.p_id)
              							 left outer join stagexproduct as sxp on (pxs.s_name = sxp.s_name and prj.p_id = sxp.p_id)
                                          where prj.p_id = searchp_idby;'
-
+language 'sql';
 insert into dbrole values(1,'Admin');
 insert into dbrole values(2,'Engineer');
 insert into dbrole values(3,'Client');
@@ -251,4 +252,5 @@ insert into stage values('Mueble de cocina','Instalacion de muebles de cocina');
 insert into stage values('Escaleras','Instalacion de escaleras');
 
 
-select * from dbuser
+select * from dbuser;
+select * from stage;
