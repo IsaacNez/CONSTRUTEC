@@ -14,6 +14,9 @@ namespace ConstructionCore.Models
         public string u_password { get; set; }
         public string u_charge { get; set; }
 
+        public int i_eud { get; set; }
+        public int charge_id { get; set; }
+
 
     }
 }
