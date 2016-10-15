@@ -1,11 +1,12 @@
 var stageForm = angular.module('employeeView',[])
 .controller('projectCtrl', ['$scope', '$http', function ($scope, $http) {
-    var url = 'http://isaac:7549';
+    
+    var url = 'http://desktop-6upj287:7249';
     // get ingenieers and architects from DB
     var Users;
 
     // get ingenieers and architects from DB
-    $http.get($scope.url+'/api/user/undefined')
+    $http.get($scope.url+'/api/dbUser/undefined')
             .then( function (response) {    
               $scope.Users = response.data;           
         });
@@ -36,12 +37,12 @@ var stageForm = angular.module('employeeView',[])
             "P_Budget": 0,
             "U_Code": $scope.U_Code,
             "U_ID": $scope.U_ID
-        }
+                        }
         console.log(Project);
         
       
         
-        $http.post($scope.url+'/api/project/post',Project).
+        $http.post($scope.url+'/api/dbProject/post',Project).
         success(function (data, status, headers, config) {
             alert('the new user has been posted!');
         }).
@@ -54,7 +55,16 @@ var stageForm = angular.module('employeeView',[])
 
     
 }]);
-
+stageForm =  angular.module('employeeView')
+.controller('stageProductCtrl', ['$scope', '$http', function ($scope, $http) {
+        var url = 'http://isaac:7549';
+     
+        
+    }]);
+stageForm =  angular.module('employeeView')
+.controller('stageProjectCtrl', ['$scope', '$http', function ($scope, $http) {
+        var url = 'http://isaac:7549'; 
+}]);
 stageForm =  angular.module('employeeView')
 .controller('stageCtrl', ['$scope', '$http', function ($scope, $http) {
     var url = 'http://isaac:7549';
@@ -63,17 +73,26 @@ stageForm =  angular.module('employeeView')
         var modalEmployees = document.getElementById('employeeModal');
         var modalStages = document.getElementById('stageModal');
         var modalProject = document.getElementById('projectModal');
-
+        var modalStageProject = document.getElementById('stageProjectModal');
+        var modalStageProduct = document.getElementById('stageProductModal');
+        
+    
         // Get the button that opens the modal
         var employee = document.getElementById("newEmployee");
         var stage = document.getElementById("newStage");
         var project = document.getElementById("newProject");
-
+        var stageProject = document.getElementById("addStage");
+        var stageProduct = document.getElementById("addMaterials");
+       
+    
         // Get the <span> element that closes the modal
         var span1 = document.getElementById("close1");
         var span2 = document.getElementById("close2");
         var span3 = document.getElementById("close3");
-
+        var span4 = document.getElementById("close4");
+        var span5 = document.getElementById("close5");
+        
+    
         // When the user clicks the button, open the modal
         employee.onclick = function() {
             modalEmployees.style.display = "block";
@@ -121,6 +140,39 @@ stageForm =  angular.module('employeeView')
                 modalProject.style.display = "none";
             }
         }
+        
+        stageProject.onclick = function() {
+            modalStageProject.style.display = "block";
+        }
+
+        // When the user clicks on <span> (x), close the modal
+        span4.onclick = function() {
+            modalStageProject.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target == modalStageProject) {
+                modalStageProject.style.display = "none";
+            }
+        }
+        
+        stageProduct.onclick = function() {
+            modalStageProduct.style.display = "block";
+        }
+
+        // When the user clicks on <span> (x), close the modal
+        span5.onclick = function() {
+            modalStageProduct.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target == modalStageProduct) {
+                modalStageProduct.style.display = "none";
+            }
+        }
+       
 
 
 
@@ -140,7 +192,7 @@ stageForm =  angular.module('employeeView')
         
       
         
-        $http.post($scope.url+'/api/stage/post/',Stage).
+        $http.post($scope.url+'/api/deStage/post/',Stage).
         success(function (data, status, headers, config) {
             alert('the new Stage has been posted!');
         }).
@@ -159,3 +211,130 @@ stageForm =  angular.module('employeeView')
      
     
 }]);
+
+
+
+stageForm = angular.module('employeeView')
+.controller('employeeCtrl', ['$scope', '$http', function ($scope, $http) {
+    
+   
+    var rolelist;
+    var stageList;
+    $http.get('http://desktop-6upj287:7249/api/dbRole/get/R_Name')
+        .then( function (response) {
+        $scope.rolelist = response.data;
+     });
+
+
+    
+    $scope.addUser = function () {
+
+        var User = {
+            "U_ID": $scope.U_ID,
+            "U_Code": $scope.U_Code,
+            "U_Name": $scope.U_Name,
+            "U_LName": $scope.U_LName,
+            "U_Phone": $scope.U_Phone,
+            "R_ID": 2,
+            "U_Password":$scope.U_Password
+        }
+        console.log(User); 
+        $http.post('http://desktop-6upj287:7249/api/User/post/',User).
+        success(function (data, status, headers, config) {
+            alert('User has been posted');
+        }).
+        error(function (data, status, headers, config) {
+            alert('error posting User')
+        });
+    }
+    
+   
+    
+
+    
+       
+
+    
+    
+}]);
+stageForm =  angular.module('employeeView')
+.controller('stageMaterialCtrl', ['$scope', '$http', function ($scope, $http) {
+        var url = 'http://isaac:7549';
+     
+       var projects; 
+       var stagesInProject; 
+       var productsInStage; 
+        var stageList; 
+        // Get the modal
+
+        var modalStageMaterial = document.getElementById('stageMaterialModal');
+        var stageMaterial = document.getElementById("addStageMaterial");
+        var span6 = document.getElementById("close6");
+    
+        stageMaterial.onclick = function() {
+            modalStageMaterial.style.display = "block";
+        }
+
+        // When the user clicks on <span> (x), close the modal
+        span6.onclick = function() {
+            modalStageMaterial.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target == modalStageMaterial) {
+                modalStageMaterial.style.display = "none";
+                
+            }
+        }
+        $http.get($scope.url+'/api/dbProject/get/R_Name')
+        .then( function (response) {
+        $scope.rolelist = response.data;
+        });
+    
+    
+        $scope.getStages = function (){
+            console.log("Updating");
+            $http.get('http://desktop-6upj287:7249/api/stage/get/'+$scope.S_Name)
+                .then( function (response) {
+                $scope.stageList = response.data;
+             });
+        }
+
+       
+              
+       $scope.addStage = function () {
+         console.log("DAAAAAAAAAM");
+         var Stage = {
+            "S_Name": $scope.S_Name,
+            "S_Description": $scope.S_Description,
+            "S_DateStart": $scope.S_DateStart,
+            "S_DateEnd": $scope.S_DateEnd,
+            "S_Status": $scope.S_Status,
+            "S_Budget": 0  
+        }
+        console.log(Stage);
+        
+      
+        
+        $http.post($scope.url+'/api/dbStage/post/',Stage).
+        success(function (data, status, headers, config) {
+            alert('the new Stage has been posted!');
+        }).
+        error(function (data, status, headers, config) {
+            alert('Error while posting the new Stage')
+        });
+        
+        
+    }
+  
+
+    
+       
+   
+   
+     
+    
+}]);
+
+
