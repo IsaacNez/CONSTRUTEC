@@ -51,44 +51,42 @@ namespace ConstructionCore.Controllers
         public void AddUser(User us)
         {
             System.Diagnostics.Debug.WriteLine("print1");
+            System.Diagnostics.Debug.WriteLine(us.u_lname);
 
             NpgsqlConnection myConnection = new NpgsqlConnection();
             System.Diagnostics.Debug.WriteLine("print2");
             myConnection.ConnectionString = System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
             System.Diagnostics.Debug.WriteLine("print3");
             System.Diagnostics.Debug.WriteLine("cargo base");
-            string test = "INSERT INTO EMPLOYEE(u_id,u_name,u_lname,u_phone,u_password, ) Values(@u_id,@u_name,@u_lname,@u_phone,@u_password)";
+            string test1 = "INSERT INTO EMPLOYEE(u_id,u_name,u_lname,u_phone,u_password, ) Values(:u_id,:u_name,:u_lname,:u_phone,:u_password)";
+            string test = "insertuser";
             var command = new NpgsqlCommand(test, myConnection);
+            command.CommandType = CommandType.StoredProcedure;
             System.Diagnostics.Debug.WriteLine("print5");
 
 
             System.Diagnostics.Debug.WriteLine("generando comando");
 
 
-            var uID = command.CreateParameter();
-            uID.ParameterName = "u_id";
-            uID.Value = us.u_id;
-            command.Parameters.Add(uID);
-            var uNa = command.CreateParameter();
-            uNa.ParameterName = "u_name";
-            uNa.Value = us.u_lname;
-            command.Parameters.Add(uNa);
-            var uLn = command.CreateParameter();
-            uLn.ParameterName = "u_lname";
-            uLn.Value = us.u_lname;
-            command.Parameters.Add(uLn);
-            var uPh = command.CreateParameter();
-            uPh.ParameterName = "u_phone";
-            uPh.Value = us.u_phone;
-            command.Parameters.Add(uPh);
-            var uPass = command.CreateParameter();
-            uPass.ParameterName = "u_password";
-            uPass.Value = us.u_password;
-            command.Parameters.Add(uPass);
+  
+             command.Parameters.AddWithValue(":m_id",us.u_id);
+        
+             command.Parameters.AddWithValue(":m_name", us.u_name);
 
-            System.Diagnostics.Debug.WriteLine("print6");
+             command.Parameters.AddWithValue(":m_lname", us.u_lname);
+
+             command.Parameters.AddWithValue("m_phone", us.u_phone);
+
+             command.Parameters.AddWithValue("m_password", us.u_password);
+            command.Parameters.AddWithValue("m_code", us.i_eud);
+            command.Parameters.AddWithValue("rm_id", us.charge_id);
             myConnection.Open();
-            int rowInserted = command.ExecuteNonQuery();
+            command.ExecuteNonQuery();
+
+             System.Diagnostics.Debug.WriteLine("print6");
+           
+
+           // command.ExecuteReader();
             myConnection.Close();
         }
 
@@ -126,8 +124,8 @@ namespace ConstructionCore.Controllers
             while (coso.Read()) {
                 us = new User();
                 us.u_id = (int)coso["u_id"];
-                us.u_charge = (string)coso["u_charge"];
-                us.u_lname = (string)coso["u_charge"];
+                
+                us.u_lname = (string)coso["u_lname"];
                 us.u_name = (string)coso["u_name"];
                 us.u_password = (string)coso["u_password"];
                 us.u_phone = (int)coso["u_phone"];
