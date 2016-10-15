@@ -216,6 +216,21 @@ returns table(gpd_id int,
              							 left outer join stagexproduct as sxp on (pxs.s_name = sxp.s_name and prj.p_id = sxp.p_id)
                                          where prj.p_id = searchp_idby;'
 language 'sql';
+
+create or replace function getcustomerservice(
+    request_stageby date
+)
+returns table(
+    gcs_stage varchar(255),
+    gcs_datestart date,
+    gcs_comment varchar(255)
+) as
+'select pxs.s_name, pxs.pxs_datestart, dbc.c_description 
+from projectxstage as pxs left outer join dbcomment as dbc on (pxs.s_name = dbc.s_name)
+where (pxs.pxs_datestart - request_stageby)< 15::int'
+language 'sql';
+
+select * from getcustomerservice('2016-10-20');
 insert into dbrole values(1,'Admin');
 insert into dbrole values(2,'Engineer');
 insert into dbrole values(3,'Client');
@@ -254,3 +269,5 @@ insert into stage values('Escaleras','Instalacion de escaleras');
 
 select * from dbuser;
 select * from stage;
+
+insert into project values(3,'cartago','casa',100000,420,115610679);
