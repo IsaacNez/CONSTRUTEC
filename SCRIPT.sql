@@ -246,10 +246,11 @@ insert into userxrole(r_id,u_id) values(2,115610679);
 insert into userxrole(r_id,u_id) values(3,304750553);
 
 
+
 insert into stage values('Trabajo preliminar','Preparacion de terreno');
-insert into stage values('Cimientos','Creación de vigas y piso');
+insert into stage values('Cimientos','Creacion de vigas y piso');
 insert into stage values('Paredes','Construccion de paredes');
-insert into stage values('Concreto reforzado','Construcción de estructuras');
+insert into stage values('Concreto reforzado','Construccion de estructuras');
 insert into stage values('Techos','Construccion de vigas del techo');
 insert into stage values('Cielos','Construccion de cielorazo');
 insert into stage values('Repello','Repello de paredes');
@@ -258,16 +259,18 @@ insert into stage values('Pisos','Chorreo de pisos');
 insert into stage values('Enchapes','Enchapado de pisos y paredes');
 insert into stage values('Instalacion pluvial','Instalacion canoas y tuberia');
 insert into stage values('Instalacion sanitaria','Instalacion de servicios sanitarios');
-insert into stage values('Instalacion eléctrica','Instalacion electríca y tomas electricos');
+insert into stage values('Instalacion electrica','Instalacion electrica y tomas electricos');
 insert into stage values('Puertas','Instalacion de puertas');
-insert into stage values('Cerrajeria','Instalación de cerrajeria');
+insert into stage values('Cerrajeria','Instalacion de cerrajeria');
 insert into stage values('Ventanas','Instalacion de las ventanas');
 insert into stage values('Closets','Instalacion de los closets');
 insert into stage values('Mueble de cocina','Instalacion de muebles de cocina');
 insert into stage values('Escaleras','Instalacion de escaleras');
 
-
 select * from dbuser;
 select * from stage;
 
 insert into project values(3,'cartago','casa',100000,420,115610679);
+
+
+
