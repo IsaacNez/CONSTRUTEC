@@ -176,5 +176,6 @@ create or replace function getuser(
     request_password varchar(255)
 )
 returns table(q_id int, q_name varchar(255), q_code int, q_role int) as
-'select use.u_id,use.u_name,uxd.u_code,uxr.r_id from dbuser as use left outer join userxrole as uxr on (use.u_id = uxr.u_id) left outer join userxplusdata as uxd on (use.u_id = uxd.u_id) ;'
+'select use.u_id,use.u_name,uxd.u_code,uxr.r_id from dbuser as use left outer join userxrole as uxr on (use.u_id = uxr.u_id) left outer join userxplusdata as uxd on (use.u_id = uxd.u_id)
+where use.u_id = request_id and use.u_password =request_password;'
 language 'sql';
