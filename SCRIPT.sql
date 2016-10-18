@@ -184,6 +184,8 @@ from dbuser as use left outer join userxrole as uxr on (use.u_id = uxr.u_id) lef
 where use.u_id = request_id and use.u_password =request_password;'
 language 'sql';
 
+select * from getuser(304890149,'casa');
+
 create or replace function getprojectdetails(
     searchp_idby int
 )
@@ -225,9 +227,9 @@ returns table(
     gcs_datestart date,
     gcs_comment varchar(255)
 ) as
-'select pxs.s_name, pxs.pxs_datestart, dbc.c_description 
-from projectxstage as pxs left outer join dbcomment as dbc on (pxs.s_name = dbc.s_name)
-where (pxs.pxs_datestart - request_stageby)< 15::int'
+'select prj.p_id,prj.u_id,dbu.u_name,dbu.u_phone,prj.p_location,pxs.pxs_datestart,pxs.s_name
+from projectxstage as pxs left outer join project as prj on (pxs.p_id = prj.p_id) left outer join dbuser as dbu on (prj.u_id = dbu.u_id)
+where pxs_datestart - request_stageby <= 15::int'
 language 'sql';
 
 create or replace function updatebudget()
