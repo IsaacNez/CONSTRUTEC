@@ -209,9 +209,9 @@ returns table(gpd_id int,
                      pxs.pxs_datestart,
                      pxs.pxs_dateend,
                      pxs.pxs_status,
-                     sxp.pr_id,
-                     sxp.pr_price,
-                     sxp.pr_quantity
+                     (case when sxp.pr_id is null then 0 else sxp.pr_id::int end),
+                     (case when sxp.pr_price is null then 0 else sxp.pr_price::int end),
+                     (case when sxp.pr_quantity is null then 0 else sxp.pr_quantity::int end)
              from project as prj left outer join projectxstage as pxs on (prj.p_id = pxs.p_id)
              							 left outer join stagexproduct as sxp on (pxs.s_name = sxp.s_name and prj.p_id = sxp.p_id)
                                          where prj.p_id = searchp_idby;'
@@ -230,6 +230,52 @@ from projectxstage as pxs left outer join dbcomment as dbc on (pxs.s_name = dbc.
 where (pxs.pxs_datestart - request_stageby)< 15::int'
 language 'sql';
 
+create or replace function updatebudget()
+returns trigger as
+$$
+begin
+update projectxstage
+set pxs_budget = temp.sum
+from (select pxs.pxs_id, pxs.p_id ,pxs.s_name, sum(sxp.pr_price*sxp.pr_quantity)
+from projectxstage as pxs left outer join stagexproduct as sxp on (pxs.s_name=sxp.s_name)
+    where pxs.p_id = sxp.p_id
+group by pxs.s_name,pxs.pxs_id,pxs.p_id) temp
+where  (temp.pxs_id = projectxstage.pxs_id) and (temp.p_id = projectxstage.p_id);
+return NEW;
+end;
+$$
+language 'plpgsql';
+
+create trigger auto_update
+after insert
+on stagexproduct
+for each row
+execute procedure updatebudget();
+
+
+create or replace function updateprojectbudget()
+returns trigger as
+$$
+begin
+update project
+set p_budget = tempstage.sum
+from(
+select pxs.p_id, sum(pxs.pxs_budget)
+from project as prj left outer join projectxstage as pxs on (prj.p_id = pxs.p_id)
+where prj.p_id = pxs.p_id
+group by pxs.p_id) tempstage
+where project.p_id = tempstage.p_id;
+return NEW;
+end;
+$$
+language 'plpgsql';
+
+create trigger auto_update_project
+after update
+on projectxstage
+for each row
+execute procedure updateprojectbudget();
+
 select * from getcustomerservice('2016-10-20');
 insert into dbrole values(1,'Admin');
 insert into dbrole values(2,'Engineer');
@@ -244,7 +290,6 @@ insert into userxrole(r_id,u_id) values(3,304890149);
 insert into userxplusdata values(420,115610679);
 insert into userxrole(r_id,u_id) values(2,115610679);
 insert into userxrole(r_id,u_id) values(3,304750553);
-
 
 
 insert into stage values('Trabajo preliminar','Preparacion de terreno');
@@ -267,6 +312,24 @@ insert into stage values('Closets','Instalacion de los closets');
 insert into stage values('Mueble de cocina','Instalacion de muebles de cocina');
 insert into stage values('Escaleras','Instalacion de escaleras');
 
+insert into project(p_location,p_name,u_code,u_id) values('Cartago','Casa de habitacion',420,304890149);
+insert into projectxstage(p_id,s_name,pxs_datestart,pxs_dateend,pxs_status) values(1,'Techos','2016-10-19','2016-11-01','Construyendo');
+insert into projectxstage(p_id,s_name,pxs_datestart,pxs_dateend,pxs_status) values(1,'Paredes','2016-10-19','2016-11-01','Construyendo');
+insert into product values(1,'Golpear','Martillo',1500,200);
+insert into product values(2,'Lavar','Esponja',500,200);
+insert into product values(3,'Pintar','Pintura Golden',7500,200);
+insert into product values(4,'clavar','Clavos',1000,200);
+insert into stagexproduct(s_name,pr_id,p_id,pr_price,pr_quantity) values('Techos',1,1,1500,2);
+insert into stagexproduct(s_name,pr_id,p_id,pr_price,pr_quantity) values('Techos',2,1,500,2);
+insert into stagexproduct(s_name,pr_id,p_id,pr_price,pr_quantity) values('Paredes',3,1,7500,2);
+insert into stagexproduct(s_name,pr_id,p_id,pr_price,pr_quantity) values('Paredes',4,1,1000,2);
+insert into stagexproduct(s_name,pr_id,p_id,pr_price,pr_quantity) values('Paredes',2,1,500,2);
+insert into stagexproduct(s_name,pr_id,p_id,pr_price,pr_quantity) values('Techos',4,1,1000,2);
+insert into stagexproduct(s_name,pr_id,p_id,pr_price,pr_quantity) values('Techos',3,1,7500,1);
+
+
+select * from projectxstage;
+select * from project;
 select * from dbuser;
 select * from stage;
 
