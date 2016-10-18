@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConstructionCore", "ConstructionCore\ConstructionCore.csproj", "{0C1B6EFD-D669-4832-A3B1-5AEB85379ECC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConstructionCore", "ConstructionCore\ConstructionCore.csproj", "{4014A7E9-F0AF-469C-9CFA-EA0A0D5765BF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +11,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{0C1B6EFD-D669-4832-A3B1-5AEB85379ECC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0C1B6EFD-D669-4832-A3B1-5AEB85379ECC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0C1B6EFD-D669-4832-A3B1-5AEB85379ECC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0C1B6EFD-D669-4832-A3B1-5AEB85379ECC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4014A7E9-F0AF-469C-9CFA-EA0A0D5765BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4014A7E9-F0AF-469C-9CFA-EA0A0D5765BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4014A7E9-F0AF-469C-9CFA-EA0A0D5765BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4014A7E9-F0AF-469C-9CFA-EA0A0D5765BF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

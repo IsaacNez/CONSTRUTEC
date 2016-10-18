@@ -78,8 +78,8 @@ namespace ConstructionCore.Controllers
              command.Parameters.AddWithValue("m_phone", us.u_phone);
 
              command.Parameters.AddWithValue("m_password", us.u_password);
-            command.Parameters.AddWithValue("m_code", us.i_eud);
-            command.Parameters.AddWithValue("rm_id", us.charge_id);
+            command.Parameters.AddWithValue("m_code", us.u_code);
+            command.Parameters.AddWithValue("rm_id", us.r_id);
             myConnection.Open();
             command.ExecuteNonQuery();
 
@@ -92,10 +92,10 @@ namespace ConstructionCore.Controllers
 
         [HttpGet]
         [ActionName("Get")]
-        public JsonResult<List<User>> Get(string attribute, string id)
+        public JsonResult<List<RequestedUser>> Get(string attribute, string id)
         {
-            User us = null;
-            List<User> values = new List<User>();
+            RequestedUser us = null;
+            List<RequestedUser> values = new List<RequestedUser>();
             string[] attr = attribute.Split(',');
             string[] ids = id.Split(',');
             System.Diagnostics.Debug.WriteLine("print1");
@@ -105,30 +105,19 @@ namespace ConstructionCore.Controllers
             System.Diagnostics.Debug.WriteLine("print3");
             System.Diagnostics.Debug.WriteLine("cargo base");
             myConnection.Open();
-            string action = "";
-            if (id != "undefined")
-            {
-               
-                action = FormConnectionString("dbuser", attr, ids);
-            }
-            else
-            {
-                action = "SELECT * FROM dbuser;";
-            }
-            System.Diagnostics.Debug.WriteLine("print4");
-            System.Diagnostics.Debug.WriteLine(action);
-            var command = new NpgsqlCommand(action, myConnection);
-            System.Diagnostics.Debug.WriteLine("print5");
+            string test = "select * from getuser("+ids[0]+",'"+ids[1]+"');";
+            var command = new NpgsqlCommand(test, myConnection);
             var coso = command.ExecuteReader();
             System.Diagnostics.Debug.WriteLine("print6");
+            us = new RequestedUser();
             while (coso.Read()) {
-                us = new User();
-                us.u_id = (int)coso["u_id"];
                 
-                us.u_lname = (string)coso["u_lname"];
-                us.u_name = (string)coso["u_name"];
-                us.u_password = (string)coso["u_password"];
-                us.u_phone = (int)coso["u_phone"];
+                us.q_id = (int)coso["q_id"];
+                
+                us.q_name = (string)coso["q_name"];
+                
+                us.q_code = (int)coso["q_code"];
+                us.q_role.Add((int)coso["q_role"]);
                 values.Add(us);
             }
        
