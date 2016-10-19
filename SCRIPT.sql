@@ -219,18 +219,43 @@ returns table(gpd_id int,
                                          where prj.p_id = searchp_idby;'
 language 'sql';
 
-create or replace function getcustomerservice(
+create or replace function getcustomerservicebydate(
     request_stageby date
 )
 returns table(
-    gcs_stage varchar(255),
+    gcs_pid int,
+    gcs_uid int,
+    gcs_uname varchar(255),
+    gcs_uphone int,
+    gcs_plocation varchar(255),
     gcs_datestart date,
-    gcs_comment varchar(255)
+    gcs_sname varchar(255)
 ) as
 'select prj.p_id,prj.u_id,dbu.u_name,dbu.u_phone,prj.p_location,pxs.pxs_datestart,pxs.s_name
 from projectxstage as pxs left outer join project as prj on (pxs.p_id = prj.p_id) left outer join dbuser as dbu on (prj.u_id = dbu.u_id)
 where pxs_datestart - request_stageby <= 15::int'
 language 'sql';
+
+create or replace function getcustomerservicebyproductanddate(
+    request_date date,
+    request_product varchar(255)
+)
+returns table(
+    csp_pid int,
+    csp_uid int,
+    csp_uname varchar(255),
+    csp_uphone int,
+    csp_plocation varchar(255),
+    csp_datestart date,
+    csp_sname varchar(255)
+)as
+'select distinct prj.p_id, dbu.u_id, dbu.u_name, dbu.u_phone, prj.p_location,pxs.pxs_datestart,pxs.s_name
+from stagexproduct as sxp left outer join product as pr on (sxp.pr_id = pr.pr_id) left outer join projectxstage as pxs on (sxp.p_id = pxs.p_id)
+left outer join project as prj on (pxs.p_id = prj.p_id) left outer join dbuser as dbu on (prj.u_id = dbu.u_id)
+where (pxs.pxs_datestart -request_date <15) and  pr.pr_name ~* request_product;'
+language 'sql';
+
+
 
 create or replace function updatebudget()
 returns trigger as
@@ -329,7 +354,9 @@ insert into stagexproduct(s_name,pr_id,p_id,pr_price,pr_quantity) values('Parede
 insert into stagexproduct(s_name,pr_id,p_id,pr_price,pr_quantity) values('Techos',4,1,1000,2);
 insert into stagexproduct(s_name,pr_id,p_id,pr_price,pr_quantity) values('Techos',3,1,7500,1);
 
-
+select * from stagexproduct,product
+select * from product
+select * from getcustomerservicebyproductanddate('2016-10-14','pin');
 select * from projectxstage;
 select * from project;
 select * from dbuser;
