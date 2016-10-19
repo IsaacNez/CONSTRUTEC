@@ -5,7 +5,7 @@ using System.Web;
 
 namespace ConstructionCore.Models
 {
-    public class Product
+    public class prodstage
     {
         public int pr_id { get; set; }
         public string pr_description { get; set; }

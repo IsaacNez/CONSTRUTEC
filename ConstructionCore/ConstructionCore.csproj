@@ -133,6 +133,7 @@
     <Compile Include="Controllers\ClientController.cs" />
     <Compile Include="Controllers\EngineerController.cs" />
     <Compile Include="Controllers\ProjectController.cs" />
+    <Compile Include="Controllers\ProjectDetailsController.cs" />
     <Compile Include="Controllers\ProjectxstageController.cs" />
     <Compile Include="Controllers\StageController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -142,9 +143,12 @@
     <Compile Include="Models\Client.cs" />
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\Engineer.cs" />
+    <Compile Include="Models\prodstage.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\Project.cs" />
+    <Compile Include="Models\ProjectDetails.cs" />
     <Compile Include="Models\projectxstage.cs" />
+    <Compile Include="Models\projstage.cs" />
     <Compile Include="Models\RequestedUser.cs" />
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\Stage.cs" />
