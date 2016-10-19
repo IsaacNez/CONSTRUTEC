@@ -1,5 +1,6 @@
 package construtec.construtec;
 
+import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.ClipData;
 import android.content.Intent;
@@ -17,10 +18,17 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
 public class UserInterface extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     TextView username;
     TextView emailuser;
+    JSONArray arrayrole;
+    String user="";
+    Integer userID = 0;
+    Integer userCode = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,7 +36,16 @@ public class UserInterface extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         Intent example = getIntent();
-
+        String jsonArray = example.getStringExtra("jsonArray");
+        System.out.println(jsonArray);
+        user = example.getStringExtra("Name");
+        userID = example.getIntExtra("UID", 1);
+        userCode = example.getIntExtra("UCode",0);
+        try {
+             arrayrole = new JSONArray(jsonArray);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -68,8 +85,46 @@ public class UserInterface extends AppCompatActivity
         getMenuInflater().inflate(R.menu.user_interface, menu);
         username = (TextView) findViewById(R.id.Name_User);
         emailuser = (TextView) findViewById(R.id.textView);
-        username.setText("Carlos");
-        emailuser.setText("carlos@tec.ac.cr");
+        username.setText(user);
+        emailuser.setText("Your ID: "+userID);
+        NavigationView nav1 = (NavigationView) findViewById(R.id.nav_view);
+        Menu nav_menu = nav1.getMenu();
+        nav_menu.findItem(R.id.nav_first_layout).setVisible(false);
+        nav_menu.findItem(R.id.nav_second_layout).setVisible(false);
+        nav_menu.findItem(R.id.nav_third_layout).setVisible(false);
+        nav_menu.findItem(R.id.nav_assign_stage).setVisible(false);
+        nav_menu.findItem(R.id.nav_assign_products).setVisible(false);
+        nav_menu.findItem(R.id.nav_gen_budget).setVisible(false);
+        nav_menu.findItem(R.id.nav_send_order).setVisible(false);
+        nav_menu.findItem(R.id.nav_search_product).setVisible(false);
+        nav_menu.findItem(R.id.nav_search_date).setVisible(false);
+        for(int i = 0; i < arrayrole.length();i++){
+            try {
+                if(arrayrole.getInt(i)==1){
+                    nav_menu.findItem(R.id.nav_first_layout).setVisible(true);
+                    nav_menu.findItem(R.id.nav_second_layout).setVisible(true);
+                }
+                if(arrayrole.getInt(i)==2){
+                    nav_menu.findItem(R.id.nav_second_layout).setVisible(true);
+                    nav_menu.findItem(R.id.nav_third_layout).setVisible(true);
+                    nav_menu.findItem(R.id.nav_assign_stage).setVisible(true);
+                    nav_menu.findItem(R.id.nav_assign_products).setVisible(true);
+                    nav_menu.findItem(R.id.nav_gen_budget).setVisible(true);
+                    nav_menu.findItem(R.id.nav_send_order).setVisible(true);
+                }
+                if(arrayrole.getInt(i)==3){
+                    nav_menu.findItem(R.id.nav_assign_products).setVisible(true);
+                    nav_menu.findItem(R.id.nav_send_order).setVisible(true);
+                }
+                if(arrayrole.getInt(i)==4){
+                    nav_menu.findItem(R.id.nav_search_product).setVisible(true);
+                    nav_menu.findItem(R.id.nav_search_date).setVisible(true);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
 
         return true;
     }
@@ -94,8 +149,12 @@ public class UserInterface extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-
+        Bundle extradata = new Bundle();
+        extradata.putString("role",arrayrole.toString());
+        extradata.putInt("u_id",userID);
+        extradata.putInt("u_code",userCode);
         FragmentManager fragmgr = getFragmentManager();
+
         if (id == R.id.nav_first_layout) {
             fragmgr.beginTransaction()
                     .replace(R.id.content_frame, new FirstFragment())
@@ -106,8 +165,10 @@ public class UserInterface extends AppCompatActivity
                     .replace(R.id.content_frame, new SecondFragment())
                     .commit();
         } else if (id == R.id.nav_third_layout) {
+            Fragment todo = new ThirdFragment();
+            todo.setArguments(extradata);
             fragmgr.beginTransaction()
-                    .replace(R.id.content_frame, new ThirdFragment())
+                    .replace(R.id.content_frame, todo)
                     .commit();
         } else if (id == R.id.nav_assign_stage){
             fragmgr.beginTransaction()

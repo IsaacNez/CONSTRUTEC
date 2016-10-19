@@ -2,13 +2,95 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Third Layout"
-        android:id="@+id/textView2"
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="80dp" />
+        android:layout_alignParentStart="true"
+        android:layout_margin="20dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Start a Project"
+            android:id="@+id/textView2"
+            android:layout_gravity="center_horizontal|top"
+            android:gravity="center_horizontal" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/_projectname"
+            android:hint="@string/Project_name"
+            android:layout_gravity="center_horizontal|top"
+            android:layout_marginTop="50dp" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/_projectlocation"
+            android:hint="@string/project_location"
+            android:layout_gravity="center_horizontal|top"
+            android:layout_marginTop="90dp" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/submit_project"
+            android:id="@+id/submit_project"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_marginBottom="0dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Chose your role"
+            android:id="@+id/roletext"
+            android:layout_gravity="center"
+            android:layout_marginTop="-90dp" />
+
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/chargesuser"
+            android:layout_gravity="center"
+            android:layout_marginTop="-50dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Chose your client"
+            android:id="@+id/choseclient"
+            android:layout_gravity="center"
+            android:layout_marginTop="-10dp" />
+
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/spinnerclients"
+            android:layout_gravity="center"
+            android:layout_marginTop="32dp"
+            android:spinnerMode="dropdown" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Chose the engineer"
+            android:id="@+id/choseengineer"
+            android:layout_gravity="center"
+            android:layout_marginTop="-10dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Waiting"
+            android:id="@+id/waiting"
+            android:layout_gravity="center"
+            android:layout_marginTop="-10dp" />
+    </FrameLayout>
 </RelativeLayout>

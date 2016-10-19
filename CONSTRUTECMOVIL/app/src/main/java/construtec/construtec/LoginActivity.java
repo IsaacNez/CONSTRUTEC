@@ -58,8 +58,9 @@ public class LoginActivity extends AppCompatActivity {
     private View mLoginFormView;
     private TextView _newRegister;
     String userName="";
+    Integer userID = 0;
     Integer userCode=0;
-    JSONArray userRole;
+    JSONArray userRole = new JSONArray();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,9 +92,11 @@ public class LoginActivity extends AppCompatActivity {
                 if(ID.matches("@|[a-zA-Z]+|$|!|#|%|&")||mPasswordView.getText().toString().matches("")){
                     Toast.makeText(LoginActivity.this,"User ID or password doesn't match",Toast.LENGTH_LONG).show();
                 }else{
-                    //getUser();
-                    Intent user = new Intent(LoginActivity.this,UserInterface.class);
-                    startActivity(user);
+
+                    if(userRole != null) {
+                        getUser();
+
+                    }
                 }
             }
         });
@@ -110,15 +113,28 @@ public class LoginActivity extends AppCompatActivity {
 
     public void getUser(){
         AsyncHttpClient httpClient = new AsyncHttpClient();
-        httpClient.get("",null, new JsonHttpResponseHandler(){
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                try {
-                    JSONObject newObject = response;
-                    userName = newObject.getString("U_Name");
-                    userCode = newObject.getInt("U_Code");
-                    userRole = newObject.getJSONArray("Role");
+        String server = "http://isaac:7249/api/user/get/u_id,u_password/"+mEmailView.getText().toString()+','+mPasswordView.getText().toString();
+        System.out.println(server);
 
+        httpClient.get(server,null, new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+                try {
+                    JSONObject newObject = response.getJSONObject(0);
+                    userName = newObject.getString("q_name");
+                    userCode = newObject.getInt("q_code");
+                    userID = newObject.getInt("q_id");
+                    userRole = new JSONArray(newObject.get("q_role").toString());
+                    System.out.println(newObject.toString()+"Esta es la prueba "+(new JSONArray(newObject.get("q_role").toString())).toString()
+                            +" "+userID);
+
+                    System.out.println(userRole.toString()+"Esta es la impresion de los roles");
+                    Intent user = new Intent(LoginActivity.this, UserInterface.class);
+                    user.putExtra("jsonArray", userRole.toString());
+                    user.putExtra("Name", userName);
+                    user.putExtra("UCode", userCode);
+                    user.putExtra("UID", userID);
+                    startActivity(user);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
