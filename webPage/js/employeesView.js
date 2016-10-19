@@ -1,3 +1,5 @@
+var actualProject;
+var actualStage;
 var stageForm = angular.module('employeeView',[])
 .controller('projectCtrl', ['$scope', '$http', function ($scope, $http) {
     
@@ -58,12 +60,113 @@ var stageForm = angular.module('employeeView',[])
 stageForm =  angular.module('employeeView')
 .controller('stageProductCtrl', ['$scope', '$http', function ($scope, $http) {
         var url = 'http://isaac:7549';
+        var productList;
+        var products;
+        var amounts; 
+        $scope.getProduct = function (){
+            console.log("Updating");
+            $http.get('http://desktop-6upj287:7249/api/product/get/'+$scope.PR_Name)
+                .then( function (response) {
+                $scope.productList = response.data;
+             });
+        }
+        $scope.addToCart = function (value1,value2){
+          
+          if(products=="" && amounts=="" ){
+              products=value1;
+              amounts=value2;
+              
+          }
+          else{
+              products = products+ "," + value1 ;
+              amounts = amounts+","  + value2  ;
+          }
+          console.log(products+'/'+amounts);
+           
+      }
+        $scope.addProducts = function(){
+            var order;
+            order={
+              "PXS_ID": 0,
+              "P_ID": $scope.actualProject,
+              "S_Name": $scope.actualStage,
+              "PXS_DateStart":$scope.status,
+              "PXS_DateEnd":$scope.
+              "PXS_Status":
+              "PXS_Budget"
+              "Products": products,
+              "Amount": amounts,
+              
+              
+              }
+              console.log(order);
+              $http.post('http://desktop-6upj287:7249/api/projectxstage/post',order).
+              success(function (data, status, headers, config) {
+                alert('the new order has been posted!');
+               }).
+              error(function (data, status, headers, config) {
+                 alert('Error while posting the new order')
+            });
+
+            }
+        
+        
+  
+    
+    
+    
+    
+    
+    
      
         
     }]);
 stageForm =  angular.module('employeeView')
 .controller('stageProjectCtrl', ['$scope', '$http', function ($scope, $http) {
-        var url = 'http://isaac:7549'; 
+        var url = 'http://isaac:7549';
+         $scope.setStage=function(){
+         var order;
+            order={
+              "PXS_ID": 0,
+              "P_ID": $scope.actualProject,
+              "S_Name": $scope.actualStage,
+              "PXS_DateStart":$scope.S_DateStart,
+              "PXS_DateEnd":$scope.S_DateEnd,
+              "PXS_Status": $scope.S_Status,
+              "PXS_Budget":0
+              }
+              console.log(order);
+              $http.post('http://desktop-6upj287:7249/api/projectxstage/post',order).
+              success(function (data, status, headers, config) {
+                alert('the new order has been posted!');
+               }).
+              error(function (data, status, headers, config) {
+                 alert('Error while posting the new order')
+            });
+
+            }
+        
+   /* 
+        $scope.setStage = funtion(){
+            
+        }*/
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 }]);
 stageForm =  angular.module('employeeView')
 .controller('stageCtrl', ['$scope', '$http', function ($scope, $http) {
@@ -287,6 +390,16 @@ stageForm =  angular.module('employeeView')
                 
             }
         }
+
+        
+        $scope.editStage = funtion(){
+            actualProject = $scope.P_ID;
+        }
+        $scope.productStage = funtion(item){
+            actualStage=item.S_Name;
+        }
+        
+        
         $http.get($scope.url+'/api/dbProject/get/R_Name')
         .then( function (response) {
         $scope.rolelist = response.data;
