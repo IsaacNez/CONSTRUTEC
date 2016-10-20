@@ -15,6 +15,36 @@ namespace ConstructionCore.Controllers
 {
     public class ProjectController : ApiController
     {
+
+        public string FormConnectionString(string baseString, string[] attr, string[] ids)
+        {
+            string ConnectionString = "SELECT * FROM " + baseString + " WHERE ";
+            string LogicalConnector = "OR";
+            if (ids == null)
+            {
+                return "SELECT * FROM " + baseString + ";";
+            }
+            if (attr.Length > 1)
+            {
+                LogicalConnector = "AND";
+            }
+            System.Diagnostics.Debug.WriteLine(attr.Length);
+            for (int i = 0; i < attr.Length; i++)
+            {
+                System.Diagnostics.Debug.WriteLine(i);
+                if (i == (attr.Length - 1))
+                {
+                    ConnectionString = ConnectionString + attr[i] + " =" + ids[i] + ";";
+                    return ConnectionString;
+                }
+                else
+                {
+                    ConnectionString = ConnectionString + attr[i] + " =" + ids[i] + LogicalConnector + " ";
+                }
+
+            }
+            return ConnectionString;
+        }
         [HttpPost]
         [ActionName("Post")]
         public void AddStage(Project proj)
@@ -72,8 +102,8 @@ namespace ConstructionCore.Controllers
             string action = "";
             if (id != "undefined")
             {
-                var need = new UserController();
-                action = need.FormConnectionString("project", attr, ids);
+               
+                action = FormConnectionString("project", attr, ids);
             }
             else
             {
@@ -90,6 +120,10 @@ namespace ConstructionCore.Controllers
                 proj = new Project();
                 proj.p_id = (int)coso["p_id"];
                 proj.p_name = (string)coso["p_name"];
+                proj.p_location = (string)coso["p_location"];
+                proj.p_budget = (int)coso["p_budget"];
+                proj.u_code = (int)coso["u_code"];
+                proj.u_id = (int)coso["u_id"];
                 values.Add(proj);
             }
 

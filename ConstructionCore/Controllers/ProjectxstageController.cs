@@ -68,11 +68,11 @@ namespace ConstructionCore.Controllers
             if (id != "undefined")
             {
                 var need = new UserController();
-                action = need.FormConnectionString("dbprojectxstage", attr, ids);
+                action = need.FormConnectionString("projectxstage", attr, ids);
             }
             else
             {
-                action = "SELECT * FROM dbprojectxstage;";
+                action = "SELECT * FROM projectxstage;";
             }
             System.Diagnostics.Debug.WriteLine("print4");
             System.Diagnostics.Debug.WriteLine(action);

@@ -47,20 +47,34 @@ namespace ConstructionCore.Controllers
                 stag.s_datestart = (DateTime)coso["gpd_datestart"];
                 stag.s_dateend = (DateTime)coso["gpd_dateend"];
                 stag.s_status = (String)coso["gpd_status"];
-                if (proj.stages.IndexOf(stag)!=-1)
+                if (proj.stages.Count !=0)
                 {
-                    System.Diagnostics.Debug.WriteLine("entro al true");
-                    int i = proj.stages.IndexOf(stag);
-                    projstage tmp = proj.stages.ElementAt(i);
-                    prodstage product = new prodstage();
-                    product.p_id = (int)coso["gpd_pid"];
-                    product.p_price = (int)coso["gpd_price"];
-                    product.p_quantity = (int)coso["gpd_quantity"];
-                    proj.stages.ElementAt(i).products.Add(product);
+                    for (int z = 0; z < proj.stages.Count; z++)
+                    {
+                        if (proj.stages.ElementAt(z).s_name == stag.s_name)
+                        {
+                            System.Diagnostics.Debug.WriteLine("entro al true");
+                            prodstage product = new prodstage();
+                            product.p_id = (int)coso["gpd_pid"];
+                            product.p_price = (int)coso["gpd_price"];
+                            product.p_quantity = (int)coso["gpd_quantity"];
+                            proj.stages.ElementAt(z).products.Add(product);
+                        }
+                        else if(proj.stages.ElementAt(z).s_name != stag.s_name)
+                        {
+                            proj.stages.Add(stag);
+                            int i = proj.stages.IndexOf(stag);
+                            prodstage product = new prodstage();
+                            product.p_id = (int)coso["gpd_pid"];
+                            product.p_price = (int)coso["gpd_price"];
+                            product.p_quantity = (int)coso["gpd_quantity"];
+                            proj.stages.ElementAt(i).products.Add(product);
+                        }
+                    }                   
                 }
-                else if(proj.stages.IndexOf(stag)==-1) {
+                else if(proj.stages.Count==0)
+                {
                     System.Diagnostics.Debug.WriteLine("entro al false");
-
                     proj.stages.Add(stag);
                     int i = proj.stages.IndexOf(stag);
                     prodstage product = new prodstage();
