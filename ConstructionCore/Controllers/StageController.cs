@@ -48,5 +48,48 @@ namespace ConstructionCore.Controllers
 
          
         }
+        [HttpGet]
+        [ActionName("Get")]
+        public JsonResult<List<Stage>> Get(string attribute, string id)
+        {
+            Stage stag = null;
+            List<Stage> values = new List<Stage>();
+            string[] attr = attribute.Split(',');
+            string[] ids = id.Split(',');
+            System.Diagnostics.Debug.WriteLine("print1");
+            NpgsqlConnection myConnection = new NpgsqlConnection();
+            System.Diagnostics.Debug.WriteLine("print2");
+            myConnection.ConnectionString = System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
+            System.Diagnostics.Debug.WriteLine("print3");
+            System.Diagnostics.Debug.WriteLine("cargo base");
+            myConnection.Open();
+            string action = "";
+            if (id != "undefined")
+            {
+                var need = new UserController();
+                action = need.FormConnectionString("stage", attr, ids);
+            }
+            else
+            {
+                action = "SELECT * FROM stage;";
+            }
+            System.Diagnostics.Debug.WriteLine("print4");
+            System.Diagnostics.Debug.WriteLine(action);
+            var command = new NpgsqlCommand(action, myConnection);
+            System.Diagnostics.Debug.WriteLine("print5");
+            var coso = command.ExecuteReader();
+            System.Diagnostics.Debug.WriteLine("print6");
+            while (coso.Read())
+            {
+                stag = new Stage();
+                stag.s_name = (string)coso["s_name"];
+                stag.s_description = (string)coso["s_description"];
+                values.Add(stag);
+            }
+
+            myConnection.Close();
+            return Json(values);
+
+        }
     }
 }

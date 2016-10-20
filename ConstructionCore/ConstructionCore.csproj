@@ -136,6 +136,7 @@
     <Compile Include="Controllers\ProjectDetailsController.cs" />
     <Compile Include="Controllers\ProjectxstageController.cs" />
     <Compile Include="Controllers\StageController.cs" />
+    <Compile Include="Controllers\StagexproductController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -152,6 +153,7 @@
     <Compile Include="Models\RequestedUser.cs" />
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\Stage.cs" />
+    <Compile Include="Models\stagexproduct.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -185,9 +187,9 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>2049</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://desktop-e6qptvt:8080/</IISUrl>
+          <IISUrl>http://desktop-6upj287:7575/</IISUrl>
           <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
-          <IISAppRootUrl>http://desktop-e6qptvt:8080/</IISAppRootUrl>
+          <IISAppRootUrl>http://desktop-6upj287:7575/</IISAppRootUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

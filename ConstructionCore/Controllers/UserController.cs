@@ -35,12 +35,12 @@ namespace ConstructionCore.Controllers
                 System.Diagnostics.Debug.WriteLine(i);
                 if (i == (attr.Length - 1))
                 {
-                    ConnectionString = ConnectionString + attr[i] + "=" + ids[i] + ";";
+                    ConnectionString = ConnectionString + attr[i] + " like '%" + ids[i] + "%';";
                     return ConnectionString;
                 }
                 else
                 {
-                    ConnectionString = ConnectionString + attr[i] + "=" + ids[i] + LogicalConnector + " ";
+                    ConnectionString = ConnectionString + attr[i] + " like '%" + ids[i] + LogicalConnector + "%' ";
                 }
 
             }

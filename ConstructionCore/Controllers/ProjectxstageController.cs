@@ -35,12 +35,7 @@ namespace ConstructionCore.Controllers
             var command = new NpgsqlCommand(test, myConnection);
             command.CommandType = CommandType.Text;
             System.Diagnostics.Debug.WriteLine("print5");
-
-
             System.Diagnostics.Debug.WriteLine("generando comando");
-
-            
-            
             command.Parameters.AddWithValue(":p_id", stage.p_id);
             command.Parameters.AddWithValue(":s_name", stage.s_name);
             command.Parameters.AddWithValue(":pxs_status", stage.pxs_status);

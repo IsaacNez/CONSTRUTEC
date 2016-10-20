@@ -5,11 +5,11 @@ using System.Web;
 
 namespace ConstructionCore.Models
 {
-    public class Product
+    public class stagexproduct
     {
+        public string s_name { get; set; }
         public int pr_id { get; set; }
-        public string pr_description { get; set; }
-        public string pr_name { get; set; }
+        public int p_id { get; set; }
         public int pr_price { get; set; }
         public int pr_quantity { get; set; }
     }

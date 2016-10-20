@@ -18,6 +18,21 @@ namespace ConstructionCore.Controllers
         [ActionName("Get")]
         public JsonResult<List<Engineer>> Get(string attribute, string id)
         {
+            List<projstage> test = new List<projstage>();
+            projstage coso3 = new projstage();
+            coso3.s_name = "hola";
+            projstage coso2 = new projstage();
+            coso2.s_name = "hola3";
+            test.Add(coso3);
+            if (test.Contains(coso3))
+            {
+                System.Diagnostics.Debug.WriteLine(test.IndexOf(coso2));
+
+            }
+            else {
+                System.Diagnostics.Debug.WriteLine("no funca");
+
+            }
             Engineer eng = null;
             List<Engineer> values = new List<Engineer>();
             string[] attr = attribute.Split(',');
@@ -33,6 +48,7 @@ namespace ConstructionCore.Controllers
             var command = new NpgsqlCommand(action, myConnection);
             System.Diagnostics.Debug.WriteLine("print5");
             var coso = command.ExecuteReader();
+
             System.Diagnostics.Debug.WriteLine("print6");
             while (coso.Read())
             {
