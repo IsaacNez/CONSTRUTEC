@@ -189,9 +189,9 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>2049</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://desktop-6upj287:7575/</IISUrl>
+          <IISUrl>http://desktop-e6qptvt:7575/</IISUrl>
           <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
-          <IISAppRootUrl>http://desktop-6upj287:7575/</IISAppRootUrl>
+          <IISAppRootUrl>http://desktop-e6qptvt:7575/</IISAppRootUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

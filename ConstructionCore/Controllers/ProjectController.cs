@@ -57,7 +57,7 @@ namespace ConstructionCore.Controllers
             myConnection.ConnectionString = System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
             System.Diagnostics.Debug.WriteLine("print3");
             System.Diagnostics.Debug.WriteLine("cargo base");
-            string test = "INSERT INTO project(p_id,p_location,p_name, p_budget, u_code, u_id) Values(:p_id,:p_location,:p_name,:p_budget,:u_code, :u_id)";
+            string test = "INSERT INTO project(p_location,p_name, u_code, u_id) Values(:p_location,:p_name,:u_code, :u_id)";
 
             var command = new NpgsqlCommand(test, myConnection);
             command.CommandType = CommandType.Text;
@@ -66,11 +66,8 @@ namespace ConstructionCore.Controllers
 
             System.Diagnostics.Debug.WriteLine("generando comando");
 
-
-            command.Parameters.AddWithValue(":p_id", proj.p_id);
             command.Parameters.AddWithValue(":p_location", proj.p_location);
             command.Parameters.AddWithValue(":p_name", proj.p_name);
-            command.Parameters.AddWithValue("p_budget", proj.p_budget);
             command.Parameters.AddWithValue("u_code", proj.u_code);
             command.Parameters.AddWithValue("u_id", proj.u_id);
             myConnection.Open();
