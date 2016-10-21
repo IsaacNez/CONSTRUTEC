@@ -12,6 +12,7 @@ using System.Web.Http.Results;
 using System.Web.Http.Cors;
 namespace ConstructionCore.Controllers
 {
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class StagexproductController : ApiController
     {
         [HttpPost]

@@ -58,7 +58,7 @@ namespace ConstructionCore.Controllers
             myConnection.ConnectionString = System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
             System.Diagnostics.Debug.WriteLine("print3");
             System.Diagnostics.Debug.WriteLine("cargo base");
-            string test1 = "INSERT INTO EMPLOYEE(u_id,u_name,u_lname,u_phone,u_password, ) Values(:u_id,:u_name,:u_lname,:u_phone,:u_password)";
+
             string test = "insertuser";
             var command = new NpgsqlCommand(test, myConnection);
             command.CommandType = CommandType.StoredProcedure;

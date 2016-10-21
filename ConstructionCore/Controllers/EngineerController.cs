@@ -13,6 +13,7 @@ using System.Web.Http.Cors;
 
 namespace ConstructionCore.Controllers
 {
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class EngineerController : ApiController
     {
         [HttpGet]

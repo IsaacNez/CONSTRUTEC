@@ -13,6 +13,7 @@ using System.Web.Http.Cors;
 
 namespace ConstructionCore.Controllers
 {
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class ProjectController : ApiController
     {
 
@@ -75,8 +76,6 @@ namespace ConstructionCore.Controllers
 
             System.Diagnostics.Debug.WriteLine("print6");
 
-
-            command.ExecuteReader();
             myConnection.Close();
 
         }
