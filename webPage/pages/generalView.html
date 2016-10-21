@@ -62,19 +62,28 @@
 
                         <span class="glyphicon glyphicon-log-out form-control-feedback"></span>
             </div>
-                <a id="projectMaterial" role="button" data-toggle="modal" data-target="#stageMaterialModal" href="#">Show All Stages</a>  
+                 <a id="projectMaterial" role="button" data-toggle="modal" data-target="#commentModal" href="#">Show All Comments</a>  
             <div class="box-body" style="margin: 20px 0px 0px 0px;">              
 
                 <div align="center" class="col span_1_of_1 table-responsive" style=" margin: 0px 0px 0px 0px;"> 
                         <table id="tableProject" class="table table-bordered table-striped">
                         <thead>
-                            <tr >    
-                                <th  >
-                                    <h4><b>ID</b>
+                            <tr onclick="getId(this)">    
+                                 
+                                <th style="display:none;" >
+                                    <h4><b>Project ID</b>
+                                    </h4>
+                                </th>
+                                <th style="display:none;" >
+                                    <h4><b>User ID</b>
                                     </h4>
                                 </th>
                                 <th  >
-                                    <h4><b>Name</b>
+                                    <h4><b>Client</b>
+                                    </h4>
+                                </th>
+                                <th  >
+                                    <h4><b>Phone</b>
                                     </h4>
                                 </th>
                                 
@@ -83,34 +92,39 @@
                                     <span id="value" class=""></span></h4>
                                 </th>
                                  <th  >
-                                    <h4><b>Client Name</b>
+                                    <h4><b>Stage</b>
                                     </h4>
                                 </th>
-                                 <th  >
-                                    <h4><b>Client Phone</b>
+                                <th  >
+                                    <h4><b>Start Date</b>
                                     </h4>
                                 </th>
                                 <th> 
-                                    <h4><b> Stages </b>
+                                    <h4><b> Comments </b>
                                     <span id="value" class=""></span></h4>
-                                </th>      
+                                </th> 
+                                
                             </tr>
                         </thead>
 
                         <tbody>
                     
                               <tr ng-repeat="item in projectlist">  
-                                <td>item.P_ID</td>
-                                <td>item.P_Name</td>
-                                <td>item.P_Location</td>
-                                <td>item.U_Name</td>
-                                <td>item.U_Phone</td>
+                                 
+                                <td  style="display:none;">item.gcs_pid</td>
+                                <td  style="display:none;">item.gcs_uid</td>
+                                <td>item.gcs_uname</td>
+                                <td>item.gcs_uphone</td>
+                                <td>item.gcs_plocation</td>
+                                <td>item.gcs_sname</td>
+                                <td>item.gcs_datestart</td>
+                              
                                
                            
                                 <td>
                                     <div  align="center" class="btn-group">    
-                                        <a data-toggle="tooltip" title="Stage Information">
-                                            <a id="projectMaterial" role="button" data-toggle="modal" data-target="#stageMaterialModal" href="#">Show All Stages</a>                                         
+                                        <a data-toggle="tooltip" title="Comment Information">
+                                             <a onclick="getId(this)" id="projectMaterial" role="button" data-toggle="modal" data-target="#commentModal" href="#">Show All Comments</a>                                        
                                         </a>
                                         
                                     </div>
@@ -137,165 +151,7 @@
 
 
          
-<div id="stageMaterialModal"  ng-controller="stageMaterialCtrl" style="overflow-y: scroll;" class="modal fade" role="dialog" style="z-index: 1400;"  > 
-  <!-- Modal content -->s
-  <div class="modal-content">
-    <div class="modal-header">
-      <span id="close2" class="close">×</span>
-      <h2> Stages Management</h2>
-    </div>
-    <div class="modal-body">
-            
-            <div class="box-body" style="margin: 20px 0px 0px 0px;">          
-            <a id="addStageMaterial" role="button" data-toggle="modal" data-target="#commentModal" href="#">Show All Comments</a> 
-                
-            <a id="addStageMaterial" role="button" data-toggle="modal" data-target="#productModal" href="#">Show All Products</a>
-             
-                <div align="center" class="col span_1_of_1 table-responsive" style=" margin: 0px 0px 0px 0px;"> 
-                        <table id="tableStage" class="table table-bordered table-striped">
-                        <thead>
-                            <tr onclick="getIndex(this)">    
-                                <th>
-                                    <h4><b>ID</b>
-                                    </h4>
-                                </th>  
-                                <th >
-                                    <h4><b>Name</b>
-                                    </h4>
-                                    
-                                </th> 
-                                 <th >
-                                    <h4><b>Decription</b>
-                                    </h4>
-                                    
-                                </th>
-                                <th  >
-                                    <h4><b>Start Date</b>
-                                    </h4>
-                                </th> 
-                                 <th  >
-                                    <h4><b>End Date</b>
-                                    </h4>
-                                </th> 
-                                 <th  >
-                                    <h4><b>Status</b>
-                                    </h4>
-                                </th>
-                                <th> 
-                                    <h4><b> Products </b>
-                                    <span id="value" class=""></span></h4>
-                                </th> 
-                                <th> 
-                                    <h4><b> Comments </b>
-                                    <span id="value" class=""></span></h4>
-                                </th>      
-                            </tr>
-                        </thead>
 
-                        <tbody>
-                    
-                              <tr ng-repeat="item in stageList">  
-                                <td>item.PXS_ID</td>
-                                <td>item.S_Name</td>
-                                <td>item.S_Description</td>
-                                <td>item.PXS_DateStart</td>
-                                <td>item.PXS_DateEnd</td>
-                                <td>item.PXS_Status</td>
-                           
-                                <td>
-                                    <div  align="center" class="btn-group">    
-                                        <a data-toggle="tooltip" title="Products Information">
-
-                                              <a id="addStageMaterial" role="button" data-toggle="modal" data-target="#productModal" href="#">Show All Products</a>  
-                                        </a>
-                                        
-                                    </div>
-                                </td>
-                                  <td>
-                                    <div  align="center" class="btn-group">    
-                                        <a data-toggle="tooltip" title="Comments Information">
-
-                                              <a id="addStageMaterial" role="button" data-toggle="modal" data-target="#commentModal" href="#">Show All Comments</a>  
-                                        </a>
-                                        
-                                    </div>
-                                </td>
-        
-                            </tr>
-                        </tbody>
-
-
-                    </table>
-                    </div>
-            </div>
-
-            </div>
-</div>     
-   
-            </div>
-            
-    
-<div id="productModal"  ng-controller="productCtrl" style="overflow-y: scroll;" class="modal fade" role="dialog" style="z-index: 1400;"  > 
-  <!-- Modal content -->s
-  <div class="modal-content">
-    <div class="modal-header">
-      <span id="close3" class="close">×</span>
-      <h2> Products</h2>
-    </div>
-    <div class="modal-body">
-            <div class="box box boxP" id="reward">
-
-             
-            <div class="box-body" style="margin: 20px 0px 0px 0px;">              
-
-                <div align="center" class="col span_1_of_1 table-responsive" style=" margin: 0px 0px 0px 0px;"> 
-                        <table id="tableProduct" class="table table-bordered table-striped">
-                        <thead>
-                            <tr >    
-                                <th  >
-                                    <h4><b>ID</b>
-                                    </h4>
-                                </th>
-                                <th  >
-                                    <h4><b>Name</b>
-                                    </h4>
-                                </th>
-                                
-                                <th >
-                                    <h4><b>Price</b>
-                                    </h4>
-                                </th>
-                                 <th  >
-                                    <h4><b>Quantity</b>
-                                    </h4>
-                                </th>
-                                    
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                    
-                              <tr ng-repeat="item in productlist">  
-                                <td>item.PR_ID</td>
-                                <td>item.PR_Name</td>
-                                <td>item.PR_Price</td>
-                                <td>item.PR_Quantity</td>
-                            </tr>
-                        </tbody>
-
-
-                    </table>
-                    </div>
-            </div>
-
-            </div>
-</div>     
-   
-            </div>
-            
-                   
-  
-  </div>
     
  <div id="commentModal" class="modal" ng-controller="commentCtrl" style="overflow-y: scroll;">
   <!-- Modal content -->
@@ -328,8 +184,7 @@
                         <div class="hcb-shadow-tr"></div> 
                         </div> 
                         
-                        <!-- Comment box where the user insert the name --->
-                        <div class="hcb-shadow-m"><input id="hcb_form_name" ng-model="C_Name" class="hcb-shadow-r" name="name" type="text" value="" placeholder="Name"></div> <div class="hcb-shadow-b"> <div class="hcb-shadow-bl"></div> <div class="hcb-shadow-br"></div> </div><div class="hcb-shadow-clear"></div> </div><div class="hcb-wrapper"><div class="hcb-shadow-t"> <div class="hcb-shadow-tl"></div> <div class="hcb-shadow-tr"></div> </div> 
+                     </div><div class="hcb-wrapper">
                     <div class="hcb-shadow-m">
                         
                         <!-- Comment box where the user insert the comments about the stage from the project --->
@@ -343,7 +198,7 @@
                     <div><input class="submit btn" id="hcb_submit" ng-click="addComment()" type="submit" value="Comment">&nbsp;<span class="home-desc" style="font-size:10px">&nbsp;</span></div>
                     
                     <!-- Show all comments from the data base --->
-                    <div class="comment" ng-repeat="item in commentlist " id="comment_11251793"><span class="date">(within the last minute) </span><span class="author"><b class="author-name">{{item.C_Name}} </b> said:</span> <blockquote>{{item.C_Description}}  </blockquote><p class="hcb-comment-tb"><a class="hcb-flag" href="javascript:hcb.flag('11251793')"><img src="//www.htmlcommentbox.com/static/images/flag.png"> flag</a> <a class="hcb-like" href="javascript:hcb.like('11251793')"><img src="//www.htmlcommentbox.com/static/images/like.png"> like</a> <a class="hcb-reply" href="javascript:hcb.reply('11251793')"><img src="//www.htmlcommentbox.com/static/images/reply.png"> reply</a> </p><div class="likes" style="display:none"><span>0 </span><img src="//www.htmlcommentbox.com/static/images/like.png"></div></div>
+                    <div class="comment" ng-repeat="item in commentlist " id="comment_11251793"><span class="date">(within the last minute) </span><blockquote>{{item.gcs_cdescription}}  </blockquote><p class="hcb-comment-tb"><a class="hcb-flag" href="javascript:hcb.flag('11251793')"><img src="//www.htmlcommentbox.com/static/images/flag.png"> flag</a> <a class="hcb-like" href="javascript:hcb.like('11251793')"><img src="//www.htmlcommentbox.com/static/images/like.png"> like</a> <a class="hcb-reply" href="javascript:hcb.reply('11251793')"><img src="//www.htmlcommentbox.com/static/images/reply.png"> reply</a> </p><div class="likes" style="display:none"><span>0 </span><img src="//www.htmlcommentbox.com/static/images/like.png"></div></div>
                     
                     
                 </form></div>
