@@ -61,7 +61,7 @@ namespace ConstructionCore.Controllers
                             product.p_quantity = (int)coso["gpd_quantity"];
                             proj.stages.ElementAt(z).products.Add(product);
                         }
-                        else if(proj.stages.ElementAt(z).s_name != stag.s_name)
+                        else if(proj.stages.ElementAt(z).s_name != stag.s_name && z==proj.stages.Count-1)
                         {
                             proj.stages.Add(stag);
                             int i = proj.stages.IndexOf(stag);
@@ -71,7 +71,8 @@ namespace ConstructionCore.Controllers
                             product.p_quantity = (int)coso["gpd_quantity"];
                             proj.stages.ElementAt(i).products.Add(product);
                         }
-                    }                   
+                    } 
+                                      
                 }
                 else if(proj.stages.Count==0)
                 {
