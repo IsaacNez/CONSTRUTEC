@@ -11,10 +11,12 @@ using System.Text;
 using System.Web.Http.Results;
 using System.Web.Http.Cors;
 
+
 namespace ConstructionCore.Controllers
 {
     [EnableCors(origins: "*", headers: "*", methods: "*")]
-    public class GeneraluserController : ApiController
+
+    public class CostumerserviceprodController : ApiController
     {
         [HttpGet]
         [ActionName("Get")]
@@ -31,40 +33,27 @@ namespace ConstructionCore.Controllers
             System.Diagnostics.Debug.WriteLine("print3");
             System.Diagnostics.Debug.WriteLine("cargo base");
             myConnection.Open();
-            string test = "";
-            if (ids.Length <= 1)
-            {
-                test = "select * from getcustomerservicebydate('" + ids[0] + "');";
-                System.Diagnostics.Debug.WriteLine(test);
-
-            }
-            else
-            {
-                test = "select * from getcustomerservicebyproductanddate('" + ids[0] + "','" + ids[1] + "');";
-                System.Diagnostics.Debug.WriteLine(test);
-
-
-            }
+            string test = "select * from getcustomerservicebyproductanddate('" + ids[0] + "','" + ids[1] + "');";
+            System.Diagnostics.Debug.WriteLine(test);
 
             var command = new NpgsqlCommand(test, myConnection);
             var coso = command.ExecuteReader();
             System.Diagnostics.Debug.WriteLine("print6");
+            
             while (coso.Read())
             {
+                System.Diagnostics.Debug.WriteLine((DateTime)coso["csp_datestart"]);
+
                 cu = new generaluser();
+                cu.gcs_datestart = (DateTime)coso["csp_datestart"];
 
-                System.Diagnostics.Debug.WriteLine((DateTime)coso["gcs_datestart"]);
+                cu.gcs_pid = (int)coso["csp_pid"];
 
-
-                cu.gcs_datestart = (DateTime)coso["gcs_datestart"];
-
-                cu.gcs_pid = (int)coso["gcs_pid"];
-
-                cu.gcs_plocation = (string)coso["gcs_plocation"];
-                cu.gcs_sname = (string)coso["gcs_sname"];
-                cu.gcs_uid = (int)coso["gcs_uid"];
-                cu.gcs_uname = (string)coso["gcs_uname"];
-                cu.gcs_uphone = (int)coso["gcs_uphone"];
+                cu.gcs_plocation = (string)coso["csp_plocation"];
+                cu.gcs_sname = (string)coso["csp_sname"];
+                cu.gcs_uid = (int)coso["csp_uid"];
+                cu.gcs_uname = (string)coso["csp_uname"];
+                cu.gcs_uphone = (int)coso["csp_uphone"];
                 values.Add(cu);
             }
 
