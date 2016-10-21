@@ -1,33 +1,13 @@
 var index;
-function  getIndex(element) {
-    alert(" row " + element.rowIndex);
-    index = element.rowIndex;
-    var temp = document.getElementById("tableStage").rows[index].cells[0].innerHTML;
-    alert(temp);
-    alert(temp.substring(temp.lastIndexOf("<b>")+1,temp.lastIndexOf("</b>")));
-    alert(document.getElementById("tableStage").rows[index].cells[0].innerHTML);
-    alert(document.getElementById("tableStage").rows[0].cells[0].innerHTML);
-    
-}
+var Pid;
+var Uid;
+var Sname;
+
+
+
 var stageForm = angular.module('generalView',[])
-.controller('projectCtrl', ['$scope', '$http', function ($scope, $http) {
-    
-    var url = 'http://desktop-6upj287:7249';
-    // get ingenieers and architects from DB
-    var Users;
-
-    // get ingenieers and architects from DB
-    $http.get($scope.url+'/api/dbUser/undefined')
-            .then( function (response) {    
-              $scope.Users = response.data;           
-        });
-    
-   
-}]);
-
-stageForm =  angular.module('generalView')
 .controller('projectMaterialCtrl', ['$scope', '$http', function ($scope, $http) {
-        var url = 'http://isaac:7549';
+         
      
        
         
@@ -53,16 +33,30 @@ stageForm =  angular.module('generalView')
                 
             }
         }
-       
         
-        $http.get($scope.url+'/api/Project/get')
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth()+1; //January is 0!
+        var yyyy = today.getFullYear();
+        // if the day have one digit return like 9 or 8 ect, so add it 0 to return 09 and 08
+        if(dd<10) {
+            dd='0'+dd
+        } 
+        // if the same soution about the day
+        if(mm<10) {
+            mm='0'+mm
+        } 
+
+        today = yyyy+'-'+mm+'-'+dd;
+        
+        $http.get('http://desktop-6upj287:7575/api/Generaluser/get/date/'+today)
         .then( function (response) {
         $scope.projectlist = response.data;
         });
     
     
         $scope.getProjectByMaterial= function (){
-            $http.get($scope.url+'/api/Project/get/P_Name/' + $scope.S_Name)
+            $http.get('http://desktop-6upj287:7575//api/Generaluser/get/date,pr_name/'+today+","+$scope.S_Name)
             .then( function (response) {
             $scope.projectlist = response.data;
             });
@@ -75,90 +69,11 @@ stageForm =  angular.module('generalView')
 
 
 
-stageForm =  angular.module('generalView')
-.controller('stageMaterialCtrl', ['$scope', '$http', function ($scope, $http) {
-        var url = 'http://isaac:7549';
-     
-       
-        
-        // Get the modal
 
-        var modalStageMaterial = document.getElementById('stageMaterialModal');
-        var stageMaterial = document.getElementById("addStageMaterial");
-        var span2 = document.getElementById("close2");
-    
-        stageMaterial.onclick = function() {
-            modalStageMaterial.style.display = "block";
-        }
-
-        // When the user clicks on <span> (x), close the modal
-        span2.onclick = function() {
-            modalStageMaterial.style.display = "none";
-        }
-
-        // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function(event) {
-            if (event.target == modalStageMaterial) {
-                modalStageMaterial.style.display = "none";
-                
-            }
-        }
-        
-        $http.get($scope.url+'/api/Project/get/P_Name')
-        .then( function (response) {
-        $scope.ProjectList = response.data;
-        });
-    
-    
-        $scope.getStages = function (){
-            console.log("Updating");
-            $http.get('http://desktop-6upj287:7249/api/stage/get/'+$scope.S_Name)
-                .then( function (response) {
-                $scope.stageList = response.data;
-             });
-        }
-
-       
-              
-       
-}]);
-
-stageForm =  angular.module('generalView')
-.controller('productCtrl', ['$scope', '$http', function ($scope, $http) {
-        var url = 'http://isaac:7549';
-     
-       
-        
-        // Get the modal
-
-        var product = document.getElementById('productModal');
-        var span3 = document.getElementById("close3");
-    
-       
-
-        // When the user clicks on <span> (x), close the modal
-        span3.onclick = function() {
-            product.style.display = "none";
-        }
-
-        // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function(event) {
-            if (event.target == product) {
-                product.style.display = "none";
-                
-            }
-        }
-        
-     $http.get($scope.url+'/api/Product/get')
-                .then( function (response) {    
-                  $scope.productlist = response.data;           
-            });
-      
-}]);
 
 stageForm =  angular.module('generalView')
 .controller('commentCtrl', ['$scope', '$http', function ($scope, $http) {
-        var url = 'http://isaac:7549';
+       
      
        
         
@@ -182,19 +97,36 @@ stageForm =  angular.module('generalView')
             }
         }
         
-     $http.get($scope.url+'/api/dbComment/get')
+     function  getId(element) {
+                alert(" row " + element.rowIndex);
+                index = element.rowIndex;
+                Pid = document.getElementById("tableProject").rows[index].cells[0].innerHTML;
+                Uid = document.getElementById("tableProject").rows[index].cells[1].innerHTML;
+                Sname = document.getElementById("tableProject").rows[index].cells[5].innerHTML;
+                alert(Pid);
+                alert(Uid);
+                alert(Sname);
+          $http.get('http://desktop-6upj287:7575//api/dbComment/get/p_id/u_id/s_name/'+Pid+"/"+Uid+"/"+Sname)
                 .then( function (response) {    
                   $scope.commentlist = response.data;           
             });
+         
+    
+}
+
+        
+    
 
         $scope.addComment = function () {
             var Comment = { 
-                "C_Name": $scope.C_Name,
-                "C_Description": $scope.C_Description,
+                "p_id": Pid,
+                "u_id": Uid,
+                "s_name": Sname,
+                "c_description": $scope.C_Description
                 
 
             }
-            console.log(Comment); $http.post('http://isaac:7549/api/dbComment/post',Comment).
+            console.log(Comment); $http.post('http://desktop-6upj287:7575//api/dbComment/post/',Comment).
             success(function (data, status, headers, config) {
                 alert('Comment has been posted');
             }).
