@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>EMPLOYEES</title>
+  <title>GENERAL USER</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="/angular-1.5.8/angular.js"></script>
@@ -62,7 +62,11 @@
 
                         <span class="glyphicon glyphicon-log-out form-control-feedback"></span>
             </div>
-                 <a id="projectMaterial" role="button" data-toggle="modal" data-target="#commentModal" href="#">Show All Comments</a>  
+                 
+             <a onclick="setIndex(this)" id="projectMaterial" role="button" data-toggle="modal" data-target="#commentModal" href="#">Show All Comments</a>                                        
+                                     
+                                        
+                              
             <div class="box-body" style="margin: 20px 0px 0px 0px;">              
 
                 <div align="center" class="col span_1_of_1 table-responsive" style=" margin: 0px 0px 0px 0px;"> 
@@ -88,8 +92,8 @@
                                 </th>
                                 
                                 <th >
-                                    <h4><b>Location</b>
-                                    <span id="value" class=""></span></h4>
+                                    <h4><b>Location</b> </h4>
+                                  
                                 </th>
                                  <th  >
                                     <h4><b>Stage</b>
@@ -99,9 +103,13 @@
                                     <h4><b>Start Date</b>
                                     </h4>
                                 </th>
+                                 <th  >
+                                    <h4><b>Status</b>
+                                    </h4>
+                                </th>
                                 <th> 
-                                    <h4><b> Comments </b>
-                                    <span id="value" class=""></span></h4>
+                                    <h4><b> Comments </b> </h4>
+                                  
                                 </th> 
                                 
                             </tr>
@@ -111,20 +119,21 @@
                     
                               <tr ng-repeat="item in projectlist">  
                                  
-                                <td  style="display:none;">item.gcs_pid</td>
-                                <td  style="display:none;">item.gcs_uid</td>
-                                <td>item.gcs_uname</td>
-                                <td>item.gcs_uphone</td>
-                                <td>item.gcs_plocation</td>
-                                <td>item.gcs_sname</td>
-                                <td>item.gcs_datestart</td>
+                                <td  style="display:none;">{{item.gcs_pid}}</td>
+                                <td  style="display:none;">{{item.gcs_uid}}</td>
+                                <td>{{item.gcs_uname}}</td>
+                                <td>{{item.gcs_uphone}}</td>
+                                <td>{{item.gcs_plocation}}</td>
+                                <td>{{item.gcs_sname}}</td>
+                                <td>{{item.gcs_datestart}}</td>
+                                <td contenteditable='true'>{{item.gcs_status}}</td>
                               
-                               
+                              
                            
                                 <td>
                                     <div  align="center" class="btn-group">    
                                         <a data-toggle="tooltip" title="Comment Information">
-                                             <a onclick="getId(this)" id="projectMaterial" role="button" data-toggle="modal" data-target="#commentModal" href="#">Show All Comments</a>                                        
+                                             <a onclick="setIndex(this)" id="projectMaterial" role="button" data-toggle="modal" data-target="#commentModal" href="#">Show All Comments</a>                                        
                                         </a>
                                         
                                     </div>
