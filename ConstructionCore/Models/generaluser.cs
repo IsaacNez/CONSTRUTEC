@@ -9,6 +9,7 @@ namespace ConstructionCore.Models
     {
         public int gcs_pid { get; set; }
         public int gcs_uid { get; set; }
+        public string gcs_status { get; set; }
         public string gcs_uname { get; set; }
         public int gcs_uphone { get; set; }
         public string gcs_plocation { get; set; }

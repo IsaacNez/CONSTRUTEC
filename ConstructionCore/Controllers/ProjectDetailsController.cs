@@ -32,62 +32,66 @@ namespace ConstructionCore.Controllers
             System.Diagnostics.Debug.WriteLine("cargo base");
             string test = "select * from getprojectdetails(" + ids[0] + ");";
             System.Diagnostics.Debug.WriteLine(test);
-            var command = new NpgsqlCommand(test, myConnection);
-            myConnection.Open();
-            var coso = command.ExecuteReader();
-            proj = new ProjectDetails();
-            while (coso.Read())
-            {
-                proj.gpd_id = (int)coso["gpd_id"];
-                proj.gpd_name = (string)coso["gpd_name"];
-                proj.gpd_location = (string)coso["gpd_location"];
-                proj.gpd_engineer = (int)coso["gpd_engineer"];
-                proj.gpd_owner = (int)coso["gpd_owner"];
-                projstage stag = new projstage();
-                stag.s_name = (string)coso["gpd_sname"];
-                stag.s_datestart = (DateTime)coso["gpd_datestart"];
-                stag.s_dateend = (DateTime)coso["gpd_dateend"];
-                stag.s_status = (String)coso["gpd_status"];
-                if (proj.stages.Count !=0)
+            
+                var command = new NpgsqlCommand(test, myConnection);
+                myConnection.Open();
+                var coso = command.ExecuteReader();
+                proj = new ProjectDetails();
+                while (coso.Read())
                 {
-                    for (int z = 0; z < proj.stages.Count; z++)
+                    proj.gpd_id = (int)coso["gpd_id"];
+                    proj.gpd_name = (string)coso["gpd_name"];
+                    proj.gpd_location = (string)coso["gpd_location"];
+                    proj.gpd_engineer = (int)coso["gpd_engineer"];
+                    proj.gpd_owner = (int)coso["gpd_owner"];
+                    projstage stag = new projstage();
+                    stag.s_name = (string)coso["gpd_sname"];
+                    stag.s_datestart = (DateTime)coso["gpd_datestart"];
+                    stag.s_dateend = (DateTime)coso["gpd_dateend"];
+                    stag.s_status = (String)coso["gpd_status"];
+                    if (proj.stages.Count != 0)
                     {
-                        if (proj.stages.ElementAt(z).s_name == stag.s_name)
+                        for (int z = 0; z < proj.stages.Count; z++)
                         {
-                            System.Diagnostics.Debug.WriteLine("entro al true");
-                            prodstage product = new prodstage();
-                            product.p_id = (int)coso["gpd_pid"];
-                            product.p_price = (int)coso["gpd_price"];
-                            product.p_quantity = (int)coso["gpd_quantity"];
-                            proj.stages.ElementAt(z).products.Add(product);
+                            if (proj.stages.ElementAt(z).s_name == stag.s_name)
+                            {
+                                System.Diagnostics.Debug.WriteLine("entro al true");
+                                prodstage product = new prodstage();
+                                product.p_id = (int)coso["gpd_pid"];
+                                product.p_price = (int)coso["gpd_price"];
+                                product.p_quantity = (int)coso["gpd_quantity"];
+                                proj.stages.ElementAt(z).products.Add(product);
+                            }
+                            else if (proj.stages.ElementAt(z).s_name != stag.s_name && z == proj.stages.Count - 1)
+                            {
+                                proj.stages.Add(stag);
+                                int i = proj.stages.IndexOf(stag);
+                                prodstage product = new prodstage();
+                                product.p_id = (int)coso["gpd_pid"];
+                                product.p_price = (int)coso["gpd_price"];
+                                product.p_quantity = (int)coso["gpd_quantity"];
+                                proj.stages.ElementAt(i).products.Add(product);
+                            }
                         }
-                        else if(proj.stages.ElementAt(z).s_name != stag.s_name && z==proj.stages.Count-1)
-                        {
-                            proj.stages.Add(stag);
-                            int i = proj.stages.IndexOf(stag);
-                            prodstage product = new prodstage();
-                            product.p_id = (int)coso["gpd_pid"];
-                            product.p_price = (int)coso["gpd_price"];
-                            product.p_quantity = (int)coso["gpd_quantity"];
-                            proj.stages.ElementAt(i).products.Add(product);
-                        }
-                    } 
-                                      
+
+                    }
+                    else if (proj.stages.Count == 0)
+                    {
+                        System.Diagnostics.Debug.WriteLine("entro al false");
+                        proj.stages.Add(stag);
+                        int i = proj.stages.IndexOf(stag);
+                        prodstage product = new prodstage();
+                        product.p_id = (int)coso["gpd_pid"];
+                        product.p_price = (int)coso["gpd_price"];
+                        product.p_quantity = (int)coso["gpd_quantity"];
+                        proj.stages.ElementAt(i).products.Add(product);
+                    }
                 }
-                else if(proj.stages.Count==0)
-                {
-                    System.Diagnostics.Debug.WriteLine("entro al false");
-                    proj.stages.Add(stag);
-                    int i = proj.stages.IndexOf(stag);
-                    prodstage product = new prodstage();
-                    product.p_id = (int)coso["gpd_pid"];
-                    product.p_price = (int)coso["gpd_price"];
-                    product.p_quantity = (int)coso["gpd_quantity"];
-                    proj.stages.ElementAt(i).products.Add(product);
-                }
-            }
-            values.Add(proj);
-            myConnection.Close();
+                values.Add(proj);
+                myConnection.Close();
+
+            
+            
             return Json(values);
 
         }

@@ -33,17 +33,25 @@ namespace ConstructionCore.Controllers
             command.CommandType = CommandType.Text;
             System.Diagnostics.Debug.WriteLine("print5");
             System.Diagnostics.Debug.WriteLine("generando comando");
-            command.Parameters.AddWithValue(":p_id", stage.p_id);
-            command.Parameters.AddWithValue(":s_name", stage.s_name);
-            command.Parameters.AddWithValue(":pr_id", stage.pr_id);
-            command.Parameters.AddWithValue(":pr_price", stage.pr_price);
-            command.Parameters.AddWithValue(":pr_quantity", stage.pr_quantity);
-            
-            myConnection.Open();
-            command.ExecuteNonQuery();
-            System.Diagnostics.Debug.WriteLine("print6");
-            myConnection.Close();
+            try
+            {
+                command.Parameters.AddWithValue(":p_id", stage.p_id);
+                command.Parameters.AddWithValue(":s_name", stage.s_name);
+                command.Parameters.AddWithValue(":pr_id", stage.pr_id);
+                command.Parameters.AddWithValue(":pr_price", stage.pr_price);
+                command.Parameters.AddWithValue(":pr_quantity", stage.pr_quantity);
 
+                myConnection.Open();
+                command.ExecuteNonQuery();
+
+                System.Diagnostics.Debug.WriteLine("print6");
+                myConnection.Close();
+            }
+            catch (Npgsql.PostgresException)
+            {
+                System.Diagnostics.Debug.WriteLine("print6");
+
+            }
         }
     }
 }

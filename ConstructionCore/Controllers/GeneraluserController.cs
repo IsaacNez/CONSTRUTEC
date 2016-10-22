@@ -57,13 +57,12 @@ namespace ConstructionCore.Controllers
 
 
                 cu.gcs_datestart = (DateTime)coso["gcs_datestart"];
-
                 cu.gcs_pid = (int)coso["gcs_pid"];
-
                 cu.gcs_plocation = (string)coso["gcs_plocation"];
                 cu.gcs_sname = (string)coso["gcs_sname"];
                 cu.gcs_uid = (int)coso["gcs_uid"];
                 cu.gcs_uname = (string)coso["gcs_uname"];
+                cu.gcs_status = (string)coso["gcs_status"];
                 cu.gcs_uphone = (int)coso["gcs_uphone"];
                 values.Add(cu);
             }

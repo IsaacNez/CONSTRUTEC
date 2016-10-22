@@ -51,6 +51,7 @@ namespace ConstructionCore.Controllers
 
                 cu.gcs_plocation = (string)coso["csp_plocation"];
                 cu.gcs_sname = (string)coso["csp_sname"];
+                cu.gcs_status = (string)coso["csp_status"];
                 cu.gcs_uid = (int)coso["csp_uid"];
                 cu.gcs_uname = (string)coso["csp_uname"];
                 cu.gcs_uphone = (int)coso["csp_uphone"];
