@@ -2,9 +2,31 @@ var index;
 var Pid;
 var Uid;
 var Sname;
+var Status;
+var url= 'http://desktop-6upj287:7575';
+var element;
+function  getId() {
+                alert(" row " + element.rowIndex);
+                index = element.rowIndex;
+                Pid = document.getElementById("tableProject").rows[index].cells[0].innerHTML;
+                Uid = document.getElementById("tableProject").rows[index].cells[1].innerHTML;
+                Sname = document.getElementById("tableProject").rows[index].cells[5].innerHTML;
+                Status = document.getElementById("tableProject").rows[index].cells[7].innerHTML;
+                alert(Pid);
+                alert(Uid);
+                alert(Sname);
+                alert(Status);
+          
+         
+    
+}
 
-
-
+function  setIndex(pelement) {
+                element=pelement;
+          
+         
+    
+}
 var stageForm = angular.module('generalView',[])
 .controller('projectMaterialCtrl', ['$scope', '$http', function ($scope, $http) {
          
@@ -49,21 +71,34 @@ var stageForm = angular.module('generalView',[])
 
         today = yyyy+'-'+mm+'-'+dd;
         
-        $http.get('http://desktop-6upj287:7575/api/Generaluser/get/date/'+today)
+        $http.get(url+'/api/Generaluser/get/date/'+today)
         .then( function (response) {
         $scope.projectlist = response.data;
         });
     
     
         $scope.getProjectByMaterial= function (){
-            $http.get('http://desktop-6upj287:7575//api/Generaluser/get/date,pr_name/'+today+","+$scope.S_Name)
+            $http.get(url+'/api/Generaluser/get/date,pr_name/'+today+","+$scope.S_Name)
             .then( function (response) {
             $scope.projectlist = response.data;
             });
         }
 
-       
-              
+        function changeStatus(element){
+            getId(element);
+             var status = { 
+                "pxs_status": Status
+            }
+            console.log(status); $http.post(url+'/api/projectxstage/post/',status).
+            success(function (data, status, headers, config) {
+                alert('status has been changed');
+            }).
+            error(function (data, status, headers, config) {
+                alert('error changing status')
+            });
+        }
+
+           
        
 }]);
 
@@ -75,7 +110,14 @@ stageForm =  angular.module('generalView')
 .controller('commentCtrl', ['$scope', '$http', function ($scope, $http) {
        
      
-       
+        $scope.getComment= function() {
+             getId();
+             $http.get(url+'/api/dbComment/get/p_id,u_id,s_name/'+Pid+","+Uid+","+Sname)
+                .then( function (response) {    
+                  $scope.commentlist = response.data;           
+            });
+        }
+            
         
         // Get the modal
 
@@ -97,25 +139,11 @@ stageForm =  angular.module('generalView')
             }
         }
         
-     function  getId(element) {
-                alert(" row " + element.rowIndex);
-                index = element.rowIndex;
-                Pid = document.getElementById("tableProject").rows[index].cells[0].innerHTML;
-                Uid = document.getElementById("tableProject").rows[index].cells[1].innerHTML;
-                Sname = document.getElementById("tableProject").rows[index].cells[5].innerHTML;
-                alert(Pid);
-                alert(Uid);
-                alert(Sname);
-          $http.get('http://desktop-6upj287:7575//api/dbComment/get/p_id/u_id/s_name/'+Pid+"/"+Uid+"/"+Sname)
-                .then( function (response) {    
-                  $scope.commentlist = response.data;           
-            });
-         
-    
-}
 
         
-    
+            
+        
+       
 
         $scope.addComment = function () {
             var Comment = { 
@@ -126,7 +154,7 @@ stageForm =  angular.module('generalView')
                 
 
             }
-            console.log(Comment); $http.post('http://desktop-6upj287:7575//api/dbComment/post/',Comment).
+            console.log(Comment); $http.post(url+'/api/dbComment/post/',Comment).
             success(function (data, status, headers, config) {
                 alert('Comment has been posted');
             }).
