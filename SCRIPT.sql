@@ -229,9 +229,10 @@ returns table(
     gcs_uphone int,
     gcs_plocation varchar(255),
     gcs_datestart date,
+    gcs_status varchar(255),
     gcs_sname varchar(255)
 ) as
-'select prj.p_id,prj.u_id,dbu.u_name,dbu.u_phone,prj.p_location,pxs.pxs_datestart,pxs.s_name
+'select prj.p_id,prj.u_id,dbu.u_name,dbu.u_phone,prj.p_location,pxs.pxs_datestart,pxs.pxs_status,pxs.s_name
 from projectxstage as pxs left outer join project as prj on (pxs.p_id = prj.p_id) left outer join dbuser as dbu on (prj.u_id = dbu.u_id)
 where pxs_datestart - request_stageby <= 15::int'
 language 'sql';
@@ -247,9 +248,10 @@ returns table(
     csp_uphone int,
     csp_plocation varchar(255),
     csp_datestart date,
+    csp_status varchar(255),
     csp_sname varchar(255)
 )as
-'select distinct prj.p_id, dbu.u_id, dbu.u_name, dbu.u_phone, prj.p_location,pxs.pxs_datestart,pxs.s_name
+'select distinct prj.p_id, dbu.u_id, dbu.u_name, dbu.u_phone, prj.p_location,pxs.pxs_datestart,pxs.pxs_status,pxs.s_name
 from stagexproduct as sxp left outer join product as pr on (sxp.pr_id = pr.pr_id) left outer join projectxstage as pxs on (sxp.p_id = pxs.p_id)
 left outer join project as prj on (pxs.p_id = prj.p_id) left outer join dbuser as dbu on (prj.u_id = dbu.u_id)
 where (pxs.pxs_datestart -request_date <15) and  pr.pr_name ~* request_product;'
