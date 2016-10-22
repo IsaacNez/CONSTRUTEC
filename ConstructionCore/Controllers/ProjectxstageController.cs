@@ -67,7 +67,7 @@ namespace ConstructionCore.Controllers
             string action = "";
             if (id != "undefined")
             {
-                var need = new UserController();
+                var need = new ProjectController();
                 action = need.FormConnectionString("projectxstage", attr, ids);
             }
             else

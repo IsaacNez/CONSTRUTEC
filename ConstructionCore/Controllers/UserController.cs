@@ -110,17 +110,13 @@ namespace ConstructionCore.Controllers
             var coso = command.ExecuteReader();
             System.Diagnostics.Debug.WriteLine("print6");
             us = new RequestedUser();
-            while (coso.Read()) {
-                
-                us.q_id = (int)coso["q_id"];
-                
-                us.q_name = (string)coso["q_name"];
-                
+            while (coso.Read()) {             
+                us.q_id = (int)coso["q_id"];                
+                us.q_name = (string)coso["q_name"]; 
                 us.q_code = (int)coso["q_code"];
                 us.q_role.Add((int)coso["q_role"]);
                 values.Add(us);
-            }
-       
+            }       
             myConnection.Close();
             return Json(values);
 
