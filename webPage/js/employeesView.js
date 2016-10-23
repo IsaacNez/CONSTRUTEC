@@ -3,48 +3,41 @@ var actualStage;
 var stageForm = angular.module('employeeView',[])
 .controller('projectCtrl', ['$scope', '$http', function ($scope, $http) {
     
-    var url = 'http://desktop-6upj287:7249';
-    // get ingenieers and architects from DB
+
     var Users;
 
     // get ingenieers and architects from DB
-    $http.get($scope.url+'/api/dbUser/undefined')
+    $http.get('http://desktop-6upj287:7575/api/Engineer/get/getAll/getAll')
             .then( function (response) {    
               $scope.Users = response.data;           
         });
-    
-/*    var str = $scope.S_List; 
-    var str1= "stage1,stage2,stage3"
-    var prueba= str1.split(",");
-    console.log(prueba);   
-    var cuisines = ["Chinese","Indian"];     
+    var Clients;
 
-    var sel = document.getElementById('list');
-    for(var i = 0; i < cuisines.length; i++) {
-        var opt = document.createElement('h2');
-        opt.setAttribute("data-toggle","collapse");
-        opt.setAttribute("data-parent","#accordion");
-        opt.innerHTML = cuisines[i];
-        opt.value = cuisines[i];
-        sel.appendChild(opt);
-    }
-    console.log(prueba);  
-    */
+    // get ingenieers and architects from DB
+    $http.get('http://desktop-6upj287:7575/api/Client/get/getAll/getAll')
+            .then( function (response) {    
+              $scope.Clients = response.data;           
+        });
+    var mensaje;
+    $http.get('http://desktop-6upj287:7575/api/User/get/U_ID,U_Password/115610679,fockyou')
+            .then( function (response) {    
+              $scope.mensaje = response.data;           
+        });
+    console.log(mensaje);
 
-    $scope.createProject = function () {
+
+    $scope.createProject = function (pClient) {
          var Project = {
-            "P_ID": $scope.P_ID,
             "P_Name": $scope.P_Name,
             "P_Location": $scope.P_Location,
-            "P_Budget": 0,
-            "U_Code": $scope.U_Code,
-            "U_ID": $scope.U_ID
+            "U_ID": $scope.U_ID,
+            "U_code":pClient
                         }
         console.log(Project);
         
       
         
-        $http.post($scope.url+'/api/dbProject/post',Project).
+        $http.post('http://desktop-6upj287:7575/api/project/post',Project).
         success(function (data, status, headers, config) {
             alert('the new user has been posted!');
         }).
@@ -63,14 +56,27 @@ stageForm =  angular.module('employeeView')
         var productList;
         var products;
         var amounts; 
+    
+                             
+    
         $scope.getProduct = function (){
             console.log("Updating");
-            $http.get('http://desktop-6upj287:7249/api/product/get/'+$scope.PR_Name)
+            $http.get('http://desktop-6upj287:7575/api/Product/get/pr_name/'+$scope.PR_Name)
                 .then( function (response) {
                 $scope.productList = response.data;
              });
+                
         }
+        
+
+    
+
+            
+            
+            
+            
         $scope.addToCart = function (value1,value2){
+          
           
           if(products=="" && amounts=="" ){
               products=value1;
@@ -86,29 +92,29 @@ stageForm =  angular.module('employeeView')
       }
         $scope.addProducts = function(){
             var order;
-            order={
-              "PXS_ID": 0,
-              "P_ID": $scope.actualProject,
-              "S_Name": $scope.actualStage,
-              "PXS_DateStart":$scope.status,
-              "PXS_DateEnd":$scope.
-              "PXS_Status":
-              "PXS_Budget"
-              "Products": products,
-              "Amount": amounts,
-              
-              
-              }
-              console.log(order);
-              $http.post('http://desktop-6upj287:7249/api/projectxstage/post',order).
-              success(function (data, status, headers, config) {
-                alert('the new order has been posted!');
-               }).
-              error(function (data, status, headers, config) {
-                 alert('Error while posting the new order')
-            });
+            var PRList=products.split(",");
+            
+            
+            var AmountList= amounts.split(",");
+            
+            for(i = 1; i < PRList.length; i++){
+                        order={
+                              "P_ID": actualProject,
+                              "S_Name": actualStage,
+                              "PR_ID": PRList[i],
+                              "PR_Quantity": AmountList[i]
+                              }
+                              console.log(order);
+                              $http.post('http://desktop-6upj287:7575/api/stagexproduct/post',order).
+                              success(function (data, status, headers, config) {
+                                alert('the new order has been posted!');
+                               }).
+                              error(function (data, status, headers, config) {
+                                 alert('Error while posting the new order')
+                            });
 
             }
+        }
         
         
   
@@ -127,16 +133,15 @@ stageForm =  angular.module('employeeView')
          $scope.setStage=function(){
          var order;
             order={
-              "PXS_ID": 0,
-              "P_ID": $scope.actualProject,
-              "S_Name": $scope.actualStage,
+              "P_ID": actualProject,
+              "S_Name": actualStage,
               "PXS_DateStart":$scope.S_DateStart,
               "PXS_DateEnd":$scope.S_DateEnd,
               "PXS_Status": $scope.S_Status,
-              "PXS_Budget":0
+              "PXS_Budget":$scope.S_Budget
               }
               console.log(order);
-              $http.post('http://desktop-6upj287:7249/api/projectxstage/post',order).
+              $http.post('http://desktop-6upj287:7575/api/projectxstage/post',order).
               success(function (data, status, headers, config) {
                 alert('the new order has been posted!');
                }).
@@ -177,7 +182,7 @@ stageForm =  angular.module('employeeView')
         var modalStages = document.getElementById('stageModal');
         var modalProject = document.getElementById('projectModal');
         var modalStageProject = document.getElementById('stageProjectModal');
-        var modalStageProduct = document.getElementById('stageProductModal');
+        //var modalStageProduct = document.getElementById('stageProductModal');
         
     
         // Get the button that opens the modal
@@ -185,7 +190,7 @@ stageForm =  angular.module('employeeView')
         var stage = document.getElementById("newStage");
         var project = document.getElementById("newProject");
         var stageProject = document.getElementById("addStage");
-        var stageProduct = document.getElementById("addMaterials");
+        //var stageProduct = document.getElementById("addMaterials");
        
     
         // Get the <span> element that closes the modal
@@ -193,7 +198,7 @@ stageForm =  angular.module('employeeView')
         var span2 = document.getElementById("close2");
         var span3 = document.getElementById("close3");
         var span4 = document.getElementById("close4");
-        var span5 = document.getElementById("close5");
+      //  var span5 = document.getElementById("close5");
         
     
         // When the user clicks the button, open the modal
@@ -260,21 +265,7 @@ stageForm =  angular.module('employeeView')
             }
         }
         
-        stageProduct.onclick = function() {
-            modalStageProduct.style.display = "block";
-        }
-
-        // When the user clicks on <span> (x), close the modal
-        span5.onclick = function() {
-            modalStageProduct.style.display = "none";
-        }
-
-        // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function(event) {
-            if (event.target == modalStageProduct) {
-                modalStageProduct.style.display = "none";
-            }
-        }
+       
        
 
 
@@ -284,18 +275,14 @@ stageForm =  angular.module('employeeView')
          console.log("DAAAAAAAAAM");
          var Stage = {
             "S_Name": $scope.S_Name,
-            "S_Description": $scope.S_Description,
-            "S_DateStart": $scope.S_DateStart,
-            "S_DateEnd": $scope.S_DateEnd,
-            "S_Status": $scope.S_Status,
-            "S_Budget": 0
-            
+            "S_Description": $scope.S_Description
+        
         }
         console.log(Stage);
         
       
         
-        $http.post($scope.url+'/api/deStage/post/',Stage).
+        $http.post('http://desktop-6upj287:7575/api/Stage/post/',Stage).
         success(function (data, status, headers, config) {
             alert('the new Stage has been posted!');
         }).
@@ -304,6 +291,8 @@ stageForm =  angular.module('employeeView')
         });
         
         
+     
+           
     }
   
 
@@ -323,7 +312,7 @@ stageForm = angular.module('employeeView')
    
     var rolelist;
     var stageList;
-    $http.get('http://desktop-6upj287:7249/api/dbRole/get/R_Name')
+    $http.get('http://desktop-6upj287:7575/api/dbRole/get/R_Name')
         .then( function (response) {
         $scope.rolelist = response.data;
      });
@@ -342,7 +331,7 @@ stageForm = angular.module('employeeView')
             "U_Password":$scope.U_Password
         }
         console.log(User); 
-        $http.post('http://desktop-6upj287:7249/api/User/post/',User).
+        $http.post('http://desktop-6upj287:7575/api/User/post/',User).
         success(function (data, status, headers, config) {
             alert('User has been posted');
         }).
@@ -367,12 +356,23 @@ stageForm =  angular.module('employeeView')
        var projects; 
        var stagesInProject; 
        var productsInStage; 
+        var projectList;
         var stageList; 
         // Get the modal
-
+        var bigJSON;
         var modalStageMaterial = document.getElementById('stageMaterialModal');
-        var stageMaterial = document.getElementById("addStageMaterial");
+      /*  var stageMaterial =  document.getElementById("addStageMaterials");
         var span6 = document.getElementById("close6");
+    
+    */
+    /////////////////////////////////////////////
+
+        var modalStageProduct = document.getElementById('stageProductModal');
+   /*     
+        var stageProduct = document.getElementById("addMaterials");
+       
+
+        var span5 = document.getElementById("close5");
     
         stageMaterial.onclick = function() {
             modalStageMaterial.style.display = "block";
@@ -390,36 +390,107 @@ stageForm =  angular.module('employeeView')
                 
             }
         }
+        
+        stageProduct.onclick = function() {
+            modalStageProduct.style.display = "block";
+        }
 
-        
-        $scope.editStage = funtion(){
+        // When the user clicks on <span> (x), close the modal
+        span5.onclick = function() {
+            modalStageProduct.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target == modalStageProduct) {
+                modalStageProduct.style.display = "none";
+            }
+        }
+
+  */      
+        $scope.editStage = function(item){
             actualProject = $scope.P_ID;
+            console.log("Project/"+actualProject);
+            actualStage=item.s_name;
+            console.log("Stage/"+actualStage);
         }
-        $scope.productStage = funtion(item){
-            actualStage=item.S_Name;
+    
+        
+        $scope.productStage = function(item){
+            actualStage=item.s_name;
+            console.log("Stage/"+actualStage);
         }
         
-        
+  /*      
         $http.get($scope.url+'/api/dbProject/get/R_Name')
         .then( function (response) {
         $scope.rolelist = response.data;
-        });
+        });*/
     
     
         $scope.getStages = function (){
             console.log("Updating");
-            $http.get('http://desktop-6upj287:7249/api/stage/get/'+$scope.S_Name)
+            $http.get('http://desktop-6upj287:7575/api/Stage/get/s_name/'+$scope.S_Name)
                 .then( function (response) {
                 $scope.stageList = response.data;
              });
         }
 
+   
+            
+            $http.get('http://desktop-6upj287:7575/api/Project/get/p_id/undefined')
+                .then( function (response) {
+                $scope.projectList = response.data;
+             });
+    
+            console.log(projectList);
+    
+        
+        
+       $scope.updateProject= function(){
+           $http.get('http://desktop-6upj287:7575/api/ProjectDetails/get/p_id/'+$scope.P_ID)
+                .then( function (response) {
+                $scope.bigJSON = response.data;
+             });
+            console.log(bigJSON);
+       }
        
-              
+        var mensaje2 = {};
+        var stagesxProject={};
+        var productxStage;
+    
+        $scope.getProjectDetails = function(){
+
+             $http.get('http://desktop-6upj287:7575/api/ProjectDetails/get/p_id/8')
+                    .then(function (response) {
+                                   mensaje2=response.data[0];
+                                   console.log(mensaje2);
+                                    $scope.stagesxProject   = mensaje2.stages; 
+                                    $scope.productxStage = stagesxProject.products
+                                    for(var x = 0; x < $scope.stagesxProject.length; x++){
+                                        $scope.stagesxProject[x] = JSON.parse($scope.stagesxProject[x]);
+                                        for(var y = 0; y < $scope.productxStage.length; y++){
+                                            $scope.productxStage[y] =  JSON.parse($scope.productxStage[y]);
+                                            
+                                        }
+                                        
+                                    }  
+  
+                                    console.log(mensaje2.gpd_name);
+                                    console.log(mensaje2.gpd_location);
+                                    console.log(mensaje2.gpd_enginner);
+                                    console.log(mensaje2.gpd_owner);
+                                    
+                 
+                                    
+                 
+                                    
+
+             } )}
        $scope.addStage = function () {
          console.log("DAAAAAAAAAM");
          var Stage = {
-            "S_Name": $scope.S_Name,
+            "S_Name": actualStage,
             "S_Description": $scope.S_Description,
             "S_DateStart": $scope.S_DateStart,
             "S_DateEnd": $scope.S_DateEnd,

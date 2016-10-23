@@ -179,11 +179,7 @@
                 <input id=P_Name type="text" ng-model="P_Name" class="form-control" placeholder="Name">
                 <span class="glyphicon glyphicon-user form-control-feedback"></span>
             </div>    
-           <div class="form-group has-feedback" style="margin: 20px 0px 0px 0px;">
-            <label for="P_ID" >Write a project ID</label>
-            <input id=P_ID type="number" ng-model="P_ID" class="form-control" placeholder="ID">
-                <span class="glyphicon glyphicon-link form-control-feedback"></span>
-            </div> 
+  
             <div class="form-group has-feedback" style="margin: 20px 0px 0px 0px;">
                 <label for="P_Location" >Write a project location</label>
                 <input id=P_Location type="text" ng-model="P_Location" class="form-control" placeholder="Location">
@@ -192,11 +188,17 @@
             <div class="form-group has-feedback" style="margin: 20px 0px 0px 0px;">
                 <label for="sel1">Select Engineer or Architect:</label>
                 <select type="text"  name="U_ID" ng-model="U_ID" placeholder="Select User" class="form-control" id="sel1" >
-                    <option ng-repeat="item in Users">{{item.U_ID}}</option>
+                    <option ng-repeat="item in Users">{{item.u_id}}</option>
+                </select>
+            </div>
+             <div class="form-group has-feedback" style="margin: 20px 0px 0px 0px;">
+                <label for="sel1">Select a Client:</label>
+                <select type="text"  name="C_ID" ng-model="C_ID" placeholder="Select User" class="form-control" id="sel1" >
+                    <option id="client" ng-repeat="item in Clients">{{item.u_id}}</option>
                 </select>
             </div>
             <div align="center">
-                <button  ng-click="createProject()" style="margin: 20px 20px 20px 20px; width:50%" type="submit" class="btn btn-primary btn-block btn-flat">Create Project</button>
+                <button  ng-click="createProject(client)" style="margin: 20px 20px 20px 20px; width:50%" type="submit" class="btn btn-primary btn-block btn-flat">Create Project</button>
             </div>   
       </div>
     </div>
@@ -224,6 +226,13 @@
                 <span class="glyphicon glyphicon-log-out form-control-feedback"></span>
             </div>
             <div class="form-group has-feedback" style="margin: 20px 0px 0px 0px;">
+            <label for="S_Budget">Write your Budget</label>
+            <input id=S_Budget type="number" min = "0" ng-model="S_Budget" class="form-control" placeholder="Your Budget">
+               
+                <span class="glyphicon glyphicon-usd"></span>
+            </div>
+        
+            <div class="form-group has-feedback" style="margin: 20px 0px 0px 0px;">
                 <label for="S_Status">Write a stage status</label>    
                 <input id=S_Status type="text" ng-model="S_Status" class="form-control" placeholder="Status">
                     <span class="glyphicon glyphicon-thumbs-up form-control-feedback"></span>
@@ -237,7 +246,7 @@
 
 </div>
 
-<div id="stageProductModal" class="modal fade"  role="dialog" style="z-index: 1600;"  ng-controller="stageProductCtrl" style="overflow-y: scroll;"   >
+<div id="stageProductModal" class="modal fade "  role="dialog" style="z-index: 1600;"  ng-controller="stageProductCtrl" style="overflow-y: scroll;"   >
   <!-- Modal content -->
   <div class="modal-content">
     <div class="modal-header"> 
@@ -260,14 +269,14 @@
                     <th style="width:15%">Add to Cart</th>
                     </thead>
                     <tbody>
-                        <!-- <tr ng-repeat="item in productList | orderBy:'PR_Name'">-->
-                        <tr >
-                            <td>{{item.PR_ID}}</td>
-                            <td>{{item.PR_Name}}</td>
-                            <td>{{item.PR_Description}}</td>
-                            <td>{{item.PR_Price}}</td>
+                        <tr ng-repeat="item in productList | orderBy:'PR_Name'">
+                        
+                            <td >{{item.pr_id}}</td>
+                            <td>{{item.pr_name}}</td>
+                            <td>{{item.pr_description}}</td>
+                            <td>{{item.pr_price}}</td>
                             <td><input type="number" min="0" ng-model="amount" >       
-                            <td><a class="btn btn-danger btn-xs" ng-click="addToCart(item.PR_ID,amount)">
+                            <td><a class="btn btn-danger btn-xs" ng-click="addToCart(item.pr_id,amount)">
                                         <span class="glyphicon glyphicon-expand"></span></a></td>
                         </tr>
                     </tbody>
@@ -295,8 +304,8 @@
     <div class="modal-body">
             <div class="form-group has-feedback" style="margin: 20px 0px 0px 0px;">
                 <label for="sel1">Select a Project</label>
-                <select type="text"  name="P_ID" ng-model="P_ID" placeholder="Select Project" class="form-control" id="P_ID" >
-                    <option ng-repeat="item in Projects">{{item.P_ID}}</option>
+                <select type="text" ng-model="P_ID"  name="P_ID" ng-change="getProjectDetails()" placeholder="Select Project" class="form-control" id="P_ID" >
+                    <option ng-repeat="item in projectList">{{item.p_id}}</option>
                 </select>
             </div>
             <div class="box box boxP" id="reward">
@@ -331,19 +340,19 @@
                         <tbody>
                             <!--
                               <tr ng-repeat="item in stageList"> -->
-                              <tr >  
-                                <td>item.S_Name</td>
-                                <td>item.S_Description</td>
+                              <tr ng-repeat="item in stageList">  
+                                <td>{{item.s_name}}</td>
+                                <td>{{item.s_description}}</td>
                            <!--       
                                 <td ng-if="i.state == 'false' "> --> 
                                 <td>
                                     <div  align="center" class="btn-group">    
                                         <a data-toggle="tooltip" title="Stage Information">
 
-                                            <button id="addStageMaterial" type="button" class="btn btn-info" data-toggle="modal"      data-target="#stageProjectModal" ng-click="editStage(item)"><i class="fa fa-question-circle" aria-hidden="true"></i></button>
+                                            <button id="stageInformation" type="button" class="btn btn-info" data-toggle="modal"      data-target="#stageProjectModal" ng-click="editStage(item)"><i class="fa fa-question-circle" aria-hidden="true"></i></button>
                                         </a>
                                         <a data-toggle="tooltip" title="Add Products">
-                                            <button id="addMaterials" type="button" class="btn btn-success" data-toggle="modal"      data-target="#stageProductModal" ng-click="productStage(item)"><i class="fa fa-plus-circle" aria-hidden="true"></i></button>
+                                            <button id="addMaterials" type="button" class="btn btn-success" data-toggle="modal"      data-target="#stageProductModal" ng-click="productStage()"><i class="fa fa-plus-circle" aria-hidden="true"></i></button>
                                         </a>
                                         <a data-toggle="tooltip" title="Create Stage">
                                             <button type="button" class="btn btn-primary" ng-click="createStage(i)"><i class="fa fa-check" aria-hidden="true"></i></button>
