@@ -132,6 +132,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\ClientController.cs" />
+    <Compile Include="Controllers\CommentController.cs" />
     <Compile Include="Controllers\CostumerserviceprodController.cs" />
     <Compile Include="Controllers\EngineerController.cs" />
     <Compile Include="Controllers\GeneraluserController.cs" />

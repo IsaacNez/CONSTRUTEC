@@ -27,7 +27,7 @@ namespace ConstructionCore.Controllers
             }
             if (attr.Length > 1)
             {
-                LogicalConnector = "AND";
+                LogicalConnector = " AND";
             }
             System.Diagnostics.Debug.WriteLine(attr.Length);
             for (int i = 0; i < attr.Length; i++)
@@ -35,12 +35,12 @@ namespace ConstructionCore.Controllers
                 System.Diagnostics.Debug.WriteLine(i);
                 if (i == (attr.Length - 1))
                 {
-                    ConnectionString = ConnectionString + attr[i] + " =" + ids[i] + ";";
+                    ConnectionString = ConnectionString + attr[i] + "=" + ids[i] + ";";
                     return ConnectionString;
                 }
                 else
                 {
-                    ConnectionString = ConnectionString + attr[i] + " =" + ids[i] + LogicalConnector + " ";
+                    ConnectionString = ConnectionString + attr[i] + "=" + ids[i] + LogicalConnector + " ";
                 }
 
             }
