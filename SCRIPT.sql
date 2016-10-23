@@ -179,7 +179,7 @@ create or replace function getuser(
     request_password varchar(255)
 )
 returns table(q_id int, q_name varchar(255), q_code int, q_role int) as
-'select use.u_id,use.u_name,(case when uxd.u_code is null then 0 else uxd.u_code::int end),uxr.r_id
+'select distinct use.u_id,use.u_name,(case when uxd.u_code is null then 0 else uxd.u_code::int end),uxr.r_id
 from dbuser as use left outer join userxrole as uxr on (use.u_id = uxr.u_id) left outer join userxplusdata as uxd on (use.u_id = uxd.u_id)
 where use.u_id = request_id and use.u_password =request_password;'
 language 'sql';
@@ -198,11 +198,13 @@ returns table(gpd_id int,
               gpd_datestart date,
               gpd_dateend date,
               gpd_status varchar(255),
+              gpd_budget int,
               gpd_pid int,
               gpd_price int,
               gpd_quantity int
              ) as
-             'select prj.p_id,
+             'select distinct 
+             		 prj.p_id,
              		 prj.p_name,
                      prj.p_location,
                      prj.u_code,
@@ -211,6 +213,7 @@ returns table(gpd_id int,
                      pxs.pxs_datestart,
                      pxs.pxs_dateend,
                      pxs.pxs_status,
+                     pxs.pxs_budget,
                      (case when sxp.pr_id is null then 0 else sxp.pr_id::int end),
                      (case when sxp.pr_price is null then 0 else sxp.pr_price::int end),
                      (case when sxp.pr_quantity is null then 0 else sxp.pr_quantity::int end)
@@ -232,7 +235,7 @@ returns table(
     gcs_status varchar(255),
     gcs_sname varchar(255)
 ) as
-'select prj.p_id,prj.u_id,dbu.u_name,dbu.u_phone,prj.p_location,pxs.pxs_datestart,pxs.pxs_status,pxs.s_name
+'select distinct prj.p_id,prj.u_id,dbu.u_name,dbu.u_phone,prj.p_location,pxs.pxs_datestart,pxs.pxs_status,pxs.s_name
 from projectxstage as pxs left outer join project as prj on (pxs.p_id = prj.p_id) left outer join dbuser as dbu on (prj.u_id = dbu.u_id)
 where pxs_datestart - request_stageby <= 15::int'
 language 'sql';
