@@ -434,6 +434,8 @@ stageForm =  angular.module('employeeView')
                 .then( function (response) {
                 $scope.stageList = response.data;
              });
+            
+            
         }
 
    
@@ -441,6 +443,7 @@ stageForm =  angular.module('employeeView')
             $http.get('http://desktop-6upj287:7575/api/Project/get/p_id/undefined')
                 .then( function (response) {
                 $scope.projectList = response.data;
+                ;
              });
     
             console.log(projectList);
@@ -456,37 +459,62 @@ stageForm =  angular.module('employeeView')
        }
        
         var mensaje2 = {};
-        var stagesxProject={};
-        var productxStage;
-    
+        var stagesxProject;
+        var productxStages;
+        
+        var productitos=[];   
         $scope.getProjectDetails = function(){
 
-             $http.get('http://desktop-6upj287:7575/api/ProjectDetails/get/p_id/8')
+             $http.get('http://desktop-6upj287:7575/api/ProjectDetails/get/p_id/'+$scope.P_ID)
                     .then(function (response) {
                                    mensaje2=response.data[0];
                                    console.log(mensaje2);
-                                    $scope.stagesxProject   = mensaje2.stages; 
-                                    $scope.productxStage = stagesxProject.products
-                                    for(var x = 0; x < $scope.stagesxProject.length; x++){
-                                        $scope.stagesxProject[x] = JSON.parse($scope.stagesxProject[x]);
-                                        for(var y = 0; y < $scope.productxStage.length; y++){
-                                            $scope.productxStage[y] =  JSON.parse($scope.productxStage[y]);
-                                            
-                                        }
+                                   $scope.stagesxProject   = mensaje2.stages; 
+                                    
+                                  /*  for(var x = 0; x < $scope.stagesxProject.length; x++){
+                                        console.log("here1");
+                                        console.log($scope.stagesxProject);
                                         
-                                    }  
+                                        console.log("here2");
+                                        $scope.productxStage = $scope.stagesxProject[x].products;
+                                        console.log($scope.productxStage);*/
+                                        
+                                /*        for(var y = 0; y < $scope.productxStage.length; y++){
+                                            var table = document.getElementById("cart");
+                                            var row = table.insertRow(0);
+                                            var cell1 = row.insertCell(0);
+                                            var cell2 = row.insertCell(1);
+                                            var cell3 = row.insertCell(2);
+                                            var cell4 = row.insertCell(3);
+
+                                            cell1.innerHTML = productxStage[y].p_id;
+                                            cell2.innerHTML = productxStage[y].p_id;
+                                            cell3.innerHTML = "NEW CELL1";
+                                            cell4.innerHTML = "NEW CELL2";
+                                        } */
+                        
+                                        
+                          
+                                    
+                                   
+                                        
+                                      console.log(productitos);
+                 
+                                    
   
                                     console.log(mensaje2.gpd_name);
                                     console.log(mensaje2.gpd_location);
                                     console.log(mensaje2.gpd_enginner);
-                                    console.log(mensaje2.gpd_owner);
+                                    console.log(mensaje2.gpd_owner);  
+                                        
+                                    }
+                                    
                                     
                  
-                                    
-                 
-                                    
-
-             } )}
+          );
+            
+        
+        }
        $scope.addStage = function () {
          console.log("DAAAAAAAAAM");
          var Stage = {
