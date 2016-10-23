@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>CLIENT</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="/angular-1.5.8/angular.js"></script>
+    <script src="/angular-1.5.8/angular.min.js"></script>
+    
+    <script src="/js/jquery-3.1.0.js"  type="text/javascript"></script>
+    <script src="/js/clientView.js"  type="text/javascript"></script>
+    <!--
+         <script>
+         function  role(e) {
+            
+            
+             var value = e.options[e.selectedIndex].value;
+             var text = e.options[e.selectedIndex].text;
+             console.log(text);
+             
+             if(text == "Client"){
+                 $( "#U_Code" ).prop( "disabled", true );
+             }
+             else{
+                 $( "#U_Code" ).prop( "disabled", false );
+             }
+     }
+    </script>
+    -->
+    
+    <link rel="stylesheet" href="/css/index.css">  
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+    
+    
+  
+    
+</head>
+<body ng-app="clientView" >
+<div>
+    <nav class="navbar navbar-inverse">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>    
+          <h2 class="navbar-brand" href="#">Welcome</h2>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="/pages/clientView.html">Home</a></li>
+            <li class="active" id="getProjects"><a href="#">Projects</a></li>
+            <li class="active" id="newEmployee"><a href="#">Sign in</a></li>
+
+          </ul>
+
+          <ul class="nav navbar-nav navbar-right">
+
+            <li id="myBtn"><a href="/index.html"><span class="glyphicon glyphicon-log-out"></span> Log Out</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+</div>
+
+        
+<div id="clientModal" class="modal" ng-controller="clientCtrl"  style="overflow-y: scroll;">
+  <!-- Modal content -->
+  <div class="modal-content">
+    <div class="modal-header">
+      <span id="close1" class="close">×</span>
+      <h2>New User</h2>
+    </div>
+    <div class="modal-body">
+            <div class="form-group has-feedback" style="margin: 20px 0px 0px 0px;">
+                <label for="U_Name" >Write a user name</label>
+                <input id=U_Name type="text" ng-model="U_Name" class="form-control" placeholder="Name">
+                <span class="glyphicon glyphicon-user form-control-feedback"></span>
+            </div>
+            <div class="form-group has-feedback" style="margin: 20px 0px 0px 0px;">
+                <label for="U_LName" >Write a user last name</label>
+                <input id=U_LName type="text" ng-model="U_LName" class="form-control" placeholder="Last Name">
+                <span class="glyphicon glyphicon-user form-control-feedback"></span>
+            </div>
+           <div class="form-group has-feedback" style="margin: 20px 0px 0px 0px;">
+            <label for="U_ID" >Write a user ID</label>
+            <input id=U_ID type="number" min="100000000" max="999999999" ng-model="U_ID" class="form-control" placeholder="ID">
+                <span class="glyphicon glyphicon-link form-control-feedback"></span>
+            </div>
+            
+            <div class="form-group has-feedback" style="margin: 20px 0px 0px 0px;">
+            <label for="U_Phone" >Write a user phone</label>    
+            <input id=U_Phone type="number" ng-model="U_Phone" class="form-control" placeholder="Phone">
+                <span class="glyphicon glyphicon-phone form-control-feedback"></span>
+            </div>
+        <!--
+            <div class="form-group has-feedback" style="margin: 20px 0px 0px 0px;">
+                <label for="sel1">Select user Role</label>
+                <select type="text"  onchange = "role(this)" name="R_ID" ng-model="R_ID" placeholder="Select User Role" class="form-control" id="sel1" >
+                    <option >Engineer</option>
+                    <option >Architect</option>
+                    <option >Client</option>
+                    <option ng-repeat="item in rolelist">{{item.R_ID}}</option>
+                     
+                </select>
+            </div>
+-->
+            <div class="form-group has-feedback" style="margin: 20px 0px 0px 0px;">
+                <label for="U_Password">Write a password</label>
+                <input id=U_Password type="password" ng-model="U_Password" class="form-control" placeholder="Password">
+                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+            </div>
+
+            <div align="center">
+                <button  ng-click="addUser()" style="margin: 20px 0px 0px 0px; width:50%" type="submit" class="btn btn-primary btn-block btn-flat">Create User</button>
+            </div>
+    </div>
+    <div class="modal-footer">
+    </div>
+  </div>
+</div>
+    
+
+</body>
+</html>
+
+
