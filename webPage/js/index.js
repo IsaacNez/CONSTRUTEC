@@ -25,30 +25,19 @@ var indexApp = angular.module('index',[])
         }
     }
     
-    var mensaje = {};
-    var roles;
+    var mensaje;
+    
     $scope.checkUser = function(){
-        
-         $http.get('http://desktop-6upj287:7575/api/User/get/U_ID,U_Password/'+$scope.U_ID +","+$scope.U_Password)
-                .then(function (response) {
-                               mensaje=response.data[0];
-                               console.log(mensaje);
-                                 $scope.roles   = mensaje.q_role; 
+        console.log($scope.U_ID);
+        $http.get('http://desktop-6upj287:7575/api/User/get/U_ID,U_Password/'+$scope.U_ID +","+$scope.U_Password)
+            .then( function (response) {    
+              $scope.mensaje = response.data;           
+        });
+    console.log(mensaje);
+    console.log('http://desktop-6upj287:7575/api/User/get/U_ID,U_Password/'+$scope.U_ID +","+$scope.U_Password);
+ 
 
-                                for(var x = 0; x < $scope.roles.length; x++){
-                                    $scope.roles[x] = JSON.parse($scope.roles[x]);
-                                }
-                                console.log(mensaje.q_id);
-                                console.log($scope.roles[0]);
-                                
-                               });
-     
-         
-          
-          
-           
-            
-            
+       //     var div = document.createElement("div");
             
              
             /*
@@ -60,7 +49,7 @@ var indexApp = angular.module('index',[])
             });
             
         */
-        
+       //    document.getElementById("loingAs").appendChild(div);
        //    document.getElementById("loingAs").appendChild(button);
         
     }
@@ -69,4 +58,4 @@ var indexApp = angular.module('index',[])
 
 
 
-}]);
+    }]);
