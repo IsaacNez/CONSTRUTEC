@@ -7,9 +7,10 @@ namespace ConstructionCore.Models
 {
     public class Comment
     {
-        public int c_id { get; set; }
         public string c_description { get; set; }
         public string s_name { get; set; }
+        public int u_id { get; set; }
+        public int p_id { get; set; }
 
     }
 }

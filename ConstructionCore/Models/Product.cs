@@ -8,9 +8,9 @@ namespace ConstructionCore.Models
     public class Product
     {
         public int pr_id { get; set; }
-        public string pr_description { get; set; }
-        public string pr_name { get; set; }
-        public int pr_price { get; set; }
-        public int pr_quantity { get; set; }
+        public string PDescription { get; set; }
+        public string PName { get; set; }
+        public int Price { get; set; }
+        public int Quantity { get; set; }
     }
 }
