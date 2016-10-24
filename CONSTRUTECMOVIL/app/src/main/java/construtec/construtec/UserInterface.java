@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ListFragment;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -29,6 +30,7 @@ public class UserInterface extends AppCompatActivity
     String user="";
     Integer userID = 0;
     Integer userCode = 0;
+    String jsonArray = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,7 +38,7 @@ public class UserInterface extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         Intent example = getIntent();
-        String jsonArray = example.getStringExtra("jsonArray");
+        jsonArray = example.getStringExtra("jsonArray");
         System.out.println(jsonArray);
         user = example.getStringExtra("Name");
         userID = example.getIntExtra("UID", 1);
@@ -49,13 +51,7 @@ public class UserInterface extends AppCompatActivity
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        fab.setVisibility(View.INVISIBLE);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -151,8 +147,10 @@ public class UserInterface extends AppCompatActivity
         int id = item.getItemId();
         Bundle extradata = new Bundle();
         extradata.putString("role",arrayrole.toString());
-        extradata.putInt("u_id",userID);
-        extradata.putInt("u_code",userCode);
+        extradata.putInt("u_id", userID);
+        extradata.putInt("u_code", userCode);
+        extradata.putString("u_name", user);
+        extradata.putString("jsonArray",jsonArray);
         FragmentManager fragmgr = getFragmentManager();
 
         if (id == R.id.nav_first_layout) {
@@ -171,13 +169,18 @@ public class UserInterface extends AppCompatActivity
                     .replace(R.id.content_frame, todo)
                     .commit();
         } else if (id == R.id.nav_assign_stage){
+            Fragment _assignstage = new AssignStage();
+            _assignstage.setArguments(extradata);
             fragmgr.beginTransaction()
-                    .replace(R.id.content_frame, new AssignStage())
+                    .replace(R.id.content_frame, _assignstage)
                     .commit();
         }else if (id == R.id.nav_assign_products){
+            Fragment todo = new AssignProduct();
+            todo.setArguments(extradata);
             fragmgr.beginTransaction()
-                    .replace(R.id.content_frame, new AssignProduct())
+                    .replace(R.id.content_frame,todo)
                     .commit();
+
         }else if (id == R.id.nav_gen_budget){
             fragmgr.beginTransaction()
                     .replace(R.id.content_frame, new GenBudget())

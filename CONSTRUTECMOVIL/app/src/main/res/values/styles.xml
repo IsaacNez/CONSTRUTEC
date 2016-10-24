@@ -13,6 +13,10 @@
         <item name="windowNoTitle">true</item>
         <item name="android:background">@color/customColor</item>
     </style>
+    <style name="ListFont" parent="@android:style/Widget.ListView">
+        <item name="android:textColor">#FF0000</item>
+        <item name="android:typeface">sans</item>
+    </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 

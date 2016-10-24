@@ -3,5 +3,96 @@
     android:layout_width="match_parent" android:layout_height="match_parent">
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></FrameLayout>
+        android:layout_height="match_parent"
+        android:layout_margin="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Stages soon to start"
+            android:id="@+id/textView10"
+            android:layout_gravity="center_horizontal|top" />
+
+        <EditText
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/_productspecification"
+            android:layout_gravity="top"
+            android:hint="Enter the product"
+            android:layout_marginTop="35dp" />
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/ic_search_black_24dp"
+            android:id="@+id/_searchaction"
+            android:layout_gravity="right|top"
+            android:layout_marginTop="35dp" />
+
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/_sxpspinner"
+            android:layout_gravity="center_horizontal|top"
+            android:layout_marginTop="90dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Large Text"
+            android:id="@+id/_sxpname"
+            android:layout_gravity="left|center_vertical"
+            android:layout_marginTop="-60dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Large Text"
+            android:id="@+id/_sxpphone"
+            android:layout_gravity="left|center_vertical"
+            android:layout_marginTop="-20dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Large Text"
+            android:id="@+id/_sxplocation"
+            android:layout_gravity="left|center_vertical"
+            android:layout_marginTop="15dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Large Text"
+            android:id="@+id/_sxpdate"
+            android:layout_gravity="left|center_vertical"
+            android:layout_marginTop="50dp" />
+
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/_sxpcomments"
+            android:layout_gravity="left|bottom"
+            android:layout_marginBottom="100dp" />
+
+        <Button
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/ic_check_circle_black_24dp"
+            android:id="@+id/_sxpfin"
+            android:layout_gravity="left|bottom" />
+
+        <Button
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/ic_comment_black_24dp"
+            android:id="@+id/_sxpadd"
+            android:layout_gravity="right|bottom" />
+    </FrameLayout>
 </RelativeLayout>

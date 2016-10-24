@@ -25,4 +25,6 @@
     <string name="Project_name">Project name</string>
     <string name="project_location">Project Location</string>
     <string name="submit_project">Submit project</string>
+    <string name="url">http://isaac:7249/api/</string>
+
 </resources>
