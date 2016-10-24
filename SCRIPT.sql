@@ -237,7 +237,7 @@ returns table(
 ) as
 'select distinct prj.p_id,prj.u_id,dbu.u_name,dbu.u_phone,prj.p_location,pxs.pxs_datestart,pxs.pxs_status,pxs.s_name
 from projectxstage as pxs left outer join project as prj on (pxs.p_id = prj.p_id) left outer join dbuser as dbu on (prj.u_id = dbu.u_id)
-where pxs_datestart - request_stageby <= 15::int'
+where (pxs_datestart - request_stageby <= 15::int) and (pxs_datestart > request_stageby) '
 language 'sql';
 
 create or replace function getcustomerservicebyproductanddate(
