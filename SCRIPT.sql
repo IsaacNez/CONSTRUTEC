@@ -257,7 +257,7 @@ returns table(
 'select distinct prj.p_id, dbu.u_id, dbu.u_name, dbu.u_phone, prj.p_location,pxs.pxs_datestart,pxs.pxs_status,pxs.s_name
 from stagexproduct as sxp left outer join product as pr on (sxp.pr_id = pr.pr_id) left outer join projectxstage as pxs on (sxp.p_id = pxs.p_id)
 left outer join project as prj on (pxs.p_id = prj.p_id) left outer join dbuser as dbu on (prj.u_id = dbu.u_id)
-where (pxs.pxs_datestart -request_date <15) and  pr.pr_name ~* request_product;'
+where (pxs.pxs_datestart -request_date <15) and  pr.pr_name ~* request_product  and (pxs_datestart > request_date);'
 language 'sql';
 
 
