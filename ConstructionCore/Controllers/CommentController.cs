@@ -51,7 +51,6 @@ namespace ConstructionCore.Controllers
             {
                 com = new Comment();
                 com.c_description = (string)coso["c_description"];
-                com.c_id = (int)coso["c_id"];
                 com.s_name = (string)coso["s_name"];
                 
                 values.Add(com);
@@ -59,6 +58,39 @@ namespace ConstructionCore.Controllers
 
             myConnection.Close();
             return Json(values);
+
+        }
+        [HttpPost]
+        [ActionName("Post")]
+        public void AddStage(Comment comment)
+        {
+            System.Diagnostics.Debug.WriteLine("print1");
+            System.Diagnostics.Debug.WriteLine(comment.s_name);
+
+            NpgsqlConnection myConnection = new NpgsqlConnection();
+            System.Diagnostics.Debug.WriteLine("print2");
+            myConnection.ConnectionString = System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
+            System.Diagnostics.Debug.WriteLine("print3");
+            System.Diagnostics.Debug.WriteLine("cargo base");
+            string test = "INSERT INTO dbcomment(c_description,s_name, p_id, u_id) Values(:c_description,:s_name,:p_id, :u_id)";
+
+            var command = new NpgsqlCommand(test, myConnection);
+            command.CommandType = CommandType.Text;
+            System.Diagnostics.Debug.WriteLine("print5");
+
+
+            System.Diagnostics.Debug.WriteLine("generando comando");
+
+            command.Parameters.AddWithValue(":c_description", comment.c_description);
+            command.Parameters.AddWithValue(":s_name", comment.s_name);
+            command.Parameters.AddWithValue("p_id", comment.p_id);
+            command.Parameters.AddWithValue("u_id", comment.u_id);
+            myConnection.Open();
+            command.ExecuteNonQuery();
+
+            System.Diagnostics.Debug.WriteLine("print6");
+
+            myConnection.Close();
 
         }
     }

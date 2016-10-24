@@ -17,71 +17,41 @@ namespace ConstructionCore.Controllers
 
     public class AdminController : ApiController
     {
-        static private string GetConnectionString()
-        {
-            return @"Data Source=DESKTOP-E6QPTVT;Initial Catalog=EPATEC;"
-                + "Integrated Security=true;";
-        }
+
 
         [HttpGet]
         [ActionName("Get")]
         public JsonResult<List<Product>> Get(string attribute, string id)
         {
-            string[] attr = attribute.Split(',');
-            string[] ids = id.Split(',');
             List<Product> values = new List<Product>();
-            Product prod = null;
+            HttpClient client = new HttpClient();
+            client.BaseAddress = new Uri("http://desktop-e6qptvt:7549/");
+            client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
 
-            System.Diagnostics.Debug.WriteLine("entrando al get");
-            SqlDataReader reader = null;
-            SqlConnection myConnection = new SqlConnection();
-            myConnection.ConnectionString = GetConnectionString();
-            System.Diagnostics.Debug.WriteLine("cargo base");
-            SqlCommand sqlCmd = new SqlCommand();
-            System.Diagnostics.Debug.WriteLine("cargo sqlcommand");
-            string action = "";
-
-            if (id != "undefined")
+            HttpResponseMessage response = client.GetAsync("api/Product/Get/PR_ID/undefined").Result;
+            //string test = "";
+            if (response.IsSuccessStatusCode)
             {
-                var constructor = new UserController();
-                action = constructor.FormConnectionString("PRODUCT", attr, ids);
+                var products = response.Content.ReadAsAsync<IEnumerable<Product>>().Result;
+                foreach (var x in products)
+                {
+                    System.Diagnostics.Debug.WriteLine(x.pr_id);
+                    AddProduct(x);
+
+                }
             }
             else
             {
-                action = "SELECT * FROM PRODUCT;";
+                System.Diagnostics.Debug.WriteLine("Error while retrieving the products from the database");
             }
 
-            System.Diagnostics.Debug.WriteLine(action);
-            sqlCmd.CommandType = CommandType.Text;
-            sqlCmd.CommandText = action;
-            System.Diagnostics.Debug.WriteLine("cargo comando");
-
-            sqlCmd.Connection = myConnection;
-            myConnection.Open();
-            System.Diagnostics.Debug.WriteLine("estado " + myConnection.State);
-
-            var coso = sqlCmd.ExecuteReader();
-
-            while (coso.Read())
-            {
-                prod = new Product();
-                prod.pr_id = (int)coso["P_ID"];
-                prod.pr_name = (string)coso["PName"];
-                prod.pr_description = (string)coso["PDescription"];
-                prod.pr_price = (int)coso["Price"];
-                prod.pr_quantity = (int)coso["Quantity"];
-                AddProduct(prod);
-                values.Add(prod);
-            }
-
-            myConnection.Close();
             return Json(values);
 
         }
         public void AddProduct(Product product)
         {
             System.Diagnostics.Debug.WriteLine("print1");
-            System.Diagnostics.Debug.WriteLine(product.pr_name);
+            System.Diagnostics.Debug.WriteLine(product.PName);
 
             NpgsqlConnection myConnection = new NpgsqlConnection();
             System.Diagnostics.Debug.WriteLine("print2");
@@ -100,10 +70,10 @@ namespace ConstructionCore.Controllers
 
 
             command.Parameters.AddWithValue(":pr_id", product.pr_id);
-            command.Parameters.AddWithValue(":pr_description", product.pr_description);
-            command.Parameters.AddWithValue(":pr_name", product.pr_name);
-            command.Parameters.AddWithValue(":pr_price", product.pr_price);
-            command.Parameters.AddWithValue(":pr_quantity", product.pr_quantity);
+            command.Parameters.AddWithValue(":pr_description", product.PDescription);
+            command.Parameters.AddWithValue(":pr_name", product.PName);
+            command.Parameters.AddWithValue(":pr_price", product.Price);
+            command.Parameters.AddWithValue(":pr_quantity", product.Quantity);
 
             myConnection.Open();
             command.ExecuteNonQuery();

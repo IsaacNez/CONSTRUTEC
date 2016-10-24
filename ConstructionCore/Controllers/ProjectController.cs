@@ -48,13 +48,13 @@ namespace ConstructionCore.Controllers
         }
         [HttpPost]
         [ActionName("Post")]
-        public void AddStage(Project proj)
+        public void AddProduct(Project proj)
         {
             System.Diagnostics.Debug.WriteLine("print1");
             System.Diagnostics.Debug.WriteLine(proj.p_name);
 
-            NpgsqlConnection myConnection = new NpgsqlConnection();
             System.Diagnostics.Debug.WriteLine("print2");
+            NpgsqlConnection myConnection = new NpgsqlConnection();
             myConnection.ConnectionString = System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
             System.Diagnostics.Debug.WriteLine("print3");
             System.Diagnostics.Debug.WriteLine("cargo base");

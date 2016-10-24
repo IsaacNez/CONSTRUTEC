@@ -51,10 +51,10 @@ namespace ConstructionCore.Controllers
             {
                 prod = new Product();
                 prod.pr_id = (int)coso["pr_id"];
-                prod.pr_name = (string)coso["pr_name"];
-                prod.pr_description = (string)coso["pr_description"];
-                prod.pr_price = (int)coso["pr_price"];
-                prod.pr_quantity = (int)coso["pr_quantity"];
+                prod.PName = (string)coso["pr_name"];
+                prod.PDescription = (string)coso["pr_description"];
+                prod.Price = (int)coso["pr_price"];
+                prod.Quantity = (int)coso["pr_quantity"];
                 
                 values.Add(prod);
             }
