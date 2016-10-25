@@ -1,5 +1,7 @@
 var indexApp = angular.module('index',[])
 .controller('indexCtrl', ['$scope', '$http', function ($scope, $http) {
+    var U_Code;
+    var U_Name;
     var modal = document.getElementById('myModal');
     var loginmodal = document.getElementById('loginModal');
 
@@ -36,19 +38,23 @@ var indexApp = angular.module('index',[])
                 .then(function (response) {
                                mensaje=response.data[0];
                                console.log(mensaje);
+                               
+                                console.log("toma "+ $scope.U_Name +" "+$scope.U_Code);
                                  $scope.roles   = mensaje.q_role; 
 
                                 for(var x = 0; x < $scope.roles.length; x++){
                                     $scope.roles[x] = JSON.parse($scope.roles[x]);
                                 }
                                 console.log(mensaje.q_id);
+                                console.log (mensaje.q_name);
                                 console.log($scope.roles[0]);
-                                
-                                for(var x = 0; x < $scope.roles.length; x++){
+                                localStorage.setItem("user", mensaje.q_name);
+                                localStorage.setItem("code", mensaje.q_code);
+           /*                     for(var x = 0; x < $scope.roles.length; x++){
                                     $scope.roles[x] = JSON.parse($scope.roles[x]);
                                     
                                 }
-             
+             */
               
                                 if($scope.roles.length > 1){
                                     
@@ -56,25 +62,27 @@ var indexApp = angular.module('index',[])
                                 }
                                 else if($scope.roles[0]==3){
                                         console.log("Client");
-                                        localStorage.setItem("user", mensaje.q_id); 
+                                       
                                         window.location.assign("/pages/clientView.html")
 
                                 }
                                 else if($scope.roles[0]==1){
                                        console.log("Admin"); 
-                                        localStorage.setItem("user", mensaje.q_id); 
+                                      
                                         window.location.assign("/pages/adminView.html")
+                                        
 
                                 }          
                                 else if($scope.roles[0]==4) {
                                         console.log("General");
-                                        localStorage.setItem("user", mensaje.q_id); 
+                                        localStorage.setItem("user", $scope.U_Name); 
+                                    
                                         window.location.assign("/pages/generalView.html")
                                 }  
 
                                 else if($scope.roles[0]==2) {
                                     console.log("Engineer");
-                                      localStorage.setItem("user", mensaje.q_id); 
+                                    localStorage.setItem("code", $scope.U_Code);
                                     window.location.assign("/pages/employeeView.html")
                                 } 
                                 
@@ -101,13 +109,14 @@ indexApp = angular.module('index')
     
     
     $scope.logClient = function(){
-
+                
                 window.location.assign("/pages/clientView.html")        
                  
           
     }
     $scope.logEngineer = function(){
-
+                
+                
                 window.location.assign("/pages/employeeView.html")        
                  
           

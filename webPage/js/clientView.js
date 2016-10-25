@@ -37,13 +37,7 @@ var stageForm = angular.module('clientView',[])
         
 
    
-    var rolelist;
     
-    $http.get(url+'/api/dbRole/get/R_Name')
-        .then( function (response) {
-        $scope.rolelist = response.data;
-     });
-
 
     
     $scope.addUser = function () {
