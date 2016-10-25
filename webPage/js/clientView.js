@@ -2,7 +2,8 @@ var url= 'http://desktop-6upj287:7575';
 
 var stageForm = angular.module('clientView',[])
 .controller('clientCtrl', ['$scope', '$http', function ($scope, $http) {
-  
+        
+    document.getElementById("idUser").innerHTML = "Welcome "+userID;
      
         // Get the modal
         var modalEmployees = document.getElementById('clientModal');
