@@ -167,6 +167,9 @@ begin
             	insert into dbuser values(m_id,m_name, m_lname, m_phone, m_password);
                 insert into userxplusdata values(m_code, m_id);
                 insert into userxrole(r_id,u_id) values(rm_id,m_id);
+            elseif (rm_id = 3 or rm_id = 4)  and m_code = 0 then
+            	insert into dbuser values(m_id,m_name, m_lname, m_phone, m_password);
+                insert into userxrole(r_id,u_id) values(rm_id,m_id);
             end if;
         end if;
     end if;
