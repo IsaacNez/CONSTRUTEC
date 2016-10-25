@@ -190,6 +190,7 @@ create or replace function getprojectdetails(
     searchp_idby int
 )
 returns table(gpd_id int, 
+              gpd_pbudget int,
               gpd_name varchar(255),
               gpd_location varchar(255),
               gpd_engineer int,
@@ -205,6 +206,7 @@ returns table(gpd_id int,
              ) as
              'select distinct 
              		 prj.p_id,
+                     prj.p_budget,
              		 prj.p_name,
                      prj.p_location,
                      prj.u_code,
