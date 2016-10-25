@@ -11,7 +11,7 @@ namespace ConstructionCore.Models
         public string s_status { get; set; }
         public DateTime s_datestart { get; set; }
         public DateTime s_dateend { get; set; }
-
+        public int gpd_budget { get; set; }
         public List<prodstage> products = new List<prodstage>(); 
     }
 }

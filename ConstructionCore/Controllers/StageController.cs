@@ -56,6 +56,7 @@ namespace ConstructionCore.Controllers
             List<Stage> values = new List<Stage>();
             string[] attr = attribute.Split(',');
             string[] ids = id.Split(',');
+            System.Diagnostics.Debug.WriteLine(ids[0]);
             System.Diagnostics.Debug.WriteLine("print1");
             NpgsqlConnection myConnection = new NpgsqlConnection();
             System.Diagnostics.Debug.WriteLine("print2");
@@ -64,10 +65,14 @@ namespace ConstructionCore.Controllers
             System.Diagnostics.Debug.WriteLine("cargo base");
             myConnection.Open();
             string action = "";
-            if (id != "undefined")
+            if (id != "undefined"&&ids[0]!="stages")
             {
                 var need = new UserController();
                 action = need.FormConnectionString("stage", attr, ids);
+            }
+            else if (ids[0] == "stages")
+            {
+                action = "select * from stage where s_name not in (select s_name from projectxstage where p_id = " + ids[1] + ");";
             }
             else
             {

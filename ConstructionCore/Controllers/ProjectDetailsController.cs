@@ -43,11 +43,13 @@ namespace ConstructionCore.Controllers
                 proj.gpd_name = (string)coso["gpd_name"];
                 proj.gpd_location = (string)coso["gpd_location"];
                 proj.gpd_engineer = (int)coso["gpd_engineer"];
+                proj.gdp_pbudget = (int)coso["gpd_pbudget"];
                 proj.gpd_owner = (int)coso["gpd_owner"];
                 projstage stag = new projstage();
                 if (coso["gpd_sname"].ToString().Length>1) {
                     stag.s_name = (string)coso["gpd_sname"];
                     stag.s_datestart = (DateTime)coso["gpd_datestart"];
+                    stag.gpd_budget = (int)coso["gpd_budget"];
                     stag.s_dateend = (DateTime)coso["gpd_dateend"];
                     stag.s_status = (String)coso["gpd_status"];
                     if (proj.stages.Count != 0)

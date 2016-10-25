@@ -27,7 +27,7 @@ namespace ConstructionCore.Controllers
             }
             if (attr.Length > 1)
             {
-                LogicalConnector = " AND";
+                LogicalConnector = " OR";
             }
             System.Diagnostics.Debug.WriteLine(attr.Length);
             for (int i = 0; i < attr.Length; i++)
@@ -98,8 +98,8 @@ namespace ConstructionCore.Controllers
             string action = "";
             if (id != "undefined")
             {
-               
-                action = FormConnectionString("project", attr, ids);
+                var test =new CommentController();
+                action = test.FormConnectionString("project", attr, ids);
             }
             else
             {

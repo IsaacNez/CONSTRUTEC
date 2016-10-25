@@ -7,7 +7,6 @@ namespace ConstructionCore.Models
 {
     public class Order
     { 
-
         public string Products { get; set; }
         public string Amount { get; set; }
         public string OPlatform { get; set; }

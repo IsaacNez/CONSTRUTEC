@@ -10,21 +10,19 @@ using System.Data;
 using System.Text;
 using System.Web.Http.Results;
 using System.Web.Http.Cors;
-
 namespace ConstructionCore.Controllers
 {
-
-    [EnableCors(origins: "*", headers: "*", methods: "*")]
-    public class ProductController : ApiController
+    public class RoleController : ApiController
     {
         [HttpGet]
         [ActionName("Get")]
-        public JsonResult<List<Product>> Get(string attribute, string id)
+        public JsonResult<List<Role>> Get(string attribute, string id)
         {
-            Product prod = null;
-            List<Product> values = new List<Product>();
+            Role rol = null;
+            List<Role> values = new List<Role>();
             string[] attr = attribute.Split(',');
             string[] ids = id.Split(',');
+            System.Diagnostics.Debug.WriteLine(ids[0]);
             System.Diagnostics.Debug.WriteLine("print1");
             NpgsqlConnection myConnection = new NpgsqlConnection();
             System.Diagnostics.Debug.WriteLine("print2");
@@ -33,14 +31,14 @@ namespace ConstructionCore.Controllers
             System.Diagnostics.Debug.WriteLine("cargo base");
             myConnection.Open();
             string action = "";
-            if (id != "undefined")
+            if (id != "undefined" )
             {
                 var need = new UserController();
-                action = need.FormConnectionString("product", attr, ids);
+                action = need.FormConnectionString("dbrole", attr, ids);
             }
             else
             {
-                action = "SELECT * FROM product;";
+                action = "SELECT * FROM dbrole;";
             }
             System.Diagnostics.Debug.WriteLine("print4");
             System.Diagnostics.Debug.WriteLine(action);
@@ -50,21 +48,15 @@ namespace ConstructionCore.Controllers
             System.Diagnostics.Debug.WriteLine("print6");
             while (coso.Read())
             {
-                prod = new Product();
-                prod.pr_id = (int)coso["pr_id"];
-                prod.PName = (string)coso["pr_name"];
-                prod.PDescription = (string)coso["pr_description"];
-                prod.Price = (int)coso["pr_price"];
-                prod.Quantity = (int)coso["pr_quantity"];
-                
-                values.Add(prod);
+                rol = new Role();
+                rol.r_id = (int)coso["r_id"];
+                rol.r_name = (string)coso["r_name"];
+                values.Add(rol);
             }
 
             myConnection.Close();
             return Json(values);
 
         }
-
-       
     }
 }

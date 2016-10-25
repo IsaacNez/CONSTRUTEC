@@ -13,9 +13,39 @@ using System.Web.Http.Cors;
 
 namespace ConstructionCore.Controllers
 {
+
     [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class CommentController : ApiController
     {
+        public string FormConnectionString(string baseString, string[] attr, string[] ids)
+        {
+            string ConnectionString = "SELECT * FROM " + baseString + " WHERE ";
+            string LogicalConnector = "OR";
+            if (ids == null)
+            {
+                return "SELECT * FROM " + baseString + ";";
+            }
+            if (attr.Length > 1)
+            {
+                LogicalConnector = " AND";
+            }
+            System.Diagnostics.Debug.WriteLine(attr.Length);
+            for (int i = 0; i < attr.Length; i++)
+            {
+                System.Diagnostics.Debug.WriteLine(i);
+                if (i == (attr.Length - 1))
+                {
+                    ConnectionString = ConnectionString + attr[i] + "=" + ids[i] + ";";
+                    return ConnectionString;
+                }
+                else
+                {
+                    ConnectionString = ConnectionString + attr[i] + "=" + ids[i] + LogicalConnector + " ";
+                }
+
+            }
+            return ConnectionString;
+        }
         [HttpGet]
         [ActionName("Get")]
         public JsonResult<List<Comment>> Get(string attribute, string id)

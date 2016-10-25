@@ -23,9 +23,21 @@ namespace ConstructionCore.Controllers
         [ActionName("Get")]
         public JsonResult<List<Product>> Get(string attribute, string id)
         {
+            NpgsqlConnection myConnection = new NpgsqlConnection();
+            myConnection.ConnectionString = System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
+            System.Diagnostics.Debug.WriteLine("print3");
+            System.Diagnostics.Debug.WriteLine("cargo base");
+            string test = "delete from product";
+
+            var command = new NpgsqlCommand(test, myConnection);
+            command.CommandType = CommandType.Text;
+            myConnection.Open();
+            command.ExecuteNonQuery();
+            myConnection.Close();
+            System.Diagnostics.Debug.WriteLine("print5");
             List<Product> values = new List<Product>();
             HttpClient client = new HttpClient();
-            client.BaseAddress = new Uri("http://desktop-e6qptvt:7549/");
+            client.BaseAddress = new Uri("http://desktop-6upj287:7549/");
             client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
 
             HttpResponseMessage response = client.GetAsync("api/Product/Get/PR_ID/undefined").Result;
