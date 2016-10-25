@@ -129,7 +129,7 @@ public class LoginActivity extends AppCompatActivity {
                         userID = newObject.getInt("q_id");
                         userRole = new JSONArray(newObject.get("q_role").toString());
                         System.out.println(newObject.toString() + "Esta es la prueba " + (new JSONArray(newObject.get("q_role").toString())).toString()
-                                + " " + userID);
+                                + " " + userID+" "+userCode);
 
                         System.out.println(userRole.toString() + "Esta es la impresion de los roles");
                         Intent user = new Intent(LoginActivity.this, UserInterface.class);

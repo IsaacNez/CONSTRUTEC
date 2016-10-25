@@ -38,14 +38,17 @@ import cz.msebera.android.httpclient.entity.StringEntity;
  */
 public class AssignProduct extends Fragment {
     View myView;
-    List<Integer> _projectsID = new ArrayList<>();
-    List<String> _projectName = new ArrayList<>();
-    List<String> _projectPres = new ArrayList<>();
+    List<Integer> _projectsID;
+    List<String> _projectName;
+    List<String> _projectPres;
 
-    List<Integer> pr_id = new ArrayList<>();
-    List<String> pr_name = new ArrayList<>();
-    List<Integer> pr_price = new ArrayList<>();
-    List<String> _productsadapter = new ArrayList<>();
+
+    List<Integer> pr_id;
+    List<String> pr_name;
+    List<Integer> pr_price;
+
+
+    List<String> _productsadapter;
 
     Integer u_id = 0;
     Integer u_code = 0;
@@ -62,15 +65,18 @@ public class AssignProduct extends Fragment {
     TextView _showstagestitle;
     TextView _showproductstitle;
 
-    List<String> _stagesdata= new ArrayList<>();
-    List<JSONArray> _products = new ArrayList<>();
-    List<String> _stagename = new ArrayList<>();
+    List<String> _stagesdata;
+    List<JSONArray> _products;
+    List<String> _stagename;
     ArrayAdapter<String> _projectspinneradapter;
     ArrayAdapter<String> _stagespinneradapter;
     ArrayAdapter<String> _productspinner;
 
     Button _addproduct;
     EditText _amount;
+
+    String _action="";
+    String _data="";
 
     @Nullable
     @Override
@@ -80,8 +86,26 @@ public class AssignProduct extends Fragment {
         u_code = getArguments().getInt("u_code", 0);
         u_name = getArguments().getString("u_name");
         jsonArray = getArguments().getString("jsonArray");
+        try {
+            JSONArray _new = new JSONArray(jsonArray);
+            if(_new.length()>1){
+                _action = "u_code,u_id";
+                _data += u_id+","+u_code;
+            }else{
+                if(_new.getInt(0)==2) {
+                    _action = "u_code";
+                    _data +=u_code;
+                }else if(_new.getInt(0)==3) {
+                    _action = "u_id";
+                    _data +=u_id;
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         getprojects();
+        getproducts();
 
 
         _showprojects = (Spinner) myView.findViewById(R.id._listviewprojectspro);
@@ -97,6 +121,9 @@ public class AssignProduct extends Fragment {
          _projectspinneradapter = new ArrayAdapter<String>(myView.getContext(),
                 android.R.layout.simple_spinner_dropdown_item, _projectPres);
         _showprojects.setAdapter(_projectspinneradapter);
+        _productspinner = new ArrayAdapter<String>(myView.getContext(),
+                android.R.layout.simple_spinner_dropdown_item,_productsadapter);
+        _showproducts.setAdapter(_productspinner);
         _showproducts.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -109,17 +136,15 @@ public class AssignProduct extends Fragment {
             }
         });
 
-        _productspinner = new ArrayAdapter<String>(myView.getContext(),
-                android.R.layout.simple_spinner_dropdown_item,_productsadapter);
-        _showproducts.setAdapter(_productspinner);
 
-        _stagespinneradapter = new ArrayAdapter<String>(myView.getContext(),
-                android.R.layout.simple_spinner_dropdown_item,_stagesdata);
-        _showstages.setAdapter(_stagespinneradapter);
+
+
+
         _showstages.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 s_name = _stagename.get(position);
+
             }
 
             @Override
@@ -131,7 +156,7 @@ public class AssignProduct extends Fragment {
         _showprojects.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                getproducts();
+
                 getprojectdeatils(_projectsID.get(position));
                 p_id = _projectsID.get(position);
             }
@@ -181,7 +206,11 @@ public class AssignProduct extends Fragment {
     public void getprojects() {
         final AsyncHttpClient httpClient = new AsyncHttpClient();
 
-        String server = "http://isaac:7249/api/project/get/u_code/"+u_code;
+        String server = "http://isaac:7249/api/project/get/"+_action+"/"+_data;
+        System.out.println(server);
+        _projectPres = new ArrayList<>();
+        _projectName = new ArrayList<>();
+        _projectsID = new ArrayList<>();
         httpClient.get(server, null, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
@@ -220,6 +249,12 @@ public class AssignProduct extends Fragment {
                     Toast.makeText(myView.getContext(),"This project does not have a stage associaded, please create one",Toast.LENGTH_LONG).show();
                 }else {
                     try {
+                        _stagename = new ArrayList<>();
+                        _products = new ArrayList<>();
+                        _stagesdata= new ArrayList<>();
+                        _stagespinneradapter = new ArrayAdapter<String>(myView.getContext(),
+                                android.R.layout.simple_spinner_dropdown_item,_stagesdata);
+                        _showstages.setAdapter(_stagespinneradapter);
                         for (int i = 0; i < response.length(); i++) {
                             JSONObject _newJSONObject = response.getJSONObject(i);
                             JSONArray _newJSONArray = _newJSONObject.getJSONArray("stages");
@@ -246,6 +281,10 @@ public class AssignProduct extends Fragment {
         AsyncHttpClient httpClient = new AsyncHttpClient();
         String server = getResources().getString(R.string.url)+"product/get/pr_id/undefined";
         System.out.println("El server es:"+server);
+        pr_price = new ArrayList<>();
+        pr_name = new ArrayList<>();
+        pr_id = new ArrayList<>();
+        _productsadapter = new ArrayList<>();
         httpClient.get(server, null, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
@@ -254,9 +293,9 @@ public class AssignProduct extends Fragment {
                     for (int i = 0; i < response.length(); i++) {
                         JSONObject _newJSON = response.getJSONObject(i);
                         pr_id.add(_newJSON.getInt("pr_id"));
-                        pr_name.add(_newJSON.getString("pr_name"));
-                        pr_price.add(_newJSON.getInt("pr_price"));
-                        _productsadapter.add(_newJSON.getString("pr_name") + ": ₡" + _newJSON.getInt("pr_price"));
+                        pr_name.add(_newJSON.getString("PName"));
+                        pr_price.add(_newJSON.getInt("Price"));
+                        _productsadapter.add(_newJSON.getString("PName") + ": ₡" + _newJSON.getInt("Price"));
                         _productspinner.notifyDataSetChanged();
                     }
                 } catch (JSONException e) {

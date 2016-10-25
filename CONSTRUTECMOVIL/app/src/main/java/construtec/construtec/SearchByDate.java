@@ -127,9 +127,15 @@ public class SearchByDate extends Fragment {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 if (_comment.getText().toString().matches("")) {
-                                    Toast.makeText(_commentview.getContext(),"You can't add an empty comment",Toast.LENGTH_LONG).show();
-                                }else{
-                                    sendComment(_position,_comment.getText().toString());
+                                    Toast.makeText(_commentview.getContext(), "You can't add an empty comment", Toast.LENGTH_LONG).show();
+                                } else {
+                                    sendComment(_position, _comment.getText().toString());
+                                    try {
+                                        getComments(_jsonList.get(_position).getString("gcs_sname").toString(), _jsonList.get(_position).getInt("gcs_pid"),
+                                                _jsonList.get(_position).getInt("gcs_uid"));
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
                                 }
                             }
                         });
@@ -181,6 +187,7 @@ public class SearchByDate extends Fragment {
                     try {
                         for (int i = 0; i < response.length(); i++) {
                             _comments.add(response.getJSONObject(i).getString("c_description"));
+                            System.out.println(response.getJSONObject(i).getString("c_description"));
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -198,8 +205,9 @@ public class SearchByDate extends Fragment {
             JSONObject _new = new JSONObject();
             _new.put("c_description",message);
             _new.put("s_name",_jsonList.get(position).getString("gcs_sname"));
-            //_new.put("p_id",_jsonList.get(position).getInt("gcs_pid"));
-           // _new.put("u_id",_jsonList.get(position).getInt("gcs_uid"));
+            _new.put("p_id",_jsonList.get(position).getInt("gcs_pid"));
+            _new.put("u_id",_jsonList.get(position).getInt("gcs_uid"));
+            System.out.println(_new.toString());
             StringEntity se = new StringEntity(_new.toString());
             httpClient.post(_assignStage.getContext(),server,se,"application/json", new JsonHttpResponseHandler(){
                 @Override

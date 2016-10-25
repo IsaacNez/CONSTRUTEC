@@ -170,6 +170,7 @@ public class UserInterface extends AppCompatActivity
                     .commit();
         } else if (id == R.id.nav_assign_stage){
             Fragment _assignstage = new AssignStage();
+            System.out.println("PORQUE"+userCode);
             _assignstage.setArguments(extradata);
             fragmgr.beginTransaction()
                     .replace(R.id.content_frame, _assignstage)
@@ -186,8 +187,10 @@ public class UserInterface extends AppCompatActivity
                     .replace(R.id.content_frame, new GenBudget())
                     .commit();
         }else if (id == R.id.nav_send_order){
+            Fragment todo = new SendOrder();
+            todo.setArguments(extradata);
             fragmgr.beginTransaction()
-                    .replace(R.id.content_frame, new SendOrder())
+                    .replace(R.id.content_frame, todo)
                     .commit();
         }else if (id == R.id.nav_search_date){
             fragmgr.beginTransaction()

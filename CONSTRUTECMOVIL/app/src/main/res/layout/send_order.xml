@@ -3,5 +3,71 @@
     android:layout_width="match_parent" android:layout_height="match_parent">
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></FrameLayout>
+        android:layout_height="match_parent"
+        android:layout_margin="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Purchase"
+            android:id="@+id/textView13"
+            android:layout_gravity="left|top" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Choose the projectt"
+            android:id="@+id/textView14"
+            android:layout_gravity="left|top"
+            android:layout_marginTop="25dp" />
+
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/_projectspinner"
+            android:layout_gravity="left|top"
+            android:layout_marginTop="55dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Choose the stage"
+            android:id="@+id/textView15"
+            android:layout_gravity="left|top"
+            android:layout_marginTop="110dp" />
+
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/_stagespinner"
+            android:layout_gravity="left|center_vertical"
+            android:layout_marginBottom="70dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Product details"
+            android:id="@+id/textView16"
+            android:layout_gravity="left|center_vertical"
+            android:layout_marginBottom="30dp" />
+
+        <ListView
+            android:layout_width="wrap_content"
+            android:layout_height="174dp"
+            android:id="@+id/_productspinner"
+            android:layout_gravity="left|center_vertical"
+            android:layout_marginTop="80dp" />
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/ic_cheap"
+            android:id="@+id/_buy"
+            android:layout_gravity="center_horizontal|bottom" />
+    </FrameLayout>
 </RelativeLayout>

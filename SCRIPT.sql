@@ -167,6 +167,9 @@ begin
             	insert into dbuser values(m_id,m_name, m_lname, m_phone, m_password);
                 insert into userxplusdata values(m_code, m_id);
                 insert into userxrole(r_id,u_id) values(rm_id,m_id);
+            elseif (rm_id = 3 or rm_id = 4)  and m_code = 0 then
+            	insert into dbuser values(m_id,m_name, m_lname, m_phone, m_password);
+                insert into userxrole(r_id,u_id) values(rm_id,m_id);
             end if;
         end if;
     end if;
@@ -190,6 +193,7 @@ create or replace function getprojectdetails(
     searchp_idby int
 )
 returns table(gpd_id int, 
+              gpd_pbudget int,
               gpd_name varchar(255),
               gpd_location varchar(255),
               gpd_engineer int,
@@ -199,12 +203,14 @@ returns table(gpd_id int,
               gpd_dateend date,
               gpd_status varchar(255),
               gpd_budget int,
+              gpd_prname varchar(255),
               gpd_pid int,
               gpd_price int,
               gpd_quantity int
              ) as
              'select distinct 
              		 prj.p_id,
+                     prj.p_budget,
              		 prj.p_name,
                      prj.p_location,
                      prj.u_code,
@@ -214,11 +220,12 @@ returns table(gpd_id int,
                      pxs.pxs_dateend,
                      pxs.pxs_status,
                      pxs.pxs_budget,
+                     (case when pr.pr_name is null then $$vacio$$ else pr.pr_name end),
                      (case when sxp.pr_id is null then 0 else sxp.pr_id::int end),
                      (case when sxp.pr_price is null then 0 else sxp.pr_price::int end),
                      (case when sxp.pr_quantity is null then 0 else sxp.pr_quantity::int end)
              from project as prj left outer join projectxstage as pxs on (prj.p_id = pxs.p_id)
-             							 left outer join stagexproduct as sxp on (pxs.s_name = sxp.s_name and prj.p_id = sxp.p_id)
+             							 left outer join stagexproduct as sxp on (pxs.s_name = sxp.s_name and prj.p_id = sxp.p_id) left outer join product as pr on (sxp.pr_id = pr.pr_id)
                                          where prj.p_id = searchp_idby;'
 language 'sql';
 
