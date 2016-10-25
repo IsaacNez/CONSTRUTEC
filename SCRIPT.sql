@@ -200,6 +200,7 @@ returns table(gpd_id int,
               gpd_dateend date,
               gpd_status varchar(255),
               gpd_budget int,
+              gpd_prname varchar(255),
               gpd_pid int,
               gpd_price int,
               gpd_quantity int
@@ -216,11 +217,12 @@ returns table(gpd_id int,
                      pxs.pxs_dateend,
                      pxs.pxs_status,
                      pxs.pxs_budget,
+                     (case when pr.pr_name is null then $$vacio$$ else pr.pr_name end),
                      (case when sxp.pr_id is null then 0 else sxp.pr_id::int end),
                      (case when sxp.pr_price is null then 0 else sxp.pr_price::int end),
                      (case when sxp.pr_quantity is null then 0 else sxp.pr_quantity::int end)
              from project as prj left outer join projectxstage as pxs on (prj.p_id = pxs.p_id)
-             							 left outer join stagexproduct as sxp on (pxs.s_name = sxp.s_name and prj.p_id = sxp.p_id)
+             							 left outer join stagexproduct as sxp on (pxs.s_name = sxp.s_name and prj.p_id = sxp.p_id) left outer join product as pr on (sxp.pr_id = pr.pr_id)
                                          where prj.p_id = searchp_idby;'
 language 'sql';
 
