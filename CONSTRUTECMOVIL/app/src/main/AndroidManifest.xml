@@ -32,9 +32,6 @@
             android:name=".UserRegistration"
             android:label="Registration Process"
             android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".addStage"
-            android:label="Add a new Stage"
-            android:theme="@style/AppTheme"></activity>
         <activity android:name=".AssignProduct"
             android:label="Add products"></activity>
     </application>

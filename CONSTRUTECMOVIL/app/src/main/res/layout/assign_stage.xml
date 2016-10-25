@@ -3,7 +3,8 @@
     android:layout_width="match_parent" android:layout_height="match_parent">
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_margin="20dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -11,7 +12,75 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Choose a project"
             android:id="@+id/titleprojects"
-            android:layout_gravity="center_horizontal|top" />
+            android:layout_gravity="top" />
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="54dp"
+            android:id="@+id/_stagespinner"
+            android:spinnerMode="dialog"
+            android:visibility="visible"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="105dp" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:ems="10"
+            android:id="@+id/_stageSD"
+            android:hint="Start Date (YYYY-MM-DD)"
+            android:layout_marginTop="155dp"
+            android:gravity="center" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:ems="10"
+            android:hint="End Date (YYYY-MM-DD)"
+            android:id="@+id/_stageDE"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="195dp"
+            android:gravity="center" />
+
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/_projectspinner"
+            android:layout_gravity="center_horizontal|top"
+            android:layout_marginTop="20dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Choose the stage"
+            android:id="@+id/textView11"
+            android:layout_gravity="top"
+            android:layout_marginTop="80dp" />
+
+        <Button
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/ic_check_black_24dp"
+            android:id="@+id/_addbutton"
+            android:layout_gravity="left|bottom" />
+
+        <ListView
+            android:layout_width="wrap_content"
+            android:layout_height="134dp"
+            android:id="@+id/_stagedetails"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_marginBottom="55dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Stage Details"
+            android:id="@+id/textView12"
+            android:layout_gravity="left|center_vertical"
+            android:layout_marginTop="25dp" />
 
     </FrameLayout>
 </RelativeLayout>
