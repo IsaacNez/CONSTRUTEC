@@ -209,6 +209,7 @@ public class SendOrder extends Fragment {
         });
         return _assignStage;
     }
+
     private void getProject(){
         String server = getString(R.string.url)+"project/get/"+param+"/"+value;
         AsyncHttpClient httpclient = new AsyncHttpClient();
@@ -244,7 +245,7 @@ public class SendOrder extends Fragment {
 
     public void getprojectdeatils(int p_id){
         final AsyncHttpClient httpClient = new AsyncHttpClient();
-        String server = "http://isaac:7249/api/projectdetails/get/p_id/"+p_id;
+        String server = getString(R.string.url)+"projectdetails/get/p_id/"+p_id;
         _products = new ArrayList<>();
         _stagesdata = new ArrayList<>();
         _stagesname = new ArrayList<>();

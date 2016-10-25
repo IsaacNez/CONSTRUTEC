@@ -45,6 +45,7 @@ public class UserInterface extends AppCompatActivity
         userCode = example.getIntExtra("UCode",0);
         try {
              arrayrole = new JSONArray(jsonArray);
+            System.out.println(arrayrole.toString());
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -90,7 +91,6 @@ public class UserInterface extends AppCompatActivity
         nav_menu.findItem(R.id.nav_third_layout).setVisible(false);
         nav_menu.findItem(R.id.nav_assign_stage).setVisible(false);
         nav_menu.findItem(R.id.nav_assign_products).setVisible(false);
-        nav_menu.findItem(R.id.nav_gen_budget).setVisible(false);
         nav_menu.findItem(R.id.nav_send_order).setVisible(false);
         nav_menu.findItem(R.id.nav_search_product).setVisible(false);
         nav_menu.findItem(R.id.nav_search_date).setVisible(false);
@@ -105,7 +105,6 @@ public class UserInterface extends AppCompatActivity
                     nav_menu.findItem(R.id.nav_third_layout).setVisible(true);
                     nav_menu.findItem(R.id.nav_assign_stage).setVisible(true);
                     nav_menu.findItem(R.id.nav_assign_products).setVisible(true);
-                    nav_menu.findItem(R.id.nav_gen_budget).setVisible(true);
                     nav_menu.findItem(R.id.nav_send_order).setVisible(true);
                 }
                 if(arrayrole.getInt(i)==3){
@@ -182,10 +181,7 @@ public class UserInterface extends AppCompatActivity
                     .replace(R.id.content_frame,todo)
                     .commit();
 
-        }else if (id == R.id.nav_gen_budget){
-            fragmgr.beginTransaction()
-                    .replace(R.id.content_frame, new GenBudget())
-                    .commit();
+
         }else if (id == R.id.nav_send_order){
             Fragment todo = new SendOrder();
             todo.setArguments(extradata);

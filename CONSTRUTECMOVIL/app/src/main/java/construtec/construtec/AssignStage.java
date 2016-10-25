@@ -85,7 +85,7 @@ public class AssignStage extends Fragment {
 
 
         _projectadapter = new ArrayAdapter<String>(_addstage.getContext(),
-                android.R.layout.simple_spinner_dropdown_item,_projectPres);
+                android.R.layout.simple_list_item_1,_projectPres);
         _projectspinner.setAdapter(_projectadapter);
         _projectspinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -152,6 +152,7 @@ public class AssignStage extends Fragment {
 
         return _addstage;
     }
+
     public void getprojects(){
         final AsyncHttpClient httpClient = new AsyncHttpClient();
         _projectPres = new ArrayList<>();
@@ -168,7 +169,8 @@ public class AssignStage extends Fragment {
                         JSONObject _newJsonObject = response.getJSONObject(i);
                         _projectsID.add(_newJsonObject.getInt("p_id"));
                         _projectName.add(_newJsonObject.getString("p_name"));
-                        _projectPres.add(_newJsonObject.getInt("p_id") + ": " + _newJsonObject.getString("p_name"));
+                        _projectPres.add("Project ID: "+_newJsonObject.getInt("p_id") + "\n " +"Project Name: "+ _newJsonObject.getString("p_name")+"\n"+
+                        "Project Budget: "+_newJsonObject.getInt("p_budget")+"\n");
                     }
                     _projectadapter.notifyDataSetChanged();
 
@@ -187,10 +189,10 @@ public class AssignStage extends Fragment {
 
     }
 
-   public void getprojectdetails(int p_id){
+    public void getprojectdetails(int p_id){
         final AsyncHttpClient httpClient = new AsyncHttpClient();
-        String server = "http://isaac:7249/api/projectdetails/get/p_id/"+p_id;
-       System.out.println("Project details: "+server);
+        String server = getString(R.string.url)+"projectdetails/get/p_id/"+p_id;
+        System.out.println("Project details: "+server);
         httpClient.get(server, null, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
@@ -210,8 +212,9 @@ public class AssignStage extends Fragment {
                                     JSONObject _stageJSONObject = _newJSONArray.getJSONObject(j);
                                     String action = "Name: " + _stageJSONObject.getString("s_name") + "\n"
                                             + "Status: " + _stageJSONObject.getString("s_status") + "\n" +
-                                            "Start date: " + _stageJSONObject.getString("s_datestart") + "\n"
-                                            + "Start end: " + _stageJSONObject.getString("s_dateend") + "\n";
+                                            "Date Start: " + _stageJSONObject.getString("s_datestart") + "\n"
+                                            + "Date End: " + _stageJSONObject.getString("s_dateend")+"\n"+
+                                            "Stage Budget: "+_stageJSONObject.getString("gpd_budget")+ "\n";
                                     if (!_stages.contains(action))
                                         _stages.add(action);
 
@@ -235,7 +238,8 @@ public class AssignStage extends Fragment {
 
     public List<String> getStages(Integer p_id){
         final AsyncHttpClient httpClient = new AsyncHttpClient();
-        String server = "http://isaac:7249/api/stage/get/p_id/"+p_id;
+        String server = getString(R.string.url)+"stage/get/p_id/stages,"+p_id;
+        System.out.println("STAGES"+server);
         final List<String> _temp = new ArrayList<>();
         _stagesdata = new ArrayList<>();
         httpClient.get(server, null, new JsonHttpResponseHandler() {

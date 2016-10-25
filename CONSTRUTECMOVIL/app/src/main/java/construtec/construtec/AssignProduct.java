@@ -203,10 +203,11 @@ public class AssignProduct extends Fragment {
         //_showproductstitle = (TextView) findViewById(R.id.chooseproducts);
 
     }
+
     public void getprojects() {
         final AsyncHttpClient httpClient = new AsyncHttpClient();
 
-        String server = "http://isaac:7249/api/project/get/"+_action+"/"+_data;
+        String server = getString(R.string.url)+"project/get/"+_action+"/"+_data;
         System.out.println(server);
         _projectPres = new ArrayList<>();
         _projectName = new ArrayList<>();
@@ -241,7 +242,7 @@ public class AssignProduct extends Fragment {
 
     public void getprojectdeatils(int p_id){
         final AsyncHttpClient httpClient = new AsyncHttpClient();
-        String server = "http://isaac:7249/api/projectdetails/get/p_id/"+p_id;
+        String server = getString(R.string.url)+"projectdetails/get/p_id/"+p_id;
         httpClient.get(server,null,new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
@@ -277,6 +278,7 @@ public class AssignProduct extends Fragment {
             }
         });
     }
+
     public void getproducts(){
         AsyncHttpClient httpClient = new AsyncHttpClient();
         String server = getResources().getString(R.string.url)+"product/get/pr_id/undefined";

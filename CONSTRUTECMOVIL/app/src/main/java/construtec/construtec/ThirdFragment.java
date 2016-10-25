@@ -84,7 +84,7 @@ public class ThirdFragment extends Fragment{
                 if (_projectName.getText().toString().matches("") | _projectLocation.getText().toString().matches(""))
                     Toast.makeText(getActivity().getApplicationContext(), "You must enter some data", Toast.LENGTH_LONG).show();
                 else {
-                    String server = "http://isaac:7249/api/project/post";
+                    String server = getString(R.string.url)+"project/post";
                     final AsyncHttpClient client = new AsyncHttpClient();
                     JSONObject params = new JSONObject();
                     try {
@@ -206,7 +206,7 @@ public class ThirdFragment extends Fragment{
 
     public synchronized void get(String action, final String controller){
         AsyncHttpClient httpClient = new AsyncHttpClient();
-        String server = "http://isaac:7249/api/"+controller+"/get/u_id/"+action;
+        String server = getString(R.string.url)+controller+"/get/u_id/"+action;
         System.out.println(server);
         _especification = new ArrayList<>();
 
@@ -241,6 +241,7 @@ public class ThirdFragment extends Fragment{
         httpClient.cancelAllRequests(true);
 
     }
+
     private synchronized void startdata(){
         try {
             rolearray = new JSONArray(roles);
@@ -265,6 +266,7 @@ public class ThirdFragment extends Fragment{
             e.printStackTrace();
         }
     }
+
     public void chooseclient(AlertDialog.Builder _window,final View _list){
         switch (_action){
             case 0:

@@ -197,6 +197,7 @@ public class SearchByProduct extends Fragment {
             }
         });
     }
+
     public void getComments(String s_name, Integer p_id, Integer u_id){
         String server = getString(R.string.url)+"comment/get/s_name,p_id,u_id/"+
                 "'"+s_name+"'"+","+p_id+","+u_id;
@@ -226,6 +227,7 @@ public class SearchByProduct extends Fragment {
             }
         });
     }
+
     private void sendComment(int position, String message){
         AsyncHttpClient httpClient = new AsyncHttpClient();
         String server = getString(R.string.url)+"comment/post";

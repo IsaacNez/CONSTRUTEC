@@ -3,5 +3,65 @@
     android:layout_width="match_parent" android:layout_height="match_parent">
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></FrameLayout>
+        android:layout_height="match_parent"
+        android:layout_margin="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Get Budget"
+            android:id="@+id/textView17"
+            android:layout_gravity="left|top" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Choose project"
+            android:id="@+id/textView18"
+            android:layout_gravity="left|top"
+            android:layout_marginTop="30dp" />
+
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/_projectBudgetSpinner"
+            android:layout_gravity="left|top"
+            android:layout_marginTop="60dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Project budget:"
+            android:id="@+id/textView19"
+            android:layout_gravity="left|top"
+            android:layout_marginTop="110dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:id="@+id/_projectBudget"
+            android:layout_gravity="left|top"
+            android:layout_marginTop="110dp"
+            android:layout_marginLeft="135dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Stage Budget"
+            android:id="@+id/textView20"
+            android:layout_gravity="left|center_vertical"
+            android:layout_marginBottom="80dp" />
+
+        <ListView
+            android:layout_width="wrap_content"
+            android:layout_height="290dp"
+            android:id="@+id/_stageBudget"
+            android:layout_gravity="left|center_vertical"
+            android:layout_marginTop="85dp" />
+    </FrameLayout>
 </RelativeLayout>

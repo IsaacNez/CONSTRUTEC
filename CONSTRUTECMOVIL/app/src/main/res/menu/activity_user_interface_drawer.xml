@@ -23,10 +23,6 @@
             android:icon="@drawable/ic_add_box_black_24dp"
             android:title="Assign products"/>
         <item
-            android:id="@+id/nav_gen_budget"
-            android:icon="@drawable/ic_attach_money_black_24dp"
-            android:title="Calculate budget"/>
-        <item
             android:id="@+id/nav_send_order"
             android:icon="@drawable/ic_menu_send_interface"
             android:title="Send order"/>
@@ -41,17 +37,6 @@
 
     </group>
 
-    <item android:title="Communicate">
-        <menu>
-            <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share_interface"
-                android:title="Share" />
-            <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send_interface"
-                android:title="Send" />
-        </menu>
-    </item>
+
 
 </menu>
