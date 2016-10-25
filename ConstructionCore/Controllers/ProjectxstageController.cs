@@ -30,7 +30,7 @@ namespace ConstructionCore.Controllers
             myConnection.ConnectionString = System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
             System.Diagnostics.Debug.WriteLine("print3");
             System.Diagnostics.Debug.WriteLine("cargo base");
-            string test = "INSERT INTO projectxstage(p_id,s_name, pxs_datestart, pxs_dateend,pxs_status,pxs_budget) Values(:p_id,:s_name,:pxs_datestart,:pxs_dateend,:pxs_status,:pxs_budget)";
+            string test = "INSERT INTO projectxstage(p_id,s_name, pxs_datestart, pxs_dateend,pxs_status) Values(:p_id,:s_name,:pxs_datestart,:pxs_dateend,:pxs_status)";
             
             var command = new NpgsqlCommand(test, myConnection);
             command.CommandType = CommandType.Text;
@@ -41,7 +41,6 @@ namespace ConstructionCore.Controllers
             command.Parameters.AddWithValue(":pxs_status", stage.pxs_status);
             command.Parameters.AddWithValue(":pxs_datestart", stage.pxs_datestart);
             command.Parameters.AddWithValue(":pxs_dateend", stage.pxs_dateend);
-            command.Parameters.AddWithValue(":pxs_budget", stage.pxs_budget);
             myConnection.Open();
             command.ExecuteNonQuery();
             System.Diagnostics.Debug.WriteLine("print6");
@@ -56,7 +55,7 @@ namespace ConstructionCore.Controllers
             string[] attr = attribute.Split(',');
             string[] ids = id.Split(',');
             string action = "update projectxstage set pxs_status ="+ids[0]+" where p_id =" +ids[1] +" and s_name="+ids[2];
-            NpgsqlConnection myCon = new NpgsqlConnection();
+            NpgsqlConnection myCon = new NpgsqlConnection(); 
             myCon.ConnectionString = System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
             var command = new NpgsqlCommand(action, myCon);
             myCon.Open();
@@ -99,6 +98,7 @@ namespace ConstructionCore.Controllers
             {
                 stage = new projectxstage();
                 stage.pxs_id = (int)coso["pxs_id"];
+                stage.pxs_status = (string)coso["pxs_status"];
                 stage.p_id = (int)coso["p_id"];
                 stage.s_name = (string)coso["s_name"];
                 stage.pxs_datestart = (DateTime)coso["pxs_datestart"];

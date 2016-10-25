@@ -20,8 +20,8 @@ namespace ConstructionCore.Controllers
         public void AddOrder(Order order)
         {
             HttpClient client = new HttpClient();
-            client.BaseAddress = new Uri("http://desktop-6upj287:7549/");
-            client.PutAsJsonAsync("api/Order/post/", order);
+            client.BaseAddress = new Uri("http://desktop-6upj287:7549");
+            client.PostAsJsonAsync("api/Order/post", order);
         }
     }
             
