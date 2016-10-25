@@ -50,6 +50,21 @@ namespace ConstructionCore.Controllers
         }
 
         [HttpGet]
+        [ActionName("Update")]
+        public void UpdateStatus(string attribute, string id)
+        {
+            string[] attr = attribute.Split(',');
+            string[] ids = id.Split(',');
+            string action = "update projectxstage set pxs_status ="+ids[0]+" where p_id =" +ids[1] +" and s_name="+ids[2];
+            NpgsqlConnection myCon = new NpgsqlConnection();
+            myCon.ConnectionString = System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
+            var command = new NpgsqlCommand(action, myCon);
+            myCon.Open();
+            command.ExecuteNonQuery();
+
+        }
+
+        [HttpGet]
         [ActionName("Get")]
         public JsonResult<List<projectxstage>> Get(string attribute, string id)
         {
