@@ -22,17 +22,10 @@ namespace ConstructionCore.Controllers
         {
             ProjectDetails proj = null;
             List<ProjectDetails> values = new List<ProjectDetails>();
-            string[] attr = attribute.Split(',');
             string[] ids = id.Split(',');
-            System.Diagnostics.Debug.WriteLine("print1");
             NpgsqlConnection myConnection = new NpgsqlConnection();
-            System.Diagnostics.Debug.WriteLine("print2");
             myConnection.ConnectionString = System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
-            System.Diagnostics.Debug.WriteLine("print3");
-            System.Diagnostics.Debug.WriteLine("cargo base");
-            string test = "select * from getprojectdetails(" + ids[0] + ");";
-            System.Diagnostics.Debug.WriteLine(test);
-            
+            string test = "select * from getprojectdetails(" + ids[0] + ");";         
             var command = new NpgsqlCommand(test, myConnection);
             myConnection.Open();
             var coso = command.ExecuteReader();
@@ -58,7 +51,6 @@ namespace ConstructionCore.Controllers
                         {
                             if (proj.stages.ElementAt(z).s_name == stag.s_name)
                             {
-                                System.Diagnostics.Debug.WriteLine("entro al true");
                                 prodstage product = new prodstage();
                                 product.p_id = (int)coso["gpd_pid"];
                                 product.p_price = (int)coso["gpd_price"];
@@ -76,11 +68,9 @@ namespace ConstructionCore.Controllers
                                 proj.stages.ElementAt(i).products.Add(product);
                             }
                         }
-
                     }
                     else if (proj.stages.Count == 0)
                     {
-                        System.Diagnostics.Debug.WriteLine("entro al false");
                         proj.stages.Add(stag);
                         int i = proj.stages.IndexOf(stag);
                         prodstage product = new prodstage();
@@ -88,24 +78,16 @@ namespace ConstructionCore.Controllers
                         product.p_price = (int)coso["gpd_price"];
                         product.p_quantity = (int)coso["gpd_quantity"];
                         proj.stages.ElementAt(i).products.Add(product);
-                    }
-                    
-                    
-                }
-                
+                    }                                 
+                }               
                 else{
                     myConnection.Close();
-                    values.Add(proj);
-                    
-
+                    values.Add(proj);                   
                 }
             }
             values.Add(proj);
-
-
             myConnection.Close();
             return Json(values);
-
         }
     }
 }

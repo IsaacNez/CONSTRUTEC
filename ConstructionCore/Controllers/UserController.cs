@@ -50,43 +50,20 @@ namespace ConstructionCore.Controllers
         [ActionName("Post")]
         public void AddUser(User us)
         {
-            System.Diagnostics.Debug.WriteLine("print1");
-            System.Diagnostics.Debug.WriteLine(us.u_lname);
-
             NpgsqlConnection myConnection = new NpgsqlConnection();
-            System.Diagnostics.Debug.WriteLine("print2");
             myConnection.ConnectionString = System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
-            System.Diagnostics.Debug.WriteLine("print3");
-            System.Diagnostics.Debug.WriteLine("cargo base");
-
             string test = "insertuser";
             var command = new NpgsqlCommand(test, myConnection);
             command.CommandType = CommandType.StoredProcedure;
-            System.Diagnostics.Debug.WriteLine("print5");
-
-
-            System.Diagnostics.Debug.WriteLine("generando comando");
-
-
-  
-             command.Parameters.AddWithValue(":m_id",us.u_id);
-        
-             command.Parameters.AddWithValue(":m_name", us.u_name);
-
-             command.Parameters.AddWithValue(":m_lname", us.u_lname);
-
-             command.Parameters.AddWithValue("m_phone", us.u_phone);
-
-             command.Parameters.AddWithValue("m_password", us.u_password);
+            command.Parameters.AddWithValue(":m_id", us.u_id);
+            command.Parameters.AddWithValue(":m_name", us.u_name);
+            command.Parameters.AddWithValue(":m_lname", us.u_lname);
+            command.Parameters.AddWithValue("m_phone", us.u_phone);
+            command.Parameters.AddWithValue("m_password", us.u_password);
             command.Parameters.AddWithValue("m_code", us.u_code);
             command.Parameters.AddWithValue("rm_id", us.r_id);
             myConnection.Open();
             command.ExecuteNonQuery();
-
-             System.Diagnostics.Debug.WriteLine("print6");
-           
-
-           // command.ExecuteReader();
             myConnection.Close();
         }
 
@@ -98,17 +75,13 @@ namespace ConstructionCore.Controllers
             List<RequestedUser> values = new List<RequestedUser>();
             string[] attr = attribute.Split(',');
             string[] ids = id.Split(',');
-            System.Diagnostics.Debug.WriteLine("print1");
             NpgsqlConnection myConnection = new NpgsqlConnection();
-            System.Diagnostics.Debug.WriteLine("print2");
             myConnection.ConnectionString = System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
-            System.Diagnostics.Debug.WriteLine("print3");
             System.Diagnostics.Debug.WriteLine("cargo base");
             myConnection.Open();
             string test = "select * from getuser("+ids[0]+",'"+ids[1]+"');";
             var command = new NpgsqlCommand(test, myConnection);
             var coso = command.ExecuteReader();
-            System.Diagnostics.Debug.WriteLine("print6");
             us = new RequestedUser();
             while (coso.Read()) {             
                 us.q_id = (int)coso["q_id"];                
