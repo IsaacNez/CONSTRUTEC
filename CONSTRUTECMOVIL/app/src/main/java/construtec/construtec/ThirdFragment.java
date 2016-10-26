@@ -204,6 +204,12 @@ public class ThirdFragment extends Fragment{
         return myView;
     }
 
+    /**
+     * Depending on the role the user has choose (in teh case it owns more than one role)
+     * it seends the correct information to be inserted into the project table.
+     * @param action
+     * @param controller
+     */
     public synchronized void get(String action, final String controller){
         AsyncHttpClient httpClient = new AsyncHttpClient();
         String server = getString(R.string.url)+controller+"/get/u_id/"+action;
@@ -242,6 +248,10 @@ public class ThirdFragment extends Fragment{
 
     }
 
+    /**
+     * Checks if the user that log on has more than one role, if it is that case
+     * it makes the user to choose which role to use.
+     */
     private synchronized void startdata(){
         try {
             rolearray = new JSONArray(roles);
@@ -267,6 +277,12 @@ public class ThirdFragment extends Fragment{
         }
     }
 
+    /**
+     * It is when it has more than one role, and it choose between then, the correct data is set in
+     * the correct popup to be display and they choose.
+     * @param _window
+     * @param _list
+     */
     public void chooseclient(AlertDialog.Builder _window,final View _list){
         switch (_action){
             case 0:

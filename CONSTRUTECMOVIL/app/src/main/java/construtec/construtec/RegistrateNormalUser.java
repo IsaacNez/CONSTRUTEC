@@ -85,6 +85,11 @@ public class RegistrateNormalUser extends Fragment {
         else
             return true;
     }
+
+    /**
+     * If the data is correct, then the data is send to be registered so it can log in into the web application
+     * or the app mobile.
+     */
     private void sendInfo(){
         String server = "";
         HttpClient newEngineer = new DefaultHttpClient();

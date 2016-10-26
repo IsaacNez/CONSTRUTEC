@@ -20,6 +20,9 @@ import cz.msebera.android.httpclient.Header;
  * Created by Isaac on 10/10/2016.
  */
 public class FirstFragment extends Fragment {
+    /**
+     * This fragment loads the products from EPATEC to CONSTRUTEC
+     */
     View myView;
     Button _callEPATEC;
     @Nullable

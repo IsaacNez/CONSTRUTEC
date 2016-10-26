@@ -35,6 +35,9 @@ public class SecondFragment extends Fragment {
     EditText _stagedescription;
     @Nullable
     @Override
+    /**
+     * It adds a new stage to the STAGE table, it is only accessed by engineers.
+     */
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
         myView = inflater.inflate(R.layout.second_layout,container,false);
         _createStage = (Button) myView.findViewById(R.id.create);

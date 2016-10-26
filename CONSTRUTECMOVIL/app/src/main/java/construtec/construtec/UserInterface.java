@@ -77,6 +77,10 @@ public class UserInterface extends AppCompatActivity
     }
 
     @Override
+    /**
+     * Depending on the log in information, it sets visible the options
+     * that are able to be accessed by the meta-data of the user.
+     */
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.user_interface, menu);
@@ -125,6 +129,7 @@ public class UserInterface extends AppCompatActivity
     }
 
     @Override
+
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
@@ -141,8 +146,10 @@ public class UserInterface extends AppCompatActivity
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
+    /**
+     * Depending of the selection, it starts the fragment correspondent.
+     */
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
         int id = item.getItemId();
         Bundle extradata = new Bundle();
         extradata.putString("role",arrayrole.toString());
@@ -151,12 +158,10 @@ public class UserInterface extends AppCompatActivity
         extradata.putString("u_name", user);
         extradata.putString("jsonArray",jsonArray);
         FragmentManager fragmgr = getFragmentManager();
-
         if (id == R.id.nav_first_layout) {
             fragmgr.beginTransaction()
                     .replace(R.id.content_frame, new FirstFragment())
                     .commit();
-            // Handle the camera action
         } else if (id == R.id.nav_second_layout) {
             fragmgr.beginTransaction()
                     .replace(R.id.content_frame, new SecondFragment())
@@ -180,8 +185,6 @@ public class UserInterface extends AppCompatActivity
             fragmgr.beginTransaction()
                     .replace(R.id.content_frame,todo)
                     .commit();
-
-
         }else if (id == R.id.nav_send_order){
             Fragment todo = new SendOrder();
             todo.setArguments(extradata);
@@ -197,7 +200,6 @@ public class UserInterface extends AppCompatActivity
                     .replace(R.id.content_frame, new SearchByProduct())
                     .commit();
         }
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;

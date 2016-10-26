@@ -111,6 +111,10 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * This function get the user and its roles depending in the information
+     * specified.
+     */
     public void getUser(){
         AsyncHttpClient httpClient = new AsyncHttpClient();
         String server = getResources().getString(R.string.url)+"user/get/u_id,u_password/"+mEmailView.getText().toString()+','+mPasswordView.getText().toString();

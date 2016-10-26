@@ -67,6 +67,12 @@ public class RegistrateCustomer extends Fragment {
         });
         return myView;
     }
+
+    /**
+     * Checks if the data specified for soon-to-be user is correct and returns a boolean depending if
+     * it finds an error or not.
+     * @return
+     */
     private boolean CheckData(){
 
         if(!E_ID.getText().toString().matches("[0-9]+"))
@@ -80,6 +86,11 @@ public class RegistrateCustomer extends Fragment {
         else
             return true;
     }
+
+    /**
+     * If the data is correct, then the data is send to be registered so it can log in into the web application
+     * or the app mobile.
+     */
     private void sendInfo(){
         String server = "";
         HttpClient newEngineer = new DefaultHttpClient();

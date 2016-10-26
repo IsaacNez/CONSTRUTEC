@@ -153,6 +153,10 @@ public class AssignStage extends Fragment {
         return _addstage;
     }
 
+    /**
+     * This function get the projects that are going to be assigned
+     * to the spinner, then to be able to get it details.
+     */
     public void getprojects(){
         final AsyncHttpClient httpClient = new AsyncHttpClient();
         _projectPres = new ArrayList<>();
@@ -189,6 +193,12 @@ public class AssignStage extends Fragment {
 
     }
 
+    /**
+     * This function obtains the details of a project, using its unique
+     * identifier. It uses as a paramater the project id called from the
+     * action that select the project in the project spinner.
+     * @param p_id
+     */
     public void getprojectdetails(int p_id){
         final AsyncHttpClient httpClient = new AsyncHttpClient();
         String server = getString(R.string.url)+"projectdetails/get/p_id/"+p_id;
@@ -236,6 +246,13 @@ public class AssignStage extends Fragment {
 
     }
 
+    /**
+     * This function get the stages a product could add, this is why
+     * it uses as parameter the unique identifier because it searches
+     * the stages that a project doesn't own.
+     * @param p_id
+     * @return
+     */
     public List<String> getStages(Integer p_id){
         final AsyncHttpClient httpClient = new AsyncHttpClient();
         String server = getString(R.string.url)+"stage/get/p_id/stages,"+p_id;

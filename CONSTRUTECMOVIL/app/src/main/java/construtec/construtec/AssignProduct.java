@@ -204,6 +204,10 @@ public class AssignProduct extends Fragment {
 
     }
 
+    /**
+     * This function get the projects that are going to be assigned
+     * to the spinner, then to be able to get it details.
+     */
     public void getprojects() {
         final AsyncHttpClient httpClient = new AsyncHttpClient();
 
@@ -240,6 +244,12 @@ public class AssignProduct extends Fragment {
 
     }
 
+    /**
+     * This function obtains the details of a project, using its unique
+     * identifier. It uses as a paramater the project id called from the
+     * action that select the project in the project spinner.
+     * @param p_id
+     */
     public void getprojectdeatils(int p_id){
         final AsyncHttpClient httpClient = new AsyncHttpClient();
         String server = getString(R.string.url)+"projectdetails/get/p_id/"+p_id;
@@ -279,6 +289,11 @@ public class AssignProduct extends Fragment {
         });
     }
 
+    /**
+     * This method get all the products available in CONSTRUTEC and
+     * preloaded from EPATEC, this allows the user to add certain
+     * products to certain stage in a product.
+     */
     public void getproducts(){
         AsyncHttpClient httpClient = new AsyncHttpClient();
         String server = getResources().getString(R.string.url)+"product/get/pr_id/undefined";

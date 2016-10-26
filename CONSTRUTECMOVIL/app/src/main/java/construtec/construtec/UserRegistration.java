@@ -61,6 +61,10 @@ public class UserRegistration extends AppCompatActivity
     }
 
     @Override
+    /**
+     * Depending on the log in information, it sets visible the options
+     * that are able to be accessed by the meta-data of the user.
+     */
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.user_registration, menu);
@@ -84,6 +88,9 @@ public class UserRegistration extends AppCompatActivity
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
+    /**
+     * Depending of the selection, it starts the fragment correspondent.
+     */
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();

@@ -210,6 +210,10 @@ public class SendOrder extends Fragment {
         return _assignStage;
     }
 
+    /**
+     * This function get the projects that are going to be assigned
+     * to the spinner, then to be able to get it details.
+     */
     private void getProject(){
         String server = getString(R.string.url)+"project/get/"+param+"/"+value;
         AsyncHttpClient httpclient = new AsyncHttpClient();
@@ -243,6 +247,12 @@ public class SendOrder extends Fragment {
         });
     }
 
+    /**
+     * This function obtains the details of a project, using its unique
+     * identifier. It uses as a paramater the project id called from the
+     * action that select the project in the project spinner.
+     * @param p_id
+     */
     public void getprojectdeatils(int p_id){
         final AsyncHttpClient httpClient = new AsyncHttpClient();
         String server = getString(R.string.url)+"projectdetails/get/p_id/"+p_id;
@@ -278,6 +288,12 @@ public class SendOrder extends Fragment {
         });
     }
 
+    /**
+     * Depending of the values gotten by the get project details
+     * and the position of the stage, it gets the products of that stage
+     * and present it to the user.
+     * @param _products
+     */
     public void getproducts(JSONArray _products){
 
         System.out.println(_products.toString());

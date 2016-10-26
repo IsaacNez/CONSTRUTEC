@@ -77,6 +77,10 @@ public class RegistrateEngineer extends Fragment {
         return myView;
     }
 
+    /**
+     * This function get the projects that are going to be assigned
+     * to the spinner, then to be able to get it details.
+     */
     private boolean CheckData(){
         if(!E_ID.getText().toString().matches("[0-9]+"))
             return false;
@@ -91,7 +95,8 @@ public class RegistrateEngineer extends Fragment {
     }
 
     /**
-     * Send the information to the webservice to be stored in the correct tables.
+     * If the data is correct, then the data is send to be registered so it can log in into the web application
+     * or the app mobile.
      */
     private void sendInfo(){
         String server = "";

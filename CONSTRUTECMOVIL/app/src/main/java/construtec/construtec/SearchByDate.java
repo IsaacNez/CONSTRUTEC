@@ -146,6 +146,10 @@ public class SearchByDate extends Fragment {
         return _assignStage;
     }
 
+    /**
+     * Get the stages soon-to-start depending on the date got automatically in the phone
+     * used at that time by the user.
+     */
     public void getDataByDate(){
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         String date = sdf.format(new Date());
@@ -172,6 +176,14 @@ public class SearchByDate extends Fragment {
         });
     }
 
+    /**
+     * It gets the comments of an stage using the unique identifier of the stage, the project
+     * and the owner, in this way, the mixture of the three of them makes an unique giant identifier
+     * which allows to get the comments.
+     * @param s_name
+     * @param p_id
+     * @param u_id
+     */
     public void getComments(String s_name, Integer p_id, Integer u_id){
         String server = getString(R.string.url)+"comment/get/s_name,p_id,u_id/"+
                 "'"+s_name+"'"+","+p_id+","+u_id;
@@ -198,6 +210,11 @@ public class SearchByDate extends Fragment {
         });
     }
 
+    /**
+     * Sends a comment depending on the stage selected
+     * @param position
+     * @param message
+     */
     private void sendComment(int position, String message){
         AsyncHttpClient httpClient = new AsyncHttpClient();
         String server = getString(R.string.url)+"comment/post";
