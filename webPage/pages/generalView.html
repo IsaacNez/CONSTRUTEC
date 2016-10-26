@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+<!--Upload the angular, scripts,css and bootstrap-->
 <head>
   <title>GENERAL USER</title>
     <meta charset="utf-8">
@@ -21,12 +22,13 @@
     
 </head>
 <body ng-app="generalView" >
+<!--Show all option that  general user can do-->
 <div>
     <nav class="navbar navbar-inverse">
       <div class="container-fluid">
         <div class="navbar-header">
              
-          <a class="navbar-brand" href="#">Welcome</a>
+          <a class="navbar-brand" id="idUser" href="#"></a>
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
           <ul class="nav navbar-nav">
@@ -41,7 +43,7 @@
     </nav>
 </div>
   
-    
+<!--Modal where show all projects stage that will start in the next 15 days-->    
 <div id="projectMaterialModal"  ng-controller="projectMaterialCtrl" style="overflow-y: scroll;" class="modal fade" role="dialog" style="z-index: 1400;"  > 
   <!-- Modal content -->s
   <div class="modal-content">
@@ -51,7 +53,8 @@
     </div>
     <div class="modal-body">
             <div class="box box boxP" id="reward">
-
+             
+            <!--Search a stage that has a specific product-->
             <div class="form-group has-feedback" style="margin: 20px 0px 0px 0px;">
                     <label for="S_Name">Search By Materials</label>
                     <input id=S_Name type="text" ng-model="S_Name" ng-change="getProjectByMaterial()" class="form-control" placeholder="Write a Material Name">
@@ -59,17 +62,15 @@
                         <span class="glyphicon glyphicon-log-out form-control-feedback"></span>
             </div>
                  
-                                                     
-                                     
-                                        
-                              
+           
+              <!--Table that show all prject stage information-->     
             <div class="box-body" style="margin: 20px 0px 0px 0px;">              
 
                 <div align="center" class="col span_1_of_1 table-responsive" style=" margin: 0px 0px 0px 0px;"> 
                         <table id="tableProject" class="table table-bordered table-striped">
                         <thead>
                             <tr >    
-                                 
+                                <!--The projects and user id wont show to the user-->
                                 <th style="display:none;" >
                                     <h4><b>Project ID</b>
                                     </h4>
@@ -78,7 +79,8 @@
                                     <h4><b>User ID</b>
                                     </h4>
                                 </th>
-                                <th   >
+                               
+                                <th  >
                                     <h4><b>Client</b>
                                     </h4>
                                 </th>
@@ -103,6 +105,10 @@
                                     <h4><b>Status</b>
                                     </h4>
                                 </th>
+                                <th  >
+                                    <h4><b>Finish</b>
+                                    </h4>
+                                </th>
                                 <th> 
                                     <h4><b> Comments </b> </h4>
                                   
@@ -113,7 +119,7 @@
 
                         <tbody>
                     
-                              <tr ng-repeat="item in projectlist">  
+                              <tr  ng-repeat="item in projectlist">  
                                  
                                 <td  style="display:none;">{{item.gcs_pid}}</td>
                                 <td  style="display:none;">{{item.gcs_uid}}</td>
@@ -122,10 +128,15 @@
                                 <td>{{item.gcs_plocation}}</td>
                                 <td>{{item.gcs_sname}}</td>
                                 <td>{{item.gcs_datestart}}</td>
-                                <td contenteditable='true'>{{item.gcs_status}}</td>
+                                
+                                <td>{{item.gcs_status}}</td>
+                                  <!--Change the stage status to ready-->
+                                <td><a data-toggle="tooltip" title="Finish Stage">
+                                            <button type="button" ng-click="updateStatus(item,item.gcs_pid,item.gcs_sname)" class="btn btn-primary"><i class="fa fa-check" aria-hidden="true"></i></button>
+                                        </a> 
+                                  </td>
                               
-                              
-                           
+                                  <!--Show all comment about this stage-->
                                 <td><div  align="center" class="btn-group">    
                                         <a data-toggle="tooltip" title="Comment Information">
                                              <a ng-click="getComment(item.gcs_pid,item.gcs_uid,item.gcs_sname)" id="commentMaterial" role="button" data-toggle="modal" data-target="#commentModal" href="#">Show All Comments</a>                                        
@@ -153,12 +164,7 @@
   
   </div>
 
-
-
-
-         
-
-    
+  <!--Modal where show all comment about a specific stage--> 
  <div id="commentModal" class="modal" ng-controller="commentCtrl" style="overflow-y: scroll;">
   <!-- Modal content -->
   <div class="modal-content">
@@ -169,6 +175,8 @@
     </div>
     <div class="modal-body">
         
+      
+          <!--Comment Box-->
         <div  id="comment_box">
             <h3>Comments</h3>
             

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+<!--Upload the angular, scripts,css and bootstrap-->
 <head>
   <title>ADMIN</title>
     <meta charset="utf-8">
@@ -23,6 +24,8 @@
     
 </head>
 <body ng-app="admiView" >
+    
+<!--Show all option that  user admin  can do-->
 <div>
     <nav class="navbar navbar-inverse">
       <div class="container-fluid">
@@ -32,7 +35,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>    
-          <h2 class="navbar-brand" href="#">Welcome</h2>
+          <h2 class="navbar-brand" id="idUser" href="#"></h2>
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
           <ul class="nav navbar-nav">
@@ -62,14 +65,17 @@
       </div>
     </nav>
 </div>
-
-    <div id="employeeModal" class="modal" ng-controller="employeeCtrl"  style="overflow-y: scroll;">
+ <!--Modal where the admin can add a new general user-->
+<div id="employeeModal" class="modal" ng-controller="employeeCtrl"  style="overflow-y: scroll;">
+    
   <!-- Modal content -->
   <div class="modal-content">
     <div class="modal-header">
       <span id="close3" class="close">×</span>
       <h2>New User</h2>
     </div>
+      
+    <!--Form where it can insert the general user information-->
     <div class="modal-body">
             <div class="form-group has-feedback" style="margin: 20px 0px 0px 0px;">
                 <label for="U_Name" >Write a user name</label>
@@ -107,7 +113,7 @@
   </div>
 </div>
     
-    
+ <!--Modal where the admin can add a new stage-->    
 <div id="stageModal" class="modal"  ng-controller="stageCtrl" style="overflow-y: scroll;" >
   <!-- Modal content -->
       <div class="modal-content">
@@ -115,6 +121,8 @@
           <span id="close2" class="close">×</span>
           <h2>New Stage</h2>
         </div>
+          
+         <!--Form where it can insert the stage information-->
         <div class="modal-body">
                 <div class="form-group has-feedback" style="margin: 20px 0px 0px 0px;">
                     <label for="S_Name">Write a stage name</label>
@@ -136,7 +144,8 @@
     </div> 
 </div>    
 
-    <div id="productModal" class="modal" ng-controller="productCtrl" style="overflow-y: scroll;">
+ <!--Modal where the admin can update and show all products from the epatec core-->
+<div id="productModal" class="modal" ng-controller="productCtrl" style="overflow-y: scroll;">
   <!-- Modal content -->
   <div class="modal-content">
     <div class="modal-header">
@@ -144,6 +153,8 @@
       <h2>EPA-TEC Products</h2>
       
     </div>
+      
+    <!-- Table that show all products-->
     <div class="modal-body">
         <div class="table-responsive" style="margin: 20px 0px 0px 0px;">
                 <table id="mytable" class="table table-bordred table-striped">
@@ -158,10 +169,10 @@
 
                         <tr ng-repeat="item in productList | orderBy:'PName'">
                             <td >{{item.pr_id}}</td>
-                            <td >{{item.pr_name}}</td>
-                            <td >{{item.pr_description}}</td>
-                            <td >{{item.pr_quantity}}</td>
-                            <td >{{item.pr_price}}</td>
+                            <td >{{item.PName}}</td>
+                            <td >{{item.PDescription}}</td>
+                            <td >{{item.Quantity}}</td>
+                            <td >{{item.Price}}</td>
                             
                         </tr>
                     </tbody>
