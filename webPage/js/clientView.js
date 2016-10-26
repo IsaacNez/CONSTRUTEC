@@ -1,8 +1,14 @@
+//Vra Globals
 var url= 'http://desktop-6upj287:7575';
 
+/**
+ * Modal where the user can sign in
+*/
 var stageForm = angular.module('clientView',[])
 .controller('clientCtrl', ['$scope', '$http', function ($scope, $http) {
-  
+        
+        //Show the user name
+        document.getElementById("idUser").innerHTML = "Welcome "+userID;
      
         // Get the modal
         var modalEmployees = document.getElementById('clientModal');
@@ -34,14 +40,12 @@ var stageForm = angular.module('clientView',[])
         }
 
 
-        
-
-   
-    
-
-    
+    /**
+     * Add the new client to the data base
+     * <p>
+    */
     $scope.addUser = function () {
-
+        // All information about the new client
         var User = {
             "U_ID": $scope.U_ID,
             "U_Name": $scope.U_Name,

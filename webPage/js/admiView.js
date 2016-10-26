@@ -1,13 +1,21 @@
+//Var Globals
 var actualProject;
 var actualStage;
 var url = 'http://desktop-6upj287:7575';
+
+/**
+ * Controller where the user admin can update the products data base 
+ * <p>
+ * Show all products from the epatec core
+*/
 var stageForm = angular.module('admiView',[])
 .controller('productCtrl', ['$scope', '$http', function ($scope, $http) {
-  
-    // get ingenieers and architects from DB
-    var Users;
+    
+        //Show the user name
+        document.getElementById("idUser").innerHTML = "Welcome "+userID;
 
-     // Get the modal
+
+        // Get the modal
         var modalProducts = document.getElementById('productModal');
       
 
@@ -21,7 +29,16 @@ var stageForm = angular.module('admiView',[])
 
         // When the user clicks the button, open the modal
         product.onclick = function() {
-            modalProducts.style.display = "block";
+            
+            // get all products from the EPA-TEC core
+
+           $http.get(url+'/api/Admin/get/product/undefined')
+                .then( function (response) {
+                $scope.productList = response.data;
+               console.log($scope.productList);
+               modalProducts.style.display = "block";
+             });
+            
         }
 
         span1.onclick = function() {
@@ -33,19 +50,15 @@ var stageForm = angular.module('admiView',[])
                 modalProducts.style.display = "none";
             }
         }
-
-
-    // get all products from the EPA-TEC core
-           
-       $http.get(url+'/api/Admin/get/product/undefined')
-            .then( function (response) {
-            $scope.productList = response.data;
-           console.log($scope.productList);
-         });
-          
+       
   
 }]);
 
+/**
+ * Controller where the user admin can update the products data base 
+ * <p>
+ * Show all products from the epatec core
+*/
 stageForm = angular.module('admiView')
 .controller('employeeCtrl', ['$scope', '$http', function ($scope, $http) {
     
@@ -58,7 +71,7 @@ stageForm = angular.module('admiView')
         var employee = document.getElementById("newEmployee");
        
     
-       
+         // Get the <span> element that closes the modal
         var span2 = document.getElementById("close3");
         
     
@@ -76,15 +89,13 @@ stageForm = angular.module('admiView')
                 modalEmployees.style.display = "none";
             }
         }
-
-
-        
-  
-
-
     
+     /**
+      * Add a new general user to the data base
+     */
     $scope.addUser = function () {
-
+        
+        //General user information
         var User = {
             "U_ID": $scope.U_ID,
             "U_Name": $scope.U_Name,
@@ -102,17 +113,12 @@ stageForm = angular.module('admiView')
             alert('error posting User')
         });
     }
-    
-   
-    
-
-    
-       
-
-    
-    
+  
 }]);
 
+/**
+  * Controller that can register a new stage
+*/
 stageForm =  angular.module('admiView')
 .controller('stageCtrl', ['$scope', '$http', function ($scope, $http) {
    
@@ -129,9 +135,10 @@ stageForm =  angular.module('admiView')
         
        
     
-        
+        // Get the <span> element that closes the modal
         var span2 = document.getElementById("close2");
-
+        
+        //Whent he user click on it the add stage option, display the modal
         stage.onclick = function() {
             modalStages.style.display = "block";
         }
@@ -148,17 +155,17 @@ stageForm =  angular.module('admiView')
             }
         }
 
-     $scope.createStage = function () {
         
+     //Add a new stage to the data base
+     $scope.createStage = function () {
+         //Information about the new stage
          var Stage = {
             "S_Name": $scope.S_Name,
             "S_Description": $scope.S_Description
         
         }
         console.log(Stage);
-        
-      
-        
+ 
         $http.post(url+'/api/Stage/post/',Stage).
         success(function (data, status, headers, config) {
             alert('the new Stage has been posted!');
