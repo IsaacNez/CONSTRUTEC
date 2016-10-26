@@ -132,7 +132,7 @@ public class SearchByProduct extends Fragment {
                     _sxpdate.setText(_stageslist.get(position).getString("gcs_datestart").toString());
                     getComments(_stageslist.get(position).getString("gcs_sname").toString(), _stageslist.get(position).getInt("gcs_pid"),
                             _stageslist.get(position).getInt("gcs_uid"));
-                }catch (JSONException e){
+                } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
@@ -147,10 +147,47 @@ public class SearchByProduct extends Fragment {
         _search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(_productsearch.getText().toString().matches("")){
-                    Snackbar.make(_assignStage,"Please specify information to make the search",Snackbar.LENGTH_LONG).show();
-                }else{
+                if (_productsearch.getText().toString().matches("")) {
+                    Snackbar.make(_assignStage, "Please specify information to make the search", Snackbar.LENGTH_LONG).show();
+                } else {
                     getStages(_productsearch.getText().toString());
+                }
+            }
+        });
+        _terminate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AsyncHttpClient httpClient = new AsyncHttpClient();
+                try {
+                    String server = getString(R.string.url)+"projectxstage/update/p_id,s_name/"+_stageslist.get(_position).getInt("gcs_pid")+","+_stagesname.get(_position)+"/pxs_status/Terminada";
+                    httpClient.get(server,null,new JsonHttpResponseHandler(){
+                        /**
+                         * Returns when request succeeds
+                         *
+                         * @param statusCode http response status line
+                         * @param headers    response headers if any
+                         * @param response   parsed response if any
+                         */
+                        @Override
+                        public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                            Snackbar.make(_assignStage,"You have terminated this current stage",Snackbar.LENGTH_LONG).setAction("Action",null).show();
+                        }
+
+                        /**
+                         * Returns when request failed
+                         *
+                         * @param statusCode    http response status line
+                         * @param headers       response headers if any
+                         * @param throwable     throwable describing the way request failed
+                         * @param errorResponse parsed response if any
+                         */
+                        @Override
+                        public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                            Snackbar.make(_assignStage,"There has been an error with your order.",Snackbar.LENGTH_LONG).setAction("Action",null).show();
+                        }
+                    });
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
             }
         });

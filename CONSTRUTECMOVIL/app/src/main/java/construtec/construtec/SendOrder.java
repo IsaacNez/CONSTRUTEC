@@ -57,6 +57,8 @@ public class SendOrder extends Fragment {
 
 
     Integer value=0;
+    Integer _tempproject = 0;
+    Integer _tempstage = 0;
     String values="";
     private List<Integer> _projectsID;
     private List<String> _projectPres;
@@ -140,6 +142,7 @@ public class SendOrder extends Fragment {
         _projects.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                _tempproject = position;
                 getprojectdeatils(_projectsID.get(position));
                 _stagespinneradapter = new ArrayAdapter<String>(_assignStage.getContext(),
                         android.R.layout.simple_spinner_dropdown_item, _stagesdata);
@@ -156,6 +159,7 @@ public class SendOrder extends Fragment {
         _stage.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                _tempstage = position;
                 getproducts(_products.get(position));
 
             }
@@ -168,38 +172,66 @@ public class SendOrder extends Fragment {
         _buy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!_canbuy){
-                    Snackbar.make(_assignStage,"This stage hasn't any product associated with. \n Try another one!",Snackbar.LENGTH_LONG).show();
-                }else{
-                    String server = getString(R.string.url)+"order/post";
+                if (!_canbuy) {
+                    Snackbar.make(_assignStage, "This stage hasn't any product associated with. \n Try another one!", Snackbar.LENGTH_LONG).show();
+                } else {
+                    String server = getString(R.string.url) + "order/post";
                     AsyncHttpClient httpClient = new AsyncHttpClient();
-                    try{
+                    try {
                         Random r = new Random();
-                        int i1 = (r.nextInt(100000000-0) + 0);
+                        int i1 = (r.nextInt(100000000 - 0) + 0);
                         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                         String date = sdf.format(new Date());
                         JSONObject _params = new JSONObject();
-                        _params.put("O_ID",i1);
-                        _params.put("O_Priority",0);
-                        _params.put("OStatus","Empacando");
-                        _params.put("OrderDate",date);
-                        _params.put("OPlatform","App");
-                        _params.put("Products",product);
-                        _params.put("Amount",values);
+                        _params.put("O_ID", i1);
+                        _params.put("O_Priority", 0);
+                        _params.put("OStatus", "Empacando");
+                        _params.put("OrderDate", date);
+                        _params.put("OPlatform", "App");
+                        _params.put("Products", product);
+                        _params.put("Amount", values);
                         StringEntity se = new StringEntity(_params.toString());
-                        httpClient.post(_assignStage.getContext(),server,se,"application/json",new JsonHttpResponseHandler(){
+                        httpClient.post(_assignStage.getContext(), server, se, "application/json", new JsonHttpResponseHandler() {
                             @Override
                             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                                 super.onFailure(statusCode, headers, throwable, errorResponse);
-                                Snackbar.make(_assignStage,"There is a network error",Snackbar.LENGTH_LONG).show();
+                                Snackbar.make(_assignStage, "There is a network error", Snackbar.LENGTH_LONG).show();
                             }
 
                             @Override
                             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                                Snackbar.make(_assignStage,"Your order has been posted",Snackbar.LENGTH_LONG).show();
+                                AsyncHttpClient httpClient = new AsyncHttpClient();
+                                String server = getString(R.string.url) + "projectxstage/update/p_id,s_name/" + _projectsID.get(_tempproject) + "," + _stagesname.get(_position) + "/pxs_status/Terminada";
+                                httpClient.get(server, null, new JsonHttpResponseHandler() {
+                                    /**
+                                     * Returns when request succeeds
+                                     *
+                                     * @param statusCode http response status line
+                                     * @param headers    response headers if any
+                                     * @param response   parsed response if any
+                                     */
+                                    @Override
+                                    public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                                        Snackbar.make(_assignStage, "You have terminated this current stage", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                                    }
+
+                                    /**
+                                     * Returns when request failed
+                                     *
+                                     * @param statusCode    http response status line
+                                     * @param headers       response headers if any
+                                     * @param throwable     throwable describing the way request failed
+                                     * @param errorResponse parsed response if any
+                                     */
+                                    @Override
+                                    public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                                        Snackbar.make(_assignStage, "There has been an error with your order.", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                                    }
+                                });
+                                Snackbar.make(_assignStage, "Your order has been posted", Snackbar.LENGTH_LONG).show();
                             }
                         });
-                    }catch (JSONException e){
+                    } catch (JSONException e) {
                         e.printStackTrace();
                     } catch (UnsupportedEncodingException e) {
                         e.printStackTrace();
@@ -273,11 +305,13 @@ public class SendOrder extends Fragment {
 
                                 JSONObject _stageJSONObject = _newJSONArray.getJSONObject(j);
                                 String action = "Name: " + _stageJSONObject.getString("s_name")+ "\n";
-                                _stagesname.add(_stageJSONObject.getString("s_name"));
-                                _products.add(_stageJSONObject.getJSONArray("products"));
-                                if (!_stagesdata.contains(action))
-                                    _stagesdata.add(action);
-                                _stagespinneradapter.notifyDataSetChanged();
+                                if (!_stageJSONObject.getString("gpd_status").matches("Terminada")) {
+                                    _stagesname.add(_stageJSONObject.getString("s_name"));
+                                    _products.add(_stageJSONObject.getJSONArray("products"));
+                                    if (!_stagesdata.contains(action))
+                                        _stagesdata.add(action);
+                                    _stagespinneradapter.notifyDataSetChanged();
+                                }
                             }
                         }
                     } catch (JSONException e) {

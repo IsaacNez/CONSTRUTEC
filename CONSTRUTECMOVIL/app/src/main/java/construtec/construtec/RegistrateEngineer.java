@@ -14,17 +14,23 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.zip.Inflater;
+
+import cz.msebera.android.httpclient.Header;
+import cz.msebera.android.httpclient.entity.StringEntity;
 
 /**
  * Created by Isaac on 10/10/2016.
@@ -67,7 +73,7 @@ public class RegistrateEngineer extends Fragment {
                     Snackbar.make(myView, "Your data is incorrect, please try again.", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                 }else{
-                    //sendInfo();
+                    sendInfo();
                     Intent _return = new Intent(getActivity(),LoginActivity.class);
                     startActivity(_return);
                 }
@@ -99,7 +105,8 @@ public class RegistrateEngineer extends Fragment {
      * or the app mobile.
      */
     private void sendInfo(){
-        String server = "";
+        String server = getString(R.string.url)+"user/post";
+        AsyncHttpClient httpClient = new AsyncHttpClient();
         HttpClient newEngineer = new DefaultHttpClient();
         HttpPost toSend = new HttpPost(server);
         String json = "";
@@ -109,19 +116,23 @@ public class RegistrateEngineer extends Fragment {
             E_Json.accumulate("U_Name",E_Name.getText().toString());
             E_Json.accumulate("U_LName",E_LName.getText().toString());
             E_Json.accumulate("U_Phone",E_Phone.getText().toString());
-            E_Json.accumulate("U_Password",E_Pass.getText().toString());
-            E_Json.accumulate("U_Code",E_UCode.getText().toString());
-            E_Json.accumulate("Role",2);
-
+            E_Json.accumulate("U_Password", E_Pass.getText().toString());
+            E_Json.accumulate("U_Code", E_UCode.getText().toString());
+            E_Json.accumulate("Role", 2);
             json = E_Json.toString();
             StringEntity ent = new StringEntity(json);
-            toSend.setEntity(ent);
-            toSend.setHeader("Accept", "application/json");
-            toSend.setHeader("Content-type", "application/json");
-            newEngineer.execute(toSend);
+            httpClient.post(myView.getContext(),server,ent,"application/json",new JsonHttpResponseHandler(){
+                @Override
+                public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                    Snackbar.make(myView,"There has been an error with your order.",Snackbar.LENGTH_LONG).setAction("Action",null).show();
+                }
+
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                    Snackbar.make(myView,"You have registered successfully.",Snackbar.LENGTH_LONG).setAction("Action",null).show();
+                }
+            });
         }catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        } catch (ClientProtocolException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
