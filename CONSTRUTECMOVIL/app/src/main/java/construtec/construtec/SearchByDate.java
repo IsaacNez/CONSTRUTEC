@@ -57,6 +57,7 @@ public class SearchByDate extends Fragment {
     TextView _startdate;
 
     Button _addcomment;
+    Button _finalize;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -68,8 +69,47 @@ public class SearchByDate extends Fragment {
         _projectlocation = (TextView) _assignStage.findViewById(R.id._projectlocation);
         _startdate = (TextView) _assignStage.findViewById(R.id._startdate);
         _addcomment = (Button) _assignStage.findViewById(R.id._addcomment);
+        _finalize = (Button) _assignStage.findViewById(R.id._finalizestage);
         getDataByDate();
 
+        _finalize.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AsyncHttpClient httpClient = new AsyncHttpClient();
+                try {
+                    String server = getString(R.string.url)+"projectxstage/update/p_id,s_name/"+_jsonList.get(_position).getInt("gcs_pid")+","+_stages.get(_position)+"/pxs_status/Terminada";
+                    httpClient.get(server,null,new JsonHttpResponseHandler(){
+                        /**
+                         * Returns when request succeeds
+                         *
+                         * @param statusCode http response status line
+                         * @param headers    response headers if any
+                         * @param response   parsed response if any
+                         */
+                        @Override
+                        public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                            Snackbar.make(_assignStage,"You have terminated this current stage",Snackbar.LENGTH_LONG).setAction("Action",null).show();
+                        }
+
+                        /**
+                         * Returns when request failed
+                         *
+                         * @param statusCode    http response status line
+                         * @param headers       response headers if any
+                         * @param throwable     throwable describing the way request failed
+                         * @param errorResponse parsed response if any
+                         */
+                        @Override
+                        public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                            Snackbar.make(_assignStage,"There has been an error with your order.",Snackbar.LENGTH_LONG).setAction("Action",null).show();
+                        }
+                    });
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
 
         _stagesadapter = new ArrayAdapter<String>(_assignStage.getContext(),
                 android.R.layout.simple_spinner_dropdown_item,_stages);
