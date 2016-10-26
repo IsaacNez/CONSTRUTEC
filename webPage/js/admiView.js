@@ -4,7 +4,6 @@ var url = 'http://desktop-6upj287:7575';
 var stageForm = angular.module('admiView',[])
 .controller('productCtrl', ['$scope', '$http', function ($scope, $http) {
   
-    document.getElementById("idUser").innerHTML = "Welcome "+userID;
     // get ingenieers and architects from DB
     var Users;
 
@@ -22,16 +21,7 @@ var stageForm = angular.module('admiView',[])
 
         // When the user clicks the button, open the modal
         product.onclick = function() {
-            
-            // get all products from the EPA-TEC core
-           
-       $http.get(url+'/api/Admin/get/product/undefined')
-            .then( function (response) {
-            $scope.productList = response.data;
-           console.log($scope.productList);
-           modalProducts.style.display = "block";
-         });
-            
+            modalProducts.style.display = "block";
         }
 
         span1.onclick = function() {
@@ -45,7 +35,13 @@ var stageForm = angular.module('admiView',[])
         }
 
 
-    
+    // get all products from the EPA-TEC core
+           
+       $http.get(url+'/api/Admin/get/product/undefined')
+            .then( function (response) {
+            $scope.productList = response.data;
+           console.log($scope.productList);
+         });
           
   
 }]);

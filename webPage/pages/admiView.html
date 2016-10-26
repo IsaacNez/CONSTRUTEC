@@ -32,7 +32,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>    
-          <h2 class="navbar-brand" id="idUser" href="#"></h2>
+          <h2 class="navbar-brand" href="#">Welcome</h2>
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
           <ul class="nav navbar-nav">
@@ -158,10 +158,10 @@
 
                         <tr ng-repeat="item in productList | orderBy:'PName'">
                             <td >{{item.pr_id}}</td>
-                            <td >{{item.PName}}</td>
-                            <td >{{item.PDescription}}</td>
-                            <td >{{item.Quantity}}</td>
-                            <td >{{item.Price}}</td>
+                            <td >{{item.pr_name}}</td>
+                            <td >{{item.pr_description}}</td>
+                            <td >{{item.pr_quantity}}</td>
+                            <td >{{item.pr_price}}</td>
                             
                         </tr>
                     </tbody>

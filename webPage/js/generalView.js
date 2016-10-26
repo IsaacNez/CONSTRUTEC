@@ -3,19 +3,14 @@ var Pid;
 var Uid;
 var Sname;
 var Status;
-var userid;
 var url= 'http://desktop-6upj287:7575';
 
-       
- 
 var stageForm = angular.module('generalView',[])
 .controller('projectMaterialCtrl', ['$scope', '$http', function ($scope, $http) {
          
      
        
-        userid = localStorage.user;
-        console.log(" id " + userid);
-        document.getElementById("idUser").innerHTML = "Welcome "+userID;
+        
         // Get the modal
 
         var modalProjectMaterial = document.getElementById('projectMaterialModal');
@@ -104,27 +99,20 @@ var stageForm = angular.module('generalView',[])
               console.log(Sname);
              
         }
-         
-        
-        
-        $scope.updateStatus= function (s,pid,sname){
-             s.gcs_status = "HOLA";
-            console.log(pid);
-            
-              console.log(sname);
-             
-          
-          
-            
-             $http.get(url+'/api/Projectxstage/update/pxs_status,p_id,s_name/'+"'"+"Hola"+"'"+","+pid+","+"'"+sname+"'").
+        function changeStatus(element){
+            getId(element);
+             var status = { 
+                "pxs_status": Status
+            }
+            console.log(status); $http.post(url+'/api/projectxstage/post/',status).
             success(function (data, status, headers, config) {
-                alert('status has been change');
+                alert('status has been changed');
             }).
             error(function (data, status, headers, config) {
                 alert('error changing status')
             });
-              
         }
+
            
        
 }]);
@@ -158,7 +146,6 @@ stageForm =  angular.module('generalView')
         $scope.addComment = function () {
             var Comment = { 
                 "p_id": Pid,
-                "u_id":userid,
                 "s_name": Sname,
                 "c_description": $scope.C_Description
                 
@@ -175,7 +162,6 @@ stageForm =  angular.module('generalView')
             });
         }
 
-      
 
        
               

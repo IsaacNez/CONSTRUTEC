@@ -26,7 +26,7 @@
       <div class="container-fluid">
         <div class="navbar-header">
              
-          <a class="navbar-brand" id="idUser" href="#"></a>
+          <a class="navbar-brand" href="#">Welcome</a>
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
           <ul class="nav navbar-nav">
@@ -59,8 +59,10 @@
                         <span class="glyphicon glyphicon-log-out form-control-feedback"></span>
             </div>
                  
-           
-                
+                                                     
+                                     
+                                        
+                              
             <div class="box-body" style="margin: 20px 0px 0px 0px;">              
 
                 <div align="center" class="col span_1_of_1 table-responsive" style=" margin: 0px 0px 0px 0px;"> 
@@ -76,8 +78,7 @@
                                     <h4><b>User ID</b>
                                     </h4>
                                 </th>
-                               
-                                <th  >
+                                <th   >
                                     <h4><b>Client</b>
                                     </h4>
                                 </th>
@@ -102,10 +103,6 @@
                                     <h4><b>Status</b>
                                     </h4>
                                 </th>
-                                <th  >
-                                    <h4><b>Finish</b>
-                                    </h4>
-                                </th>
                                 <th> 
                                     <h4><b> Comments </b> </h4>
                                   
@@ -116,7 +113,7 @@
 
                         <tbody>
                     
-                              <tr  ng-repeat="item in projectlist">  
+                              <tr ng-repeat="item in projectlist">  
                                  
                                 <td  style="display:none;">{{item.gcs_pid}}</td>
                                 <td  style="display:none;">{{item.gcs_uid}}</td>
@@ -125,12 +122,8 @@
                                 <td>{{item.gcs_plocation}}</td>
                                 <td>{{item.gcs_sname}}</td>
                                 <td>{{item.gcs_datestart}}</td>
-                                
-                                <td>{{item.gcs_status}}</td>
-                                <td><a data-toggle="tooltip" title="Finish Stage">
-                                            <button type="button" ng-click="updateStatus(item,item.gcs_pid,item.gcs_sname)" class="btn btn-primary"><i class="fa fa-check" aria-hidden="true"></i></button>
-                                        </a> 
-                                  </td>
+                                <td contenteditable='true'>{{item.gcs_status}}</td>
+                              
                               
                            
                                 <td><div  align="center" class="btn-group">    
@@ -175,10 +168,6 @@
       
     </div>
     <div class="modal-body">
-        
-        
-       
-        
         
         <div  id="comment_box">
             <h3>Comments</h3>

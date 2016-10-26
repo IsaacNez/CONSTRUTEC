@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+    
+    
+<head> 
+  <!-- INCLUSION DE TODAS LAS LIBRERIAS Y ARCHIVOS NECESARIOS --> 
   <title>EMPLOYEES</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="/angular-1.5.8/angular.js"></script>
     <script src="/angular-1.5.8/angular.min.js"></script>
-    
     <script src="/js/jquery-3.1.0.js"  type="text/javascript"></script>
     <script src="/js/employeesView.js"  type="text/javascript"></script>
     <link rel="stylesheet" href="/css/index.css">  
@@ -15,486 +17,403 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
-    
-    
-  
-    
 </head>
+    
+    
+<!-- INICIO DE LA PAGINA-->
 <body ng-app="employeeView" >
-<div>
-    <nav class="navbar navbar-inverse">
-      <div class="container-fluid">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>    
-          <a class="navbar-brand" id="idUser" href="#"></a>
-        </div>
-        <div class="collapse navbar-collapse" id="myNavbar">
-          <ul class="nav navbar-nav">
-            <li class="active"><a href="/pages/employeeView.html">Home</a></li>
-           <li class="dropdown">
-              <a class="dropdown-toggle" data-toggle="dropdown" href="#">Create<span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <li id="newEmployee"><a href="#">New Employee</a></li>
-                <li id="newStage"><a href="#">New Stage</a></li>
-                <li id="newProject"><a href="#">New Project</a></li>
+    <!--DIVISION PARA EL MENU DE LA PARTE SUPERIOR -->
+    <div>
+        <nav class="navbar navbar-inverse">
+          <div class="container-fluid">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>    
+              <a class="navbar-brand" id="idUser" href="#"></a>
+            </div>
+            <div class="collapse navbar-collapse" id="myNavbar">
+              <ul class="nav navbar-nav">
+                    <li class="active"><a href="/pages/employeeView.html">Home</a></li>
+                   <li class="dropdown">
+                      <a class="dropdown-toggle" data-toggle="dropdown" href="#">Create<span class="caret"></span></a>
+                      <ul class="dropdown-menu">
+                        <li id="newEmployee"><a href="#">New Employee</a></li>
+                        <li id="newStage"><a href="#">New Stage</a></li>
+                        <li id="newProject"><a href="#">New Project</a></li>
+                      </ul>
+                    </li>
+                    <li class="dropdown">
+                      <a class="dropdown-toggle" data-toggle="dropdown" href="#">Add<span class="caret"></span></a>
+                      <ul class="dropdown-menu">
+                        <li id="addStageMaterial" role="button" data-toggle="modal" data-target="#stageMaterialModal"><a href="#">Stages-Materials</a></li>
+                      </ul>
+                    </li>
               </ul>
-            </li>
-            <li class="dropdown">
-              <a class="dropdown-toggle" data-toggle="dropdown" href="#">Add<span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <li id="addStage"><a href="#">Stage to Project</a></li>
-                <li id="addMaterials1"><a href="#">Materials to Stage</a></li>
-                <li id="addStageMaterial" role="button" data-toggle="modal" data-target="#stageMaterialModal"><a href="#">Stages-Materials</a></li>
+              <ul class="nav navbar-nav navbar-right">
+                    <li id="myBtn"><a href="/index.html"><span class="glyphicon glyphicon-log-out"></span> Log Out</a></li>
               </ul>
-            </li>
-          </ul>
-          <ul class="nav navbar-nav navbar-right">
-            <li id="myBtn"><a href="/index.html"><span class="glyphicon glyphicon-log-out"></span> Log Out</a></li>
-          </ul>
-        </div>
-      </div>
-    </nav>
-</div>
+            </div>
+          </div>
+        </nav>
+    </div>
     
-<div id="employeeModal" class="modal" ng-controller="employeeCtrl"  style="overflow-y: scroll;">
-  <!-- Modal content -->
-  <div class="modal-content">
-    <div class="modal-header">
-      <span id="close1" class="close">×</span>
-      <h2>New User</h2>
-    </div>
-    <div class="modal-body">
-            <div class="form-group has-feedback" style="margin: 20px 0px 0px 0px;">
-                <label for="U_Name" >Write a user name</label>
-                <input id=U_Name type="text" ng-model="U_Name" class="form-control" placeholder="Name">
-                <span class="glyphicon glyphicon-user form-control-feedback"></span>
-            </div>
-            <div class="form-group has-feedback" style="margin: 20px 0px 0px 0px;">
-                <label for="U_LName" >Write a user last name</label>
-                <input id=U_LName type="text" ng-model="U_LName" class="form-control" placeholder="Last Name">
-                <span class="glyphicon glyphicon-user form-control-feedback"></span>
-            </div>
-           <div class="form-group has-feedback" style="margin: 20px 0px 0px 0px;">
-            <label for="U_ID" >Write a user ID</label>
-            <input id=U_ID type="number" min="100000000" max="999999999" ng-model="U_ID" class="form-control" placeholder="ID">
-                <span class="glyphicon glyphicon-link form-control-feedback"></span>
-            </div>
-            <div class="form-group has-feedback" style="margin: 20px 0px 0px 0px;">
-            <label for="U_Code" >Write a user code</label>
-            <input id=U_Code type="number" ng-model="U_Code" class="form-control" placeholder="Code">
-                <span class="glyphicon glyphicon-option-horizontal form-control-feedback"></span>
-            </div>
-            <div class="form-group has-feedback" style="margin: 20px 0px 0px 0px;">
-            <label for="U_Phone" >Write a user phone</label>    
-            <input id=U_Phone type="number" ng-model="U_Phone" class="form-control" placeholder="Phone">
-                <span class="glyphicon glyphicon-phone form-control-feedback"></span>
-            </div>
-            <div class="form-group has-feedback" style="margin: 20px 0px 0px 0px;">
-                <label for="sel1">Select user Role</label>
-                <select type="text"  name="R_ID" ng-model="R_ID" placeholder="Select User Role" class="form-control" id="sel1" >
-                    <option ng-repeat="item in rolelist">{{item.R_ID}}</option>
-                </select>
-            </div>
-            <div class="form-group has-feedback" style="margin: 20px 0px 0px 0px;">
-                <label for="U_Password">Write a password</label>
-                <input id=U_Password type="password" ng-model="U_Password" class="form-control" placeholder="Password">
-                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-            </div>
-
-            <div align="center">
-                <button  ng-click="addUser()" style="margin: 20px 0px 0px 0px; width:50%" type="submit" class="btn btn-primary btn-block btn-flat">Create User</button>
-            </div>
-    </div>
-    <div class="modal-footer">
-    </div>
-  </div>
-</div>
     
-<div id="stageModal" class="modal"  ng-controller="stageCtrl" style="overflow-y: scroll;" >
-  <!-- Modal content -->
+    
+    <!-- POP POP TO CREATE NEW USER-->
+    <div id="employeeModal" class="modal" ng-controller="employeeCtrl"  style="overflow-y: scroll;">
+      <!-- Modal content -->
       <div class="modal-content">
         <div class="modal-header">
-          <span id="close2" class="close">×</span>
-          <h2>New Stage</h2>
+          <span id="close1" class="close">×</span>
+          <h2>New User</h2>
         </div>
         <div class="modal-body">
                 <div class="form-group has-feedback" style="margin: 20px 0px 0px 0px;">
-                    <label for="S_Name">Write a stage name</label>
-                    <input id=S_Name type="text" ng-model="S_Name" class="form-control" placeholder="Stage Name">
-                    <span class="glyphicon glyphicon-pencil form-control-feedback"></span>
+                    <label for="U_Name" >Write a user name</label>
+                    <input id=U_Name type="text" ng-model="U_Name" class="form-control" placeholder="Name">
+                    <span class="glyphicon glyphicon-user form-control-feedback"></span>
                 </div>
                 <div class="form-group has-feedback" style="margin: 20px 0px 0px 0px;">
-                    <label for="S_Description">Write a stage description</label>
-                    <input id=S_Description type="text" ng-model="S_Description" class="form-control" placeholder="Description">
-                    <span class="glyphicon glyphicon-list-alt form-control-feedback"></span>
+                    <label for="U_LName" >Write a user last name</label>
+                    <input id=U_LName type="text" ng-model="U_LName" class="form-control" placeholder="Last Name">
+                    <span class="glyphicon glyphicon-user form-control-feedback"></span>
                 </div>
-    <!--           
-               <div class="form-group has-feedback" style="margin: 20px 0px 0px 0px;">
-                <label for="S_DateStart">Start date of Stage</label>
-                <input id=S_DateStart type="date" ng-model="S_DateStart" class="form-control" placeholder="Start Day">
+                <div class="form-group has-feedback" style="margin: 20px 0px 0px 0px;">
+                    <label for="U_ID" >Write a user ID</label>
+                    <input id=U_ID type="number" min="100000000" max="999999999" ng-model="U_ID" class="form-control" placeholder="ID">
+                    <span class="glyphicon glyphicon-link form-control-feedback"></span>
+                </div>
+                <div class="form-group has-feedback" style="margin: 20px 0px 0px 0px;">
+                    <label for="U_Code" >Write a user code</label>
+                    <input id=U_Code type="number" ng-model="U_Code" class="form-control" placeholder="Code">
+                    <span class="glyphicon glyphicon-option-horizontal form-control-feedback"></span>
+                </div>
+                <div class="form-group has-feedback" style="margin: 20px 0px 0px 0px;">
+                    <label for="U_Phone" >Write a user phone</label>    
+                    <input id=U_Phone type="number" ng-model="U_Phone" class="form-control" placeholder="Phone">
+                    <span class="glyphicon glyphicon-phone form-control-feedback"></span>
+                </div>
+                <div class="form-group has-feedback" style="margin: 20px 0px 0px 0px;">
+                    <label for="sel1">Select user Role</label>
+                    <select type="text"  name="R_ID" ng-model="R_ID" placeholder="Select User Role" class="form-control" id="sel1" >
+                    <option ng-repeat="item in rolelist">{{item.r_id}}-{{item.r_name}} </option>
+                    </select>
+                </div>
+                <div class="form-group has-feedback" style="margin: 20px 0px 0px 0px;">
+                    <label for="U_Password">Write a password</label>
+                    <input id=U_Password type="password" ng-model="U_Password" class="form-control" placeholder="Password">
+                    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                </div>
 
+                <div align="center">
+                    <button  ng-click="addUser()" style="margin: 20px 0px 0px 0px; width:50%" type="submit" class="btn btn-primary btn-block btn-flat">Create User</button>
+                </div>
+        </div>
+        
+      </div>
+    </div>
+    
+    
+    <!-- POP POTO CREATE NEW STAGES -->
+    <div id="stageModal" class="modal"  ng-controller="stageCtrl" style="overflow-y: scroll;" >
+      <!-- Modal content -->
+        <div class="modal-content">
+            <div class="modal-header">
+              <span id="close2" class="close">×</span>
+              <h2>New Stage</h2>
+            </div>
+            <div class="modal-body">
+                    <div class="form-group has-feedback" style="margin: 20px 0px 0px 0px;">
+                        <label for="S_Name">Write a stage name</label>
+                        <input id=S_Name type="text" ng-model="S_Name" class="form-control" placeholder="Stage Name">
+                        <span class="glyphicon glyphicon-pencil form-control-feedback"></span>
+                    </div>
+                    <div class="form-group has-feedback" style="margin: 20px 0px 0px 0px;">
+                        <label for="S_Description">Write a stage description</label>
+                        <input id=S_Description type="text" ng-model="S_Description" class="form-control" placeholder="Description">
+                        <span class="glyphicon glyphicon-list-alt form-control-feedback"></span>
+                    </div>
+                    <div align="center">
+                        <button  ng-click="createStage()" style="margin: 20px 20px 20px 20px; width:50%" type="submit" class="btn btn-primary btn-block btn-flat">Create Stage</button>
+                    </div>
+            </div>
+        </div> 
+    </div>
+    
+    
+    
+    <!-- POP POP TO CREATE NEW PROJECT -->
+    <div id="projectModal" class="modal" ng-controller= "projectCtrl" style="overflow-y: scroll;">
+      <div class="modal-content">
+        <div class="modal-header">
+          <span id="close3" class="close">×</span>
+          <h2>New Project</h2>
+        </div>
+        <div class="modal-body" >
+               <div class="form-group has-feedback" style="margin: 20px 0px 0px 0px;">
+                    <label for="P_name" >Write a project name</label>
+                    <input id=P_Name type="text" ng-model="P_Name" class="form-control" placeholder="Name">
+                    <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                </div>    
+                <div class="form-group has-feedback" style="margin: 20px 0px 0px 0px;">
+                    <label for="P_Location" >Write a project location</label>
+                    <input id=P_Location type="text" ng-model="P_Location" class="form-control" placeholder="Location">
+                    <span class="glyphicon glyphicon-map-marker form-control-feedback"></span>
+                </div>
+                <div class="form-group has-feedback" style="margin: 20px 0px 0px 0px;">
+                    <label for="sel1">Select Engineer or Architect:</label>
+                    <select type="text"  name="U_ID" ng-model="U_ID" placeholder="Select User" class="form-control" id="sel1" >
+                        <option ng-repeat="item in Users">{{item.u_id}}</option>
+                    </select>
+                </div>
+                 <div class="form-group has-feedback" style="margin: 20px 0px 0px 0px;">
+                    <label for="sel1">Select a Client:</label>
+                    <select type="text"  name="C_ID" ng-model="C_ID" placeholder="Select User" class="form-control" id="sel1" >
+                        <option id="client" ng-repeat="item in Clients">{{item.u_id}}</option>
+                    </select>
+                </div>
+                <div align="center">
+                    <button  ng-click="createProject(client)" style="margin: 20px 20px 20px 20px; width:50%" type="submit" class="btn btn-primary btn-block btn-flat">Create Project</button>
+                </div>   
+          </div>
+        </div>
+    </div>
+
+    
+    <!-- POP POP TO CREATE NEW PROJECT -->
+    <div id="stageProjectModal" class="modal fade"  role="dialog" style="z-index: 1600;"  ng-controller="stageProjectCtrl" style="overflow-y: scroll;"   >
+      <div class="modal-content">
+        <div class="modal-header">
+          <span id="close4" class="close">×</span>
+          <h2> Stage Information</h2>
+        </div>
+        <div class="modal-body">
+               <div class="form-group has-feedback" style="margin: 20px 0px 0px 0px;">
+                    <label for="S_DateStart">Set Start Date</label>
+                   <input id=S_DateStart type="date" ng-model="S_DateStart" class="form-control" placeholder="Start Day">
                     <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
                 </div>
-
                 <div class="form-group has-feedback" style="margin: 20px 0px 0px 0px;">
-                <label for="S_DateEnd">End date of Stage</label>
-                <input id=S_DateEnd type="date" ng-model="S_DateEnd" class="form-control" placeholder="End Day">
-
+                    <label for="S_DateEnd">Set End Date</label>
+                    <input id=S_DateEnd type="date" ng-model="S_DateEnd" class="form-control" placeholder="End Day">
                     <span class="glyphicon glyphicon-log-out form-control-feedback"></span>
                 </div>
                 <div class="form-group has-feedback" style="margin: 20px 0px 0px 0px;">
                     <label for="S_Status">Write a stage status</label>    
                     <input id=S_Status type="text" ng-model="S_Status" class="form-control" placeholder="Status">
-                        <span class="glyphicon glyphicon-thumbs-up form-control-feedback"></span>
-                </div>
-
-
-                </div>
-
-    -->         
-                <div align="center">
-                    <button  ng-click="createStage()" style="margin: 20px 20px 20px 20px; width:50%" type="submit" class="btn btn-primary btn-block btn-flat">Create Stage</button>
-                </div>
-      </div>
-      <div class="modal-footer">
-      </div>
-    </div> 
-</div>
-    
-<div id="projectModal" class="modal" ng-controller= "projectCtrl" style="overflow-y: scroll;">
-
-  <div class="modal-content">
-    <div class="modal-header">
-      <span id="close3" class="close">×</span>
-      <h2>New Project</h2>
-    </div>
-    <div class="modal-body" >
-           
-           <div class="form-group has-feedback" style="margin: 20px 0px 0px 0px;">
-                <label for="P_name" >Write a project name</label>
-                <input id=P_Name type="text" ng-model="P_Name" class="form-control" placeholder="Name">
-                <span class="glyphicon glyphicon-user form-control-feedback"></span>
-            </div>    
-  
-            <div class="form-group has-feedback" style="margin: 20px 0px 0px 0px;">
-                <label for="P_Location" >Write a project location</label>
-                <input id=P_Location type="text" ng-model="P_Location" class="form-control" placeholder="Location">
-                <span class="glyphicon glyphicon-map-marker form-control-feedback"></span>
-            </div>
-            <div class="form-group has-feedback" style="margin: 20px 0px 0px 0px;">
-                <label for="sel1">Select Engineer or Architect:</label>
-                <select type="text"  name="U_ID" ng-model="U_ID" placeholder="Select User" class="form-control" id="sel1" >
-                    <option ng-repeat="item in Users">{{item.u_id}}</option>
-                </select>
-            </div>
-             <div class="form-group has-feedback" style="margin: 20px 0px 0px 0px;">
-                <label for="sel1">Select a Client:</label>
-                <select type="text"  name="C_ID" ng-model="C_ID" placeholder="Select User" class="form-control" id="sel1" >
-                    <option id="client" ng-repeat="item in Clients">{{item.u_id}}</option>
-                </select>
-            </div>
-            <div align="center">
-                <button  ng-click="createProject(client)" style="margin: 20px 20px 20px 20px; width:50%" type="submit" class="btn btn-primary btn-block btn-flat">Create Project</button>
-            </div>   
-      </div>
-    </div>
-</div>
-
-
-<div id="stageProjectModal" class="modal fade"  role="dialog" style="z-index: 1600;"  ng-controller="stageProjectCtrl" style="overflow-y: scroll;"   >
-  <!-- Modal content -->
-  <div class="modal-content">
-    <div class="modal-header">
-      <span id="close4" class="close">×</span>
-      <h2> Stage Information</h2>
-    </div>
-    <div class="modal-body">
-      
-           <div class="form-group has-feedback" style="margin: 20px 0px 0px 0px;">
-            <label for="S_DateStart">Set Start Date</label>
-            <input id=S_DateStart type="date" ng-model="S_DateStart" class="form-control" placeholder="Start Day">
-                <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
-            </div>
-            <div class="form-group has-feedback" style="margin: 20px 0px 0px 0px;">
-            <label for="S_DateEnd">Set End Date</label>
-            <input id=S_DateEnd type="date" ng-model="S_DateEnd" class="form-control" placeholder="End Day">
-               
-                <span class="glyphicon glyphicon-log-out form-control-feedback"></span>
-            </div>
-     <!--       <div class="form-group has-feedback" style="margin: 20px 0px 0px 0px;">
-            <label for="S_Budget">Write your Budget</label>
-            <input id=S_Budget type="number" min = "0" ng-model="S_Budget" class="form-control" placeholder="Your Budget">
-               
-                <span class="glyphicon glyphicon-usd"></span>
-            </div>-->
-        
-            <div class="form-group has-feedback" style="margin: 20px 0px 0px 0px;">
-                <label for="S_Status">Write a stage status</label>    
-                <input id=S_Status type="text" ng-model="S_Status" class="form-control" placeholder="Status">
                     <span class="glyphicon glyphicon-thumbs-up form-control-feedback"></span>
-            </div>
-            <div align="center">
-                <button  ng-click="setStage()" style="margin: 20px 20px 20px 20px; width:50%" type="submit" class="btn btn-primary btn-block btn-flat">Add Stage</button>
-            </div>
-            </div>
-            
-  </div>
-
-</div>
-
-<div id="stageProductModal" class="modal fade "  role="dialog" style="z-index: 1600;"  ng-controller="stageProductCtrl" style="overflow-y: scroll;"   >
-  <!-- Modal content -->
-  <div class="modal-content">
-    <div class="modal-header"> 
-      <span id="close5" class="close">×</span>
-      <h2> Add Products to Stage</h2>
-    </div>
-    <div class="modal-body">
-                <label for="S_Name">Search Products</label>
-                        <input id=PR_Name type="text" ng-model="PR_Name" ng-change="getProduct()" class="form-control" placeholder="Write Product Name">
-
-                            <span class="glyphicon glyphicon-log-out form-control-feedback"></span>
-                <div class="table-responsive">
-                <table id="mytable" class="table table-bordred table-striped">
-                    <thead>
-                    <th style="width:10%">ID </th>
-                    <th style="width:20%">Name</th>
-                    <th style="width:30%"> Description</th>
-                    <th style="width:15%">Price</th>
-                    <th style="width:10%">Amount</th>
-                    <th style="width:15%">Add to Cart</th>
-                    </thead>
-                    <tbody>
-                        <tr ng-repeat="item in productList | orderBy:'PR_Name'">
-                        
-                            <td >{{item.pr_id}}</td>
-                            <td>{{item.PName}}</td>
-                            <td>{{item.PDescription}}</td>
-                            <td>{{item.Price}}</td>
-                            <td><input type="number" min="0" ng-model="amount" >       
-                            <td><a class="btn btn-danger btn-xs" ng-click="addToCart(item.pr_id,amount)">
-                                        <span class="glyphicon glyphicon-expand"></span></a></td>
-                        </tr>
-                    </tbody>
-                </table>
-
-            </div>
-                
-            </div>
-            <div align="center">
-                <button  ng-click="addProducts()" style="margin: 20px 20px 20px 20px; width:50%" type="submit" class="btn btn-primary btn-block btn-flat">Add Products</button>
-            </div>  
-  
-  </div>
-  
-
-</div>  
-         
-<div id="stageMaterialModal"  ng-controller="stageMaterialCtrl" style="overflow-y: scroll;" class="modal fade" role="dialog" style="z-index: 1400;"  > 
-  <!-- Modal content -->s
-  <div class="modal-content">
-    <div class="modal-header">
-      <span id="close6" class="close">×</span>
-      <h2> Project Management</h2>
-    </div>
-    <div class="modal-body">
-            <div class="form-group has-feedback" style="margin: 20px 0px 0px 0px;">
-                <label for="sel1">Select a Project</label>
-                <select type="text" ng-model="P_ID"  name="P_ID" ng-change="getProjectDetails()" placeholder="Select Project" class="form-control" id="P_ID" >
-                    <option ng-repeat="item in projectList">{{item.p_id}}</option>
-                </select>
-            </div>
-            <div class="box box boxP" id="reward">
-
-            <div class="form-group has-feedback" style="margin: 20px 0px 0px 0px;">
-                    <label for="S_Name">Search Stage</label>
-                    <input id=S_Name type="text" ng-model="S_Name" ng-change="getStages()" class="form-control" placeholder="Write Stage Name">
-
-                        <span class="glyphicon glyphicon-log-out form-control-feedback"></span>
-            </div>
-            <div class="box-body" style="margin: 20px 0px 0px 0px;">              
-
-                <div align="center" class="col span_1_of_1 table-responsive" style=" margin: 0px 0px 0px 60px;"> 
-                        <table id="table" class="table table-bordered table-striped">
-                        <thead>
-                            <tr >    
-                                <th  >
-                                    <h4><b>Stage Name</b>
-                                    </h4>
-                                </th>  
-                                <th >
-                                    <h4><b>Description</b>
-                                    <span id="value" class=""></span></h4>
-                                </th>   
-                                <th> 
-                                    <h4><b> Options </b>
-                                    <span id="value" class=""></span></h4>
-                                </th>      
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            <!--
-                              <tr ng-repeat="item in stageList"> -->
-                              <tr ng-repeat="item in stageList">  
-                                <td>{{item.s_name}}</td>
-                                <td>{{item.s_description}}</td>
-                           <!--       
-                                <td ng-if="i.state == 'false' "> --> 
-                                <td>
-                                    <div  align="center" class="btn-group">    
-                                        <a data-toggle="tooltip" title="Stage Information">
-
-                                            <button id="stageInformation" type="button" class="btn btn-info" data-toggle="modal"      data-target="#stageProjectModal" ng-click="editStage(item)"><i class="fa fa-question-circle" aria-hidden="true"></i></button>
-                                        </a>
-                                        <a data-toggle="tooltip" title="Add Products">
-                                            <button id="addMaterials" type="button" class="btn btn-success" data-toggle="modal"      data-target="#stageProductModal" ng-click="productStage()"><i class="fa fa-plus-circle" aria-hidden="true"></i></button>
-                                        </a>
-                                        <a data-toggle="tooltip" title="Create Stage">
-                                            <button type="button" class="btn btn-primary" ng-click="sendOrder()"><i class="fa fa-check" aria-hidden="true"></i></button>
-                                        </a> 
-                                    </div>
-                                </td>
-        <!--
-                                <td ng-if="i.state == 'true' ">
-                                    <div class="btn-group">    
-                                        <a data-toggle="tooltip" title={{Idioma.reward[9]}}>
-                                            <button id={{i.product}} type="button" class="btn btn-primary" ng-click="editStateUser(i)"><i class="fa fa-toggle-on"></i></button>
-                                        </a>
-                                        <a data-toggle="tooltip" title={{Idioma.reward[10]}}>
-                                            <button type="button" class="btn btn-primary"    ng-click="editUser(i)"><i class="fa fa-pencil-square-o"></i></button>
-                                        </a>
-                                        <a data-toggle="tooltip" title={{Idioma.reward[11]}}>
-                                            <button type="button" class="btn btn-primary" ng-click="deleteUser(i)"><i class="fa fa-close"></i></button>
-                                        </a>
-                                    </div>
-                                </td>
-        -->
-                            </tr>
-                        </tbody>
-
-
-                    </table>
-                    </div>
-            </div>
-            <div> 
-                <h2>Project Information</h2>
-                <div>
-                      <dl class="dl-horizontal" >
-                                  <dt id ="name"></dt>
-                                  <dd id ="p_name"></dd>
-                                  <dt id ="locate"></dt>
-                                  <dd id ="p_locate"></dd>
-                                  <dt id ="enginner"></dt>
-                                  <dd id ="p_enginner"></dd>
-                                  <dt id ="owner"></dt>
-                                  <dd id ="p_owner"></dd>
-                                  <dt id ="budget"></dt>
-                                  <dd id ="p_budget"></dd>  
-                             </dl>
-                 
                 </div>
-                <!--ng-repeat="item in StageList"--> 
-                <div class="panel-group" id="accordion" ng-repeat="item in stagesxProject" >
-                  <div class="panel panel-default">
-                    <div class="panel-heading">
-                      <h4 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#accordion" href="#item" >
-                        {{item.s_name}}</a>
-                      </h4>
+                <div align="center">
+                    <button  ng-click="setStage()" style="margin: 20px 20px 20px 20px; width:50%" type="submit" class="btn btn-primary btn-block btn-flat">Add Stage</button>
+                </div>
+        </div>
+      </div>
+    </div>
+    
+    
+    <!-- POP POP TO CREATE NEW PROJECT -->
+    <div id="stageProductModal" class="modal fade "  role="dialog" style="z-index: 1600;"  ng-controller="stageProductCtrl" style="overflow-y: scroll;"   >
+      <div class="modal-content">
+        <div class="modal-header"> 
+          <span id="close5" class="close">×</span>
+          <h2> Add Products to Stage</h2>
+        </div>
+        <div class="modal-body">
+                    <label for="S_Name">Search Products</label>
+                            <input id=PR_Name type="text" ng-model="PR_Name" ng-change="getProduct()" class="form-control" placeholder="Write Product Name"><span class="glyphicon glyphicon-log-out form-control-feedback"></span>
+                    <div class="table-responsive">
+                        <table id="mytable" class="table table-bordred table-striped">
+                            <thead>
+                            <th style="width:10%">ID </th>
+                            <th style="width:20%">Name</th>
+                            <th style="width:30%"> Description</th>
+                            <th style="width:15%">Price</th>
+                            <th style="width:10%">Amount</th>
+                            <th style="width:15%">Add to Cart</th>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="item in productList">
+                                    <td >{{item.pr_id}}</td>
+                                    <td>{{item.PName}}</td>
+                                    <td>{{item.PDescription}}</td>
+                                    <td>{{item.Price}}</td>
+                                    <td><input type="number" min="0" ng-model="amount" >       
+                                    <td><a class="btn btn-danger btn-xs" ng-click="addToCart(item.pr_id,amount,item.Price)"><span class="glyphicon glyphicon-expand"></span></a></td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
-                    <div id="item" class="panel-collapse collapse in">
-                      <div class="panel-body">
-                          
-                          <div>
-                            <h3>Stage Information</h3>
-                              <dl class="dl-horizontal">
-                                  <dt>Description</dt>
-                                  <dd>item.S_Description</dd>
-                                  <dt>Start Date</dt>
-                                  <dd>{{item.s_datestart}}</dd>
-                                  <dt>End Date</dt>
-                                  <dd>{{item.s_dateend}}</dd>
-                                  <dt>Status</dt>
-                                  <dd>{{item.s_status}}</dd>
-                                  
-                             </dl>
-                              
-                          </div> 
-                          <div>
-                              <h3>Stage Products</h3>
-                              <table id="cart" class="table-responsive table-hover table-condensed" table-responsive >
+                </div>
+                <div align="center">
+                    <button  ng-click="addProducts()" style="margin: 20px 20px 20px 20px; width:50%" type="submit" class="btn btn-primary btn-block btn-flat">Add Products</button>
+                </div>  
+      </div>
+
+
+    </div>  
+    
+    
+    <!-- POP POP TO ADD STAGES TO PROJECTS -->     
+    <div id="stageMaterialModal"  ng-controller="stageMaterialCtrl" style="overflow-y: scroll;" class="modal fade" role="dialog" style="z-index: 1400;"  > 
+      <div class="modal-content">
+        <div class="modal-header">
+          <span id="close6" class="close">×</span>
+          <h2> Project Management</h2>
+        </div>
+        <div class="modal-body">
+                <div class="form-group has-feedback" style="margin: 20px 0px 0px 0px;">
+                    <label for="sel1">Select a Project</label>
+                    <select type="text" ng-model="P_ID"  name="P_ID" ng-change="getProjectDetails()" placeholder="Select Project" class="form-control" id="P_ID" >
+                        <option ng-repeat="item in projectList">{{item.p_id}}</option>
+                    </select>
+                </div>
+                <div class="box box boxP" id="reward">
+
+                    <div class="form-group has-feedback" style="margin: 20px 0px 0px 0px;">
+                            <label for="S_Name">Search Stage</label>
+                            <input id=S_Name type="text" ng-model="S_Name" ng-change="getStages()" class="form-control" placeholder="Write Stage Name">
+
+                                <span class="glyphicon glyphicon-log-out form-control-feedback"></span>
+                    </div>
+                    <div class="box-body" style="margin: 20px 0px 0px 0px;">              
+
+                        <div align="center" class="col span_1_of_1 table-responsive" style=" margin: 0px 0px 0px 60px;"> 
+                                <table id="table" class="table table-bordered table-striped">
                                     <thead>
-                                        <tr>
-                                            <th style="width:50%">Product</th>
-                                            <th style="width:10%">Price</th>
-                                            <th style="width:8%">Quantity</th>
-                                            <th style="width:22%" class="text-center">Subtotal</th>
-                                            <th style="width:10%"></th>
+                                        <tr >    
+                                            <th>
+                                                <h4><b>Stage Name</b>
+                                                </h4>
+                                            </th>  
+                                            <th >
+                                                <h4><b>Description</b>
+                                                <span id="value" class=""></span></h4>
+                                            </th>   
+                                            <th> 
+                                                <h4><b> Options </b>
+                                                <span id="value" class=""></span></h4>
+                                            </th>      
                                         </tr>
                                     </thead>
                                     <tbody>
-                                       <tr ng-repeat="item2 in item.products" > 
-                                            <td data-th="Product">
-                                                <div class="row">
-                                                    <div class="col-sm-2 hidden-xs">{{item2.p_id}}</div>
-                                                    <div class="col-sm-10">
-                                                        <h4 class="nomargin">{{item2.p_name}}</h4>
-                                                        <p>{{item2.p_description}}</p>
-                                                    </div>
+                                           <tr ng-repeat="item in stageList">  
+                                            <td>{{item.s_name}}</td>
+                                            <td>{{item.s_description}}</td>
+                                            <td>
+                                                <div  align="center" class="btn-group">    
+                                                    <a data-toggle="tooltip" title="Stage Information">
+
+                                                        <button id="stageInformation" type="button" class="btn btn-info" data-toggle="modal"      data-target="#stageProjectModal" ng-click="editStage(item)"><i class="fa fa-question-circle" aria-hidden="true"></i></button>
+                                                    </a>
+                                                    <a data-toggle="tooltip" title="Add Products">
+                                                        <button id="addMaterials" type="button" class="btn btn-success" data-toggle="modal"      data-target="#stageProductModal" ng-click="productStage()"><i class="fa fa-plus-circle" aria-hidden="true"></i></button>
+                                                    </a>
+                                                    <a data-toggle="tooltip" title="Create Stage">
+                                                        <button type="button" class="btn btn-primary" ng-click="sendOrder()"><i class="fa fa-check" aria-hidden="true"></i></button>
+                                                    </a> 
                                                 </div>
                                             </td>
-                                            <td data-th="Price">{{item2.p_price}}</td>
-                                            <td data-th="Quantity">{{item2.p_quantity}}</td>
-                                            <td data-th="Subtotal" class="text-center">{{item2.p_price*item2.p_quantity}}</td>
-                                            <td class="actions" data-th=""></td>
-                                        </tr>
+                                           </tr>
                                     </tbody>
-                                    <tfoot>
-                                        <tr class="visible-xs">
-                                            <td class="text-center"><strong>Total 1.99</strong></td>
-                                        </tr>
-                                        <tr>
-                                            <td></td>
-                                            <td colspan="2" class="hidden-xs"></td>
-                                            <td class="hidden-xs text-center"><strong>Total $1.99</strong></td>
-                                            <td></td>
-                                        </tr>
-                                    </tfoot>
-                                </table>
-                               </div>   
-                              
+                            </table>
                         </div>
                     </div>
-                  </div>
-                
-
-              </div>
+                    <div> 
+                        <h2>Project Information</h2>
+                        <div>
+                            <dl class="dl-horizontal" >
+                              <dt id ="name"></dt>
+                              <dd id ="p_name"></dd>
+                              <dt id ="locate"></dt>
+                              <dd id ="p_locate"></dd>
+                              <dt id ="enginner"></dt>
+                              <dd id ="p_enginner"></dd>
+                              <dt id ="owner"></dt>
+                              <dd id ="p_owner"></dd>
+                              <dt id ="budget"></dt>
+                              <dd id ="p_budget"></dd>  
+                            </dl>
+                        </div>
+                        <div class="panel-group" id="accordion" ng-repeat="item in stagesxProject" >
+                          <div class="panel panel-default">
+                            <div class="panel-heading">
+                              <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#item" >
+                                {{item.s_name}}</a>
+                              </h4>
+                            </div>
+                            <div id="item" class="panel-collapse collapse in">
+                              <div class="panel-body">
+                                  <div>
+                                    <h3>Stage Information</h3>
+                                      <dl class="dl-horizontal">
+                                          <dt>Description</dt>
+                                          <dd>item.S_Description</dd>
+                                          <dt>Start Date</dt>
+                                          <dd>{{item.s_datestart}}</dd>
+                                          <dt>End Date</dt>
+                                          <dd>{{item.s_dateend}}</dd>
+                                          <dt>Status</dt>
+                                          <dd>{{item.s_status}}</dd>
+                                     </dl>
+                                  </div> 
+                                  <div>
+                                      <h3>Stage Products</h3>
+                                      <table id="cart" class="table-responsive table-hover table-condensed" table-responsive >
+                                            <thead>
+                                                <tr>
+                                                    <th style="width:50%">Product</th>
+                                                    <th style="width:10%">Price</th>
+                                                    <th style="width:8%">Quantity</th>
+                                                    <th style="width:22%" class="text-center">Subtotal</th>
+                                                    <th style="width:10%"></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                               <tr ng-repeat="item2 in item.products" > 
+                                                    <td data-th="Product">
+                                                        <div class="row">
+                                                            <div class="col-sm-2 hidden-xs">{{item2.p_id}}</div>
+                                                            <div class="col-sm-10">
+                                                                <h4 class="nomargin">{{item2.pr_name}}</h4>
+                                                                <p>{{item2.pr_description}}</p>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td data-th="Price">{{item2.pr_price}}</td>
+                                                    <td data-th="Quantity">{{item2.pr_quantity}}</td>
+                                                    <td data-th="Subtotal" class="text-center">{{item2.pr_price*item2.pr_quantity}}</td>
+                                                    <td class="actions" data-th=""></td>
+                                                </tr>
+                                            </tbody>
+                                            <tfoot>
+                                                <tr class="visible-xs">
+                                                    <td class="text-center"><strong>{{item.gpd_budget}}</strong></td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td colspan="2" class="hidden-xs"></td>
+                                                    <td class="hidden-xs text-center"><strong>Total $1.99</strong></td>
+                                                    <td></td>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                  </div>   
+                                </div>
+                            </div>
+                          </div>
+                      </div>
+                    </div>
+                </div>
+                <div align="center">
+                    <button  ng-click="addProducts()" style="margin: 20px 20px 20px 20px; width:50%" type="submit" class="btn btn-primary btn-block btn-flat">Add Products</button>
+                </div>    
             </div>
-            </div>
-</div>     
-           
-             
-            <div align="center">
-                <button  ng-click="addProducts()" style="margin: 20px 20px 20px 20px; width:50%" type="submit" class="btn btn-primary btn-block btn-flat">Add Products</button>
-            </div>    
-            </div>
-            
-         
-           
-  
+    </div>     
   </div>
-
- 
-    
-
-
-    
-
 </body>
 </html>
 
