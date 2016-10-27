@@ -52,6 +52,7 @@ namespace ConstructionCore.Controllers
                             if (proj.stages.ElementAt(z).s_name == stag.s_name)
                             {
                                 prodstage product = new prodstage();
+                                product.p_name = (string)coso["gpd_prname"];
                                 product.p_id = (int)coso["gpd_pid"];
                                 product.p_price = (int)coso["gpd_price"];
                                 product.p_quantity = (int)coso["gpd_quantity"];
@@ -63,6 +64,7 @@ namespace ConstructionCore.Controllers
                                 int i = proj.stages.IndexOf(stag);
                                 prodstage product = new prodstage();
                                 product.p_id = (int)coso["gpd_pid"];
+                                product.p_name = (string)coso["gpd_prname"];
                                 product.p_price = (int)coso["gpd_price"];
                                 product.p_quantity = (int)coso["gpd_quantity"];
                                 proj.stages.ElementAt(i).products.Add(product);
@@ -75,6 +77,7 @@ namespace ConstructionCore.Controllers
                         int i = proj.stages.IndexOf(stag);
                         prodstage product = new prodstage();
                         product.p_id = (int)coso["gpd_pid"];
+                        product.p_name = (string)coso["gpd_prname"];
                         product.p_price = (int)coso["gpd_price"];
                         product.p_quantity = (int)coso["gpd_quantity"];
                         proj.stages.ElementAt(i).products.Add(product);

@@ -49,6 +49,7 @@ namespace ConstructionCore.Controllers
                 {
                     System.Diagnostics.Debug.WriteLine(x.pr_id);
                     AddProduct(x);
+                    values.Add(x);
 
                 }
             }

@@ -10,5 +10,6 @@ namespace ConstructionCore.Models
         public int p_id { get; set; }
         public int p_price { get; set; }
         public int p_quantity { get; set; }
+        public string p_name { get; set; }
     }
 }

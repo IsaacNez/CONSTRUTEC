@@ -64,8 +64,8 @@ namespace ConstructionCore.Controllers
             string action = "";
             if (id != "undefined")
             {
-                var need = new ProjectController();
-                action = need.FormConnectionString("dbcomment", attr, ids);
+               
+                action = FormConnectionString("dbcomment", attr, ids);
             }
             else
             {
