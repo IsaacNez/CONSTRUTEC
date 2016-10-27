@@ -19,7 +19,7 @@ namespace ConstructionCore.Controllers
     {
 
         /**
-         * Function that returns the products that matches the given parameters.
+         * Function that makes a request to epatec's web service in order to gather all the products available there and migrate them to construtec's database
          * @params: String attribute and string id 
          **/
         [HttpGet]

@@ -15,6 +15,9 @@ namespace ConstructionCore.Controllers
 {
     public class OrderController : ApiController
     {
+        /*
+         * Method that redirections the order insertion request to the epatec's web service.
+         */
         [HttpPost]
         [ActionName("Post")]
         public void AddOrder(Order order)

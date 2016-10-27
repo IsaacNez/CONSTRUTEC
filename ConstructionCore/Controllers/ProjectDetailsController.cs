@@ -16,6 +16,9 @@ namespace ConstructionCore.Controllers
     [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class ProjectDetailsController : ApiController
     {
+        /*
+         * Get function for the details at a specific project, it parses and formats the data retrieved from the database in order to sent it to the web page.
+         */
         [HttpGet]
         [ActionName("Get")]
         public JsonResult<List<ProjectDetails>> Get(string attribute, string id)
