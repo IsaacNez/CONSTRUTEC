@@ -187,8 +187,6 @@ from dbuser as use left outer join userxrole as uxr on (use.u_id = uxr.u_id) lef
 where use.u_id = request_id and use.u_password =request_password;'
 language 'sql';
 
-select * from getuser(304890149,'casa');
-
 create or replace function getprojectdetails(
     searchp_idby int
 )
@@ -314,67 +312,3 @@ after update
 on projectxstage
 for each row
 execute procedure updateprojectbudget();
-
-select * from getcustomerservice('2016-10-20');
-insert into dbrole values(1,'Admin');
-insert into dbrole values(2,'Engineer');
-insert into dbrole values(3,'Client');
-insert into dbrole values(4,'General');
-insert into dbuser values(930549742,'Admin','admin',88888888,'admin1234');
-insert into dbuser values(304890149,'Isaac','Nunez',83048205,'casa');
-insert into dbuser values(115610679,'Gabriel','Sanchez',86309586,'fockyou');
-insert into dbuser values(304750553,'Bryan','Masis',84719652,'coso2016');
-insert into userxrole(r_id,u_id) values(1,930549742);
-insert into userxrole(r_id,u_id) values(3,304890149); 	
-insert into userxplusdata values(420,115610679);
-insert into userxrole(r_id,u_id) values(2,115610679);
-insert into userxrole(r_id,u_id) values(3,304750553);
-
-
-insert into stage values('Trabajo preliminar','Preparacion de terreno');
-insert into stage values('Cimientos','Creacion de vigas y piso');
-insert into stage values('Paredes','Construccion de paredes');
-insert into stage values('Concreto reforzado','Construccion de estructuras');
-insert into stage values('Techos','Construccion de vigas del techo');
-insert into stage values('Cielos','Construccion de cielorazo');
-insert into stage values('Repello','Repello de paredes');
-insert into stage values('Entrepisos','Division entre pisos');
-insert into stage values('Pisos','Chorreo de pisos');
-insert into stage values('Enchapes','Enchapado de pisos y paredes');
-insert into stage values('Instalacion pluvial','Instalacion canoas y tuberia');
-insert into stage values('Instalacion sanitaria','Instalacion de servicios sanitarios');
-insert into stage values('Instalacion electrica','Instalacion electrica y tomas electricos');
-insert into stage values('Puertas','Instalacion de puertas');
-insert into stage values('Cerrajeria','Instalacion de cerrajeria');
-insert into stage values('Ventanas','Instalacion de las ventanas');
-insert into stage values('Closets','Instalacion de los closets');
-insert into stage values('Mueble de cocina','Instalacion de muebles de cocina');
-insert into stage values('Escaleras','Instalacion de escaleras');
-
-insert into project(p_location,p_name,u_code,u_id) values('Cartago','Casa de habitacion',420,304890149);
-insert into projectxstage(p_id,s_name,pxs_datestart,pxs_dateend,pxs_status) values(1,'Techos','2016-10-19','2016-11-01','Construyendo');
-insert into projectxstage(p_id,s_name,pxs_datestart,pxs_dateend,pxs_status) values(1,'Paredes','2016-10-19','2016-11-01','Construyendo');
-insert into product values(1,'Golpear','Martillo',1500,200);
-insert into product values(2,'Lavar','Esponja',500,200);
-insert into product values(3,'Pintar','Pintura Golden',7500,200);
-insert into product values(4,'clavar','Clavos',1000,200);
-insert into stagexproduct(s_name,pr_id,p_id,pr_price,pr_quantity) values('Techos',1,1,1500,2);
-insert into stagexproduct(s_name,pr_id,p_id,pr_price,pr_quantity) values('Techos',2,1,500,2);
-insert into stagexproduct(s_name,pr_id,p_id,pr_price,pr_quantity) values('Paredes',3,1,7500,2);
-insert into stagexproduct(s_name,pr_id,p_id,pr_price,pr_quantity) values('Paredes',4,1,1000,2);
-insert into stagexproduct(s_name,pr_id,p_id,pr_price,pr_quantity) values('Paredes',2,1,500,2);
-insert into stagexproduct(s_name,pr_id,p_id,pr_price,pr_quantity) values('Techos',4,1,1000,2);
-insert into stagexproduct(s_name,pr_id,p_id,pr_price,pr_quantity) values('Techos',3,1,7500,1);
-
-select * from stagexproduct,product
-select * from product
-select * from getcustomerservicebyproductanddate('2016-10-14','pin');
-select * from projectxstage;
-select * from project;
-select * from dbuser;
-select * from stage;
-
-insert into project values(3,'cartago','casa',100000,420,115610679);
-
-
-
