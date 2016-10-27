@@ -77,7 +77,7 @@ public class SearchByDate extends Fragment {
             public void onClick(View v) {
                 AsyncHttpClient httpClient = new AsyncHttpClient();
                 try {
-                    String server = getString(R.string.url)+"projectxstage/update/p_id,s_name/"+_jsonList.get(_position).getInt("gcs_pid")+","+_stages.get(_position)+"/pxs_status/Terminada";
+                    String server = getString(R.string.url)+"projectxstage/update/coso/"+"'"+"Terminada"+"'"+","+_jsonList.get(_position).getInt("gcs_pid")+","+"'"+_stages.get(_position)+"'";
                     httpClient.get(server,null,new JsonHttpResponseHandler(){
                         /**
                          * Returns when request succeeds
@@ -225,8 +225,8 @@ public class SearchByDate extends Fragment {
      * @param u_id
      */
     public void getComments(String s_name, Integer p_id, Integer u_id){
-        String server = getString(R.string.url)+"comment/get/s_name,p_id,u_id/"+
-                "'"+s_name+"'"+","+p_id+","+u_id;
+        String server = getString(R.string.url)+"comment/get/s_name,p_id/"+
+                "'"+s_name+"'"+","+p_id;
         AsyncHttpClient httpClient = new AsyncHttpClient();
         _comments = new ArrayList<>();
         httpClient.get(server, null, new JsonHttpResponseHandler(){

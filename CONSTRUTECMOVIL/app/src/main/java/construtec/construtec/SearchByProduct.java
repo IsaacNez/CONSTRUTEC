@@ -159,7 +159,7 @@ public class SearchByProduct extends Fragment {
             public void onClick(View v) {
                 AsyncHttpClient httpClient = new AsyncHttpClient();
                 try {
-                    String server = getString(R.string.url)+"projectxstage/update/p_id,s_name/"+_stageslist.get(_position).getInt("gcs_pid")+","+_stagesname.get(_position)+"/pxs_status/Terminada";
+                    String server = getString(R.string.url)+"projectxstage/update/coso/"+"'"+"Terminada"+"'"+","+_stageslist.get(_position).getInt("gcs_pid")+","+"'"+_stagesname.get(_position)+"'";
                     httpClient.get(server,null,new JsonHttpResponseHandler(){
                         /**
                          * Returns when request succeeds
@@ -224,7 +224,6 @@ public class SearchByProduct extends Fragment {
                         _sxpstagesadapter = new ArrayAdapter<String>(_assignStage.getContext(),
                                 android.R.layout.simple_spinner_dropdown_item,_stagesname);
                         _sxpspinner.setAdapter(_sxpstagesadapter);
-                        _sxpstagesadapter.notifyDataSetChanged();
                         for(int i = 0; i < response.length(); i++){
                             if (response.getJSONObject(i).getString("gcs_status").matches("Terminada")) {
                                 _stageslist.add(response.getJSONObject(i));
@@ -235,6 +234,7 @@ public class SearchByProduct extends Fragment {
                 }catch (JSONException e){
                     e.printStackTrace();
                 }
+                _sxpstagesadapter.notifyDataSetChanged();
 
             }
         });

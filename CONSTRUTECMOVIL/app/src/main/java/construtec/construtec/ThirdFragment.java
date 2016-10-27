@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.INotificationSideChannel;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,11 +56,16 @@ public class ThirdFragment extends Fragment{
     Integer _client = 0;
 
     Button submit_project;
-    Button _showclient;
-
     String roles="";
+    String _temp="";
 
+    Spinner _roles;
+    Spinner _choose;
+    TextView _chooseview;
 
+    ArrayAdapter<String> _listvalue;
+    ArrayAdapter<String> _listclients;
+    ArrayAdapter<String> _listvaluerole;
 
 
     @Nullable
@@ -69,11 +75,101 @@ public class ThirdFragment extends Fragment{
         roles = getArguments().getString("role");
         _ucode = getArguments().getInt("u_code");
         _uid = getArguments().getInt("u_id");
+        _roles = (Spinner) myView.findViewById(R.id._rolespinner);
+        _choose = (Spinner) myView.findViewById(R.id._generalspinner);
+        _chooseview = (TextView) myView.findViewById(R.id._choose);
 
         startdata();
+        if(_action == 0){
+            _chooseview.setText("Choose an enginner");
+            get("user_undefined", "engineer");
+            _roles.setVisibility(View.INVISIBLE);
+             _listvalue = new ArrayAdapter<String>(myView.getContext(),
+                    android.R.layout.simple_spinner_dropdown_item, _especification);
+            _choose.setAdapter(_listvalue);
+        }else if(_action == 1){
+            get("user_undefined", "client");
+            _chooseview.setText("Choose a client");
+            _roles.setVisibility(View.INVISIBLE);
+            _listvalue = new ArrayAdapter<String>(myView.getContext(),
+                    android.R.layout.simple_spinner_dropdown_item, _especification);
+            _choose.setAdapter(_listvalue);
+
+        }else{
+           _listvaluerole = new ArrayAdapter<String>(myView.getContext(),
+                    android.R.layout.simple_spinner_dropdown_item, charges);
+            _roles.setAdapter(_listvaluerole);
+            _listvaluerole.notifyDataSetChanged();
+            _chooseview.setText("");
+        }
+
+        _roles.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                _temp = parent.getItemAtPosition(position).toString();
+                if(parent.getItemAtPosition(position).toString().matches("Engineer"))
+                    getother("blabla", "client");
+                else {
+                    getother("blabla", "engineer");
+                }
+                 _listclients = new ArrayAdapter<String>(myView.getContext(),
+                        android.R.layout.simple_spinner_dropdown_item,_especification);
+                _choose.setAdapter(_listclients);
+
+
+
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        _choose.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                System.out.println(_action);
+                switch (_action){
+                    case 1:
+                        _engineer = _ucode;
+                        _client = _codes.get(position);
+                        Toast.makeText(myView.getContext(),"You have choosen: "+_especification.get(position)
+                                +" as your client",Toast.LENGTH_LONG).show();
+                        break;
+                    case 0:
+                        _engineer = _codes.get(position);
+                        _client = _uid;
+                        Toast.makeText(myView.getContext(),"You have choosen: "+_especification.get(position)
+                                +" as your engineer",Toast.LENGTH_LONG).show();
+                        break;
+                    case 3:
+                        if(_temp.matches("Engineer")){
+                            _chooseview.setText("Choose your client");
+                            Toast.makeText(myView.getContext(),"You have choosen: "+_especification.get(position)
+                                    +" as your client",Toast.LENGTH_LONG).show();
+                            _engineer = _ucode;
+                            _client = _codes.get(position);
+                        }else{
+                            _chooseview.setText("Choose your engineer");
+                            _engineer = _codes.get(position);
+                            _client = _uid;
+                            Toast.makeText(myView.getContext(),"You have choosen: "+_especification.get(position)
+                                    +" as your engineer",Toast.LENGTH_LONG).show();
+                        }
+                        break;
+
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         submit_project = (Button) myView.findViewById(R.id.submit_project);
-        _showclient = (Button) myView.findViewById(R.id._selectclient);
 
         _projectName = (EditText) myView.findViewById(R.id._projectname);
         _projectLocation = (EditText) myView.findViewById(R.id._projectlocation);
@@ -84,7 +180,7 @@ public class ThirdFragment extends Fragment{
                 if (_projectName.getText().toString().matches("") | _projectLocation.getText().toString().matches(""))
                     Toast.makeText(getActivity().getApplicationContext(), "You must enter some data", Toast.LENGTH_LONG).show();
                 else {
-                    String server = getString(R.string.url)+"project/post";
+                    String server = getString(R.string.url) + "project/post";
                     final AsyncHttpClient client = new AsyncHttpClient();
                     JSONObject params = new JSONObject();
                     try {
@@ -97,7 +193,7 @@ public class ThirdFragment extends Fragment{
                         client.post(myView.getContext(), server, se, "application/json", new JsonHttpResponseHandler() {
                             @Override
                             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                                Toast.makeText(myView.getContext(),"Se ha hecho el post",Toast.LENGTH_LONG).show();
+                                Toast.makeText(myView.getContext(), "Se ha hecho el post", Toast.LENGTH_LONG).show();
                             }
                         });
                     } catch (JSONException e) {
@@ -110,99 +206,13 @@ public class ThirdFragment extends Fragment{
         });
 
 
-        _showclient.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final LayoutInflater layout = LayoutInflater.from(myView.getContext());
-                final View _list = layout.inflate(R.layout.show, null);
-                AlertDialog.Builder _window = new AlertDialog.Builder(myView.getContext());
-                _window.setView(_list);
-                if((_action == 0) |(_action==1)) {
-                    chooseclient(_window,_list);
-                }
-                else if(_action == 3){
-                    _showclient.setText("Select your role");
-                    ArrayAdapter<String> _listvalue = new ArrayAdapter<String>(_list.getContext(),
-                            android.R.layout.simple_list_item_1, charges);
-                    _window
-                            .setCancelable(false)
-                            .setAdapter(_listvalue, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    if(which == 0){
 
-                                        get("user_undefined", "client");
-                                        final LayoutInflater superlayout = LayoutInflater.from(_list.getContext());
-                                        final View _listchoose = layout.inflate(R.layout.chooseuserdependingon, null);
-                                        AlertDialog.Builder _windowchoose = new AlertDialog.Builder(_list.getContext());
-                                        _windowchoose.setView(_listchoose);
-                                        ArrayAdapter<String> _listclients = new ArrayAdapter<String>(_listchoose.getContext(),
-                                        android.R.layout.simple_list_item_2,_especification);
-                                        _windowchoose
-                                                .setCancelable(false)
-                                                .setAdapter(_listclients, new DialogInterface.OnClickListener() {
-                                                    @Override
-                                                    public void onClick(DialogInterface dialog, int which) {
-                                                        Toast.makeText(_listchoose.getContext(),"You have choosen: "+_especification.get(which)
-                                                                +" as your client",Toast.LENGTH_LONG).show();
-                                                        _engineer = _ucode;
-                                                        _client = _codes.get(which);
-                                                        dialog.cancel();
-                                                    }
-                                                });
-                                        AlertDialog _windowsecundary = _windowchoose.create();
-                                        _windowchoose.show();
-
-                                    }
-                                    else if (which == 1){
-                                        get("engineer_undefined", "engineer");
-                                        final LayoutInflater superlayout = LayoutInflater.from(_list.getContext());
-                                        final View _listchoose = layout.inflate(R.layout.chooseuserdependingon, null);
-                                        AlertDialog.Builder _windowchoose = new AlertDialog.Builder(_list.getContext());
-                                        _windowchoose.setView(_listchoose);
-                                        ArrayAdapter<String> _listclients = new ArrayAdapter<String>(_listchoose.getContext(),
-                                                android.R.layout.simple_list_item_2,_especification);
-                                        _windowchoose
-                                                .setCancelable(false)
-                                                .setAdapter(_listclients, new DialogInterface.OnClickListener() {
-                                                    @Override
-                                                    public void onClick(DialogInterface dialog, int which) {
-                                                        _engineer = _codes.get(which);
-                                                        _client = _uid;
-                                                        Toast.makeText(_listchoose.getContext(),"You have choosen: "+_especification.get(which)
-                                                        +" as your engineer",Toast.LENGTH_LONG).show();
-                                                        dialog.cancel();
-                                                    }
-                                                });
-                                        AlertDialog _windowsecundary = _windowchoose.create();
-                                        _windowchoose.show();
-
-
-                                    }
-                                }
-                            })
-                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-
-                                }
-                            })
-                            .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.cancel();
-                                }
-                            });
-                    AlertDialog _windowshow = _window.create();
-                    _window.show();
-                }
-            }
-        });
 
 
 
         return myView;
     }
+
 
     /**
      * Depending on the role the user has choose (in teh case it owns more than one role)
@@ -224,9 +234,9 @@ public class ThirdFragment extends Fragment{
                     if (controller.matches("engineer")) {
                         for (int i = 0; i < response.length(); i++) {
                             JSONObject jsonObj = response.getJSONObject(i);
-                            _codes.add(jsonObj.getInt("u_code"));
+                            _codes.add(jsonObj.getInt("u_id"));
                             _names.add(jsonObj.getString("u_name"));
-                            String temp = jsonObj.getString("u_name") + ": " + jsonObj.getInt("u_code");
+                            String temp = jsonObj.getString("u_name") + ": " + jsonObj.getInt("u_id");
                             _especification.add(temp);
                         }
                     } else if (controller.matches("client")) {
@@ -238,15 +248,61 @@ public class ThirdFragment extends Fragment{
                             _especification.add(temp);
                         }
                     }
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                _listvalue.notifyDataSetChanged();
+
 
             }
         });
         httpClient.cancelAllRequests(true);
 
     }
+
+
+    public synchronized void getother(String action, final String controller){
+        AsyncHttpClient httpClient = new AsyncHttpClient();
+        String server = getString(R.string.url)+controller+"/get/u_id/"+action;
+        System.out.println(server);
+        _especification = new ArrayList<>();
+
+        httpClient.get(server, null, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+                System.out.println(response.toString());
+                try {
+                    if (controller.matches("engineer")) {
+                        for (int i = 0; i < response.length(); i++) {
+                            JSONObject jsonObj = response.getJSONObject(i);
+                            _codes.add(jsonObj.getInt("u_id"));
+                            _names.add(jsonObj.getString("u_name"));
+                            String temp = jsonObj.getString("u_name") + ": " + jsonObj.getInt("u_id");
+                            _especification.add(temp);
+                        }
+                    } else if (controller.matches("client")) {
+                        for (int i = 0; i < response.length(); i++) {
+                            JSONObject jsonObj = response.getJSONObject(i);
+                            _codes.add(jsonObj.getInt("u_id"));
+                            _names.add(jsonObj.getString("u_name"));
+                            String temp = jsonObj.getString("u_name") + ": " + jsonObj.getInt("u_id");
+                            _especification.add(temp);
+                        }
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                _listclients.notifyDataSetChanged();
+
+            }
+        });
+        httpClient.cancelAllRequests(true);
+
+    }
+
+
 
     /**
      * Checks if the user that log on has more than one role, if it is that case
@@ -257,7 +313,7 @@ public class ThirdFragment extends Fragment{
             rolearray = new JSONArray(roles);
             for(int i = 0 ; i<rolearray.length();i++){
                 if (rolearray.getInt(i)==2)
-                    charges.add("Enginner");
+                    charges.add("Engineer");
                 else if (rolearray.getInt(i)==3)
                     charges.add("Client");
             }
@@ -283,55 +339,6 @@ public class ThirdFragment extends Fragment{
      * @param _window
      * @param _list
      */
-    public void chooseclient(AlertDialog.Builder _window,final View _list){
-        switch (_action){
-            case 0:
-                get("user_undefined", "client");
-                _showclient.setText("Select your client");
-                break;
-            case 1:
-                _showclient.setText("Select your engineer");
-                get("engineer_undefined", "engineer");
-        }
-        ArrayAdapter<String> _listvalue = new ArrayAdapter<String>(_list.getContext(),
-                android.R.layout.simple_list_item_1, _especification);
-        _window
-                .setCancelable(false)
-                .setAdapter(_listvalue, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        switch (_action){
-                            case 0:
-                                _engineer = _ucode;
-                                _client = _codes.get(which);
-                                Toast.makeText(_list.getContext(),"You have choosen: "+_especification.get(which)
-                                        +" as your client",Toast.LENGTH_LONG).show();
-                                dialog.cancel();
-                                break;
-                            case 1:
-                                _engineer = _codes.get(which);
-                                _client = _uid;
-                                Toast.makeText(_list.getContext(),"You have choosen: "+_especification.get(which)
-                                        +" as your engineer",Toast.LENGTH_LONG).show();
-                                dialog.cancel();
-                                break;
-                        }
-                    }
-                })
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        //_clientshow.setText(_names.get(_userselection.getSelectedItemPosition()));
-                    }
-                })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });
-        AlertDialog _windowshow = _window.create();
-        _window.show();
-    }
+
 
 }

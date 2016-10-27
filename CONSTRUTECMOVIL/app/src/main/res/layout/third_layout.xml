@@ -44,12 +44,29 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp" />
 
-    <Button
+    <Spinner
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Press"
-        android:id="@+id/_selectclient"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:id="@+id/_rolespinner"
+        android:layout_below="@+id/_projectlocation"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/_generalspinner"
+        android:layout_marginTop="41dp"
+        android:layout_below="@+id/_rolespinner"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Choose"
+        android:id="@+id/_choose"
+        android:layout_below="@+id/_rolespinner"
+        android:layout_alignStart="@+id/_projectlocation" />
 
 </RelativeLayout>

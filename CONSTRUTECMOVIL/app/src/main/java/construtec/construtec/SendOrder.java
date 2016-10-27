@@ -201,7 +201,7 @@ public class SendOrder extends Fragment {
                             @Override
                             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                                 AsyncHttpClient httpClient = new AsyncHttpClient();
-                                String server = getString(R.string.url) + "projectxstage/update/p_id,s_name/" + _projectsID.get(_tempproject) + "," + _stagesname.get(_position) + "/pxs_status/Terminada";
+                                String server = getString(R.string.url) +   "projectxstage/update/coso/"+"'"+"Terminada"+"'"+","+_projectsID.get(_tempproject)+","+"'"+_stagesname.get(_position)+"'";
                                 httpClient.get(server, null, new JsonHttpResponseHandler() {
                                     /**
                                      * Returns when request succeeds
@@ -229,6 +229,7 @@ public class SendOrder extends Fragment {
                                     }
                                 });
                                 Snackbar.make(_assignStage, "Your order has been posted", Snackbar.LENGTH_LONG).show();
+                                getprojectdeatils(_tempproject);
                             }
                         });
                     } catch (JSONException e) {
@@ -305,7 +306,7 @@ public class SendOrder extends Fragment {
 
                                 JSONObject _stageJSONObject = _newJSONArray.getJSONObject(j);
                                 String action = "Name: " + _stageJSONObject.getString("s_name")+ "\n";
-                                if (!_stageJSONObject.getString("gpd_status").matches("Terminada")) {
+                                if (!_stageJSONObject.getString("s_status").matches("Terminada")) {
                                     _stagesname.add(_stageJSONObject.getString("s_name"));
                                     _products.add(_stageJSONObject.getJSONArray("products"));
                                     if (!_stagesdata.contains(action))
