@@ -1,6 +1,7 @@
 //Vra Globals
 var url= 'http://desktop-6upj287:7575';
-
+var userID = localStorage.user;
+var userCode = localStorage.code;
 /**
  * Modal where the user can sign in
 */

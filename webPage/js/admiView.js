@@ -2,6 +2,8 @@
 var actualProject;
 var actualStage;
 var url = 'http://desktop-6upj287:7575';
+var userID = localStorage.user;
+var userCode = localStorage.code;
 
 /**
  * Controller where the user admin can update the products data base 
@@ -178,8 +180,4 @@ stageForm =  angular.module('admiView')
   
  
 }]);
-
-
-
-
 

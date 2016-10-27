@@ -1,3 +1,4 @@
+
 //ANGULAR MODULE TO MANAGE INDEX.HTML
 var indexApp = angular.module('index',[])
 .controller('indexCtrl', ['$scope', '$http', function ($scope, $http) {
@@ -37,12 +38,15 @@ var indexApp = angular.module('index',[])
                  
                     localStorage.setItem("user", mensaje.q_name);
                     localStorage.setItem("code", mensaje.q_code);
+             
+                    console.log(mensaje.q_code);
                  
                     if($scope.roles.length > 1)  {loginmodal.style.display = "block";}
-                    else if($scope.roles[0]==1)  {window.location.assign("/pages/adminView.html");}
+                    else if($scope.roles[0]==1)  {window.location.assign("/pages/admiView.html");}
                     else if($scope.roles[0]==2)  {window.location.assign("/pages/employeeView.html");}
                     else if($scope.roles[0]==3)  {window.location.assign("/pages/clientView.html");}
-                    else if($scope.roles[0]==4)  {localStorage.setItem("user", $scope.U_Name); 
+                    else if($scope.roles[0]==4)  {localStorage.setItem("user", mensaje.q_name); 
+                                                  localStorage.setItem("code", mensaje.q_id);
                                                   window.location.assign("/pages/generalView.html");}  
                     
                 });       

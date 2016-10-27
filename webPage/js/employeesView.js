@@ -4,6 +4,7 @@ var actualStage;
 var allProducts;
 var allAmounts;
 var userID = localStorage.user;
+var userCode = localStorage.code;
 
 //ANGULAR MODULE TO MANAGE THE PROJECT POP POP
 var stageForm = angular.module('employeeView',[])
@@ -19,22 +20,25 @@ var stageForm = angular.module('employeeView',[])
         $http.get('http://desktop-6upj287:7575/api/Client/get/getAll/getAll')
                 .then( function (response) {    
                   $scope.Clients = response.data;});
-
-
-        // FUNCTION TO INSERT A NEW PROJECT IN DATA BASE
-        $scope.createProject = function (pClient) 
+        
+        
+        /**
+         * FUNCTION TO INSERT A NEW PROJECT IN DATA BASE
+         */
+        $scope.createProject = function () 
             {
                  var Project = {
                                     "P_Name": $scope.P_Name,
                                     "P_Location": $scope.P_Location,
-                                    "U_ID": $scope.U_ID,
-                                    "U_code":pClient
+                                    "U_ID": $scope.C_ID,
+                                    "U_code":$scope.U_ID
                                 }
                 $http.post('http://desktop-6upj287:7575/api/project/post',Project).
                     success(function (data, status, headers, config) {alert('the new user has been posted!');}).
                     error(function (data, status, headers, config) {alert('Error while posting the new employee')});
              }
     }]);
+
 
 //ANGULAR MODULE TO MANAGE THE PRODUCT PER STAGE POP POP
 stageForm =  angular.module('employeeView')
@@ -43,11 +47,18 @@ stageForm =  angular.module('employeeView')
         var productList;
         var prices;
 
+        /**
+         * FUNCTION TO GET PRODUCTS FROM DATA BASE
+         */
         $scope.getProduct = function (){
             $http.get('http://desktop-6upj287:7575/api/Product/get/PName/'+$scope.PName)
                 .then( function (response) { $scope.productList = response.data;}); }
-        
-        // FUNCTION TO INSERT A PRODUCT 
+        /**
+         * FUNCTION TO INSERT A PRODUCT 
+         * @param {Number} value1 
+         * @param {Number} value2 
+         * @param {Number} value3
+         */ 
         $scope.addToCart = function (value1,value2,value3){
             order={
                       "P_ID": actualProject,
@@ -81,6 +92,9 @@ stageForm =  angular.module('employeeView')
 stageForm =  angular.module('employeeView')
 .controller('stageProjectCtrl', ['$scope', '$http', function ($scope, $http) {
         var url = 'http://isaac:7549';
+         /**
+         * FUNCTION TO INSERT A NEW STAGE IN A PROJEcT
+         */ 
          $scope.setStage=function(){
          var order;
               order={
@@ -113,8 +127,7 @@ stageForm =  angular.module('employeeView')
         var employee     =  document.getElementById("newEmployee");
         var stage        =  document.getElementById("newStage");
         var project      =  document.getElementById("newProject");
-        var stageProject =  document.getElementById("addStage");
-      
+       
         // SPAN TO CLOSE THE MODALS
         var span1 = document.getElementById("close1");
         var span2 = document.getElementById("close2");
@@ -125,21 +138,24 @@ stageForm =  angular.module('employeeView')
         employee.onclick     = function() {modalEmployees.style.display = "block";}
         stage.onclick        = function() {modalStages.style.display = "block";}
         project.onclick      = function() {modalProject.style.display = "block";}
-        stageProject.onclick = function() {modalStageProject.style.display = "block";}
+    
         
         // QUIT THE MODAL WITH CLICK OUT OF THE MODAL
         window.onclick = function(event) {if (event.target == modalEmployees)    {modalEmployees.style.display = "none";}}
         window.onclick = function(event) {if (event.target == modalStages)       {modalStages.style.display = "none";}}
         window.onclick = function(event) {if (event.target == modalProject)      {modalProject.style.display = "none";}}
-        window.onclick = function(event) {if (event.target == modalStageProject) {modalStageProject.style.display = "none";}}
+
         
         // QUIT THE MODAL WITH CLICK ON X
         span1.onclick = function() {modalEmployees.style.display = "none";}
         span2.onclick = function() {modalStages.style.display = "none";}
         span3.onclick = function() {modalProject.style.display = "none";}
-        span4.onclick = function() {modalStageProject.style.display = "none";}
 
-        // FUNTION TO INSERT A NEW STAGE
+
+         
+        /**
+         * FUNTION TO CREATE A NEW STAGE
+         */ 
         $scope.createStage = function () {
              var Stage = {
                             "S_Name": $scope.S_Name,
@@ -153,16 +169,22 @@ stageForm =  angular.module('employeeView')
 }]);
 
 
-//ANGULAR MODULE TO MANAGE THE USER POP POP
+//ANGULAR MODULE TO MANAGE THE USER POP UP
 stageForm = angular.module('employeeView')
 .controller('employeeCtrl', ['$scope', '$http', function ($scope, $http) {
     
     var rolelist;
     var stageList;
+    /**
+    * FUNTION TO GET THE LIST OF ROLES
+    */ 
     $http.get('http://desktop-6upj287:7575/api/Role/get/R_Name/undefined')
         .then( function (response) {$scope.rolelist = response.data;});
     
-    //FUNCTION TO INSERT NEW USER ON DATABASE
+  
+    /**
+    * FUNCTION TO INSERT NEW USER ON DATABASE
+    */ 
     $scope.addUser = function () {
 
         var User = {
@@ -177,7 +199,8 @@ stageForm = angular.module('employeeView')
         $http.post('http://desktop-6upj287:7575/api/User/post/',User).
         success(function (data, status, headers, config) {alert('User has been posted');}).
         error(function (data, status, headers, config)   {alert('error posting User')});
-    }  
+    }
+ 
 }]);
 
 
@@ -195,31 +218,34 @@ stageForm =  angular.module('employeeView')
         var bigJSON;
         var modalStageMaterial = document.getElementById('stageMaterialModal');
         var modalStageProduct = document.getElementById('stageProductModal');
-    
-        // GET PROJECTS FROM DB
-        $http.get('http://desktop-6upj287:7575/api/Project/get/p_id/undefined')
+        /**
+        * GET PROJECTS FROM DB
+        */ 
+        $http.get('http://desktop-6upj287:7575/api/Project/get/u_code/'+userCode)
                 .then( function (response) {$scope.projectList = response.data;});
-
-        // FUNCTION TO SET ACTUAL PROJECT AND STAGE WHEN WE WANT TO EDIT 
+        /**
+        * FUNCTION TO SET ACTUAL PROJECT AND STAGE WHEN WE WANT TO EDIT
+        * @param {String} item 
+        */ 
+        
         $scope.editStage = function(item){
             actualProject = $scope.P_ID;
-            console.log("Project/"+actualProject);
+            
             actualStage=item.s_name;
-            console.log("Stage/"+actualStage);
+            
         }
+
         
-        // FUNCTION TO SET ACTUAL PROJECT AND STAGE WHEN WE WANT TO EDIT 
-        $scope.productStage = function(item){
-            actualStage=item.s_name;
-            console.log("Stage/"+actualStage);
-        }
-        
-        // FUNCTION TO GET STAGES NAMES 
+        /**
+        * FUNCTION TO GET STAGES NAMES 
+        */ 
         $scope.getStages = function (){
             $http.get('http://desktop-6upj287:7575/api/Stage/get/s_name/'+$scope.S_Name)
                 .then( function (response) {$scope.stageList = response.data;});}
 
-   
+        /**
+        * GET PROJECTS FROM DB
+        */ 
        $scope.updateProject= function(){
            $http.get('http://desktop-6upj287:7575/api/ProjectDetails/get/p_id/'+$scope.P_ID)
                 .then( function (response) {$scope.bigJSON = response.data;});
@@ -227,8 +253,9 @@ stageForm =  angular.module('employeeView')
        }
        
         var mensaje2 = {};
-    
-         // FUNCTION TO GET PROJECT DETAILS FROM DATA BASE 
+        /**
+        * FUNCTION TO GET PROJECT DETAILS FROM DATA BASE
+        */ 
         $scope.getProjectDetails = function(){
             
              $http.get('http://desktop-6upj287:7575/api/ProjectDetails/get/p_id/'+$scope.P_ID)
@@ -249,12 +276,14 @@ stageForm =  angular.module('employeeView')
                                document.getElementById("owner").innerHTML      = "Owner";
                                document.getElementById("p_owner").innerHTML    = $scope.mensaje2.gpd_owner;  
                                document.getElementById("budget").innerHTML     = "Budget";
-                               document.getElementById("p_budget").innerHTML   = $scope.mensaje2.gpd_pbudget;  
+                               document.getElementById("p_budget").innerHTML   = $scope.mensaje2.gdp_pbudget;  
                             });
             
         
         }
-
+        /**
+        * FUNCTION TO CREATE A NEW ORDER WITH ALL PRODUCTS
+        */ 
         $scope.sendOrder = function () {
               var d = new Date();
               var randomOrder = parseInt((Math.floor((Math.random() * 1000000) + 1)* d.getHours())/d.getMinutes()+d.getMilliseconds());
@@ -267,6 +296,7 @@ stageForm =  angular.module('employeeView')
                       "OrderDate": d
                     }
               console.log(order);
+              $scope.getProjectDetails();
               $http.post('http://desktop-6upj287:7575/api/Order/post',order).
               success(function (data, status, headers, config) {alert('the new order has been posted!');}).
               error(function (data, status, headers, config)   {alert('Error while posting the new order')});

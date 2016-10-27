@@ -1,4 +1,3 @@
-    
 //Var Globals
 var index;
 var Pid;
@@ -7,6 +6,8 @@ var Sname;
 var Status;
 var userid;
 var url= 'http://desktop-6upj287:7575';
+var userID = localStorage.user;
+var userCode = localStorage.code;
 
 /**
 * Show all stages of projects that will start in the next 15 days
@@ -15,9 +16,7 @@ var stageForm = angular.module('generalView',[])
 .controller('projectMaterialCtrl', ['$scope', '$http', function ($scope, $http) {
          
      
-       
-        userid = localStorage.user;// Get the user Id
-        console.log(" id " + userid);
+     ;
         document.getElementById("idUser").innerHTML = "Welcome "+userID;//Show the user name
         // Get the modal
 
@@ -167,7 +166,8 @@ stageForm =  angular.module('generalView')
          * @return: list of all comments
          * 
         */
-        $scope.displayComment= function (){
+        
+        $scope.displayComment= function (value1){
             
              $http.get(url+'/api/Comment/get/p_id,s_name/'+Pid+","+"'"+Sname+"'")
                 .then( function (response) {    
@@ -186,7 +186,7 @@ stageForm =  angular.module('generalView')
         $scope.addComment = function () {
             var Comment = { 
                 "p_id": Pid,
-                "u_id":userid,
+                "u_id": userCode,
                 "s_name": Sname,
                 "c_description": $scope.C_Description
                 
@@ -201,6 +201,7 @@ stageForm =  angular.module('generalView')
             error(function (data, status, headers, config) {
                 alert('error adding comment')
             });
+             
         }
 
             

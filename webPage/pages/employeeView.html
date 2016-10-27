@@ -62,7 +62,7 @@
     
     
     
-    <!-- POP POP TO CREATE NEW USER-->
+    <!-- POP UP TO CREATE NEW USER-->
     <div id="employeeModal" class="modal" ng-controller="employeeCtrl"  style="overflow-y: scroll;">
       <!-- Modal content -->
       <div class="modal-content">
@@ -87,6 +87,12 @@
                     <span class="glyphicon glyphicon-link form-control-feedback"></span>
                 </div>
                 <div class="form-group has-feedback" style="margin: 20px 0px 0px 0px;">
+                    <label for="sel1">Select user Role</label>
+                    <select type="text" name="R_ID" ng-model="R_ID" placeholder="Select User Role" class="form-control" id="sel1" >
+                    <option ng-repeat="item in rolelist">{{item.r_id}}-{{item.r_name}} </option>
+                    </select>
+                </div>
+                <div  class="form-group has-feedback" style="margin: 20px 0px 0px 0px;">
                     <label for="U_Code" >Write a user code</label>
                     <input id=U_Code type="number" ng-model="U_Code" class="form-control" placeholder="Code">
                     <span class="glyphicon glyphicon-option-horizontal form-control-feedback"></span>
@@ -96,12 +102,7 @@
                     <input id=U_Phone type="number" ng-model="U_Phone" class="form-control" placeholder="Phone">
                     <span class="glyphicon glyphicon-phone form-control-feedback"></span>
                 </div>
-                <div class="form-group has-feedback" style="margin: 20px 0px 0px 0px;">
-                    <label for="sel1">Select user Role</label>
-                    <select type="text"  name="R_ID" ng-model="R_ID" placeholder="Select User Role" class="form-control" id="sel1" >
-                    <option ng-repeat="item in rolelist">{{item.r_id}}-{{item.r_name}} </option>
-                    </select>
-                </div>
+                
                 <div class="form-group has-feedback" style="margin: 20px 0px 0px 0px;">
                     <label for="U_Password">Write a password</label>
                     <input id=U_Password type="password" ng-model="U_Password" class="form-control" placeholder="Password">
@@ -117,7 +118,7 @@
     </div>
     
     
-    <!-- POP POTO CREATE NEW STAGES -->
+    <!-- POP UP CREATE NEW STAGES -->
     <div id="stageModal" class="modal"  ng-controller="stageCtrl" style="overflow-y: scroll;" >
       <!-- Modal content -->
         <div class="modal-content">
@@ -145,7 +146,7 @@
     
     
     
-    <!-- POP POP TO CREATE NEW PROJECT -->
+    <!-- POP UP TO CREATE NEW PROJECT -->
     <div id="projectModal" class="modal" ng-controller= "projectCtrl" style="overflow-y: scroll;">
       <div class="modal-content">
         <div class="modal-header">
@@ -176,7 +177,7 @@
                     </select>
                 </div>
                 <div align="center">
-                    <button  ng-click="createProject(client)" style="margin: 20px 20px 20px 20px; width:50%" type="submit" class="btn btn-primary btn-block btn-flat">Create Project</button>
+                    <button  ng-click="createProject()" style="margin: 20px 20px 20px 20px; width:50%" type="submit" class="btn btn-primary btn-block btn-flat">Create Project</button>
                 </div>   
           </div>
         </div>
@@ -247,9 +248,7 @@
                         </table>
                     </div>
                 </div>
-                <div align="center">
-                    <button  ng-click="addProducts()" style="margin: 20px 20px 20px 20px; width:50%" type="submit" class="btn btn-primary btn-block btn-flat">Add Products</button>
-                </div>  
+            
       </div>
 
 
@@ -309,7 +308,7 @@
                                                         <button id="stageInformation" type="button" class="btn btn-info" data-toggle="modal"      data-target="#stageProjectModal" ng-click="editStage(item)"><i class="fa fa-question-circle" aria-hidden="true"></i></button>
                                                     </a>
                                                     <a data-toggle="tooltip" title="Add Products">
-                                                        <button id="addMaterials" type="button" class="btn btn-success" data-toggle="modal"      data-target="#stageProductModal" ng-click="productStage()"><i class="fa fa-plus-circle" aria-hidden="true"></i></button>
+                                                        <button id="addMaterials" type="button" class="btn btn-success" data-toggle="modal"      data-target="#stageProductModal"><i class="fa fa-plus-circle" aria-hidden="true"></i></button>
                                                     </a>
                                                     <a data-toggle="tooltip" title="Create Stage">
                                                         <button type="button" class="btn btn-primary" ng-click="sendOrder()"><i class="fa fa-check" aria-hidden="true"></i></button>
@@ -350,8 +349,7 @@
                                   <div>
                                     <h3>Stage Information</h3>
                                       <dl class="dl-horizontal">
-                                          <dt>Description</dt>
-                                          <dd>item.S_Description</dd>
+                                    
                                           <dt>Start Date</dt>
                                           <dd>{{item.s_datestart}}</dd>
                                           <dt>End Date</dt>
@@ -378,14 +376,13 @@
                                                         <div class="row">
                                                             <div class="col-sm-2 hidden-xs">{{item2.p_id}}</div>
                                                             <div class="col-sm-10">
-                                                                <h4 class="nomargin">{{item2.pr_name}}</h4>
-                                                                <p>{{item2.pr_description}}</p>
+                                                                {{item2.p_name}}
                                                             </div>
                                                         </div>
                                                     </td>
-                                                    <td data-th="Price">{{item2.pr_price}}</td>
-                                                    <td data-th="Quantity">{{item2.pr_quantity}}</td>
-                                                    <td data-th="Subtotal" class="text-center">{{item2.pr_price*item2.pr_quantity}}</td>
+                                                    <td data-th="Price">{{item2.p_price}}</td>
+                                                    <td data-th="Quantity">{{item2.p_quantity}}</td>
+                                                    <td data-th="Subtotal" class="text-center">{{item2.p_price*item2.p_quantity}}</td>
                                                     <td class="actions" data-th=""></td>
                                                 </tr>
                                             </tbody>
@@ -396,7 +393,7 @@
                                                 <tr>
                                                     <td></td>
                                                     <td colspan="2" class="hidden-xs"></td>
-                                                    <td class="hidden-xs text-center"><strong>Total $1.99</strong></td>
+                                                    <td class="hidden-xs text-center"><strong>{{item.gpd_budget}}</strong></td>
                                                     <td></td>
                                                 </tr>
                                             </tfoot>
@@ -408,9 +405,7 @@
                       </div>
                     </div>
                 </div>
-                <div align="center">
-                    <button  ng-click="addProducts()" style="margin: 20px 20px 20px 20px; width:50%" type="submit" class="btn btn-primary btn-block btn-flat">Add Products</button>
-                </div>    
+              
             </div>
     </div>     
   </div>
