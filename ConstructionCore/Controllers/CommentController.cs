@@ -17,6 +17,9 @@ namespace ConstructionCore.Controllers
     [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class CommentController : ApiController
     {
+        /*
+         * Function that gives form to the request string for the database
+         */
         public string FormConnectionString(string baseString, string[] attr, string[] ids)
         {
             string ConnectionString = "SELECT * FROM " + baseString + " WHERE ";
@@ -46,6 +49,9 @@ namespace ConstructionCore.Controllers
             }
             return ConnectionString;
         }
+        /*
+         * Function that returns all the comments that matches the given conditions
+         */
         [HttpGet]
         [ActionName("Get")]
         public JsonResult<List<Comment>> Get(string attribute, string id)
@@ -88,7 +94,9 @@ namespace ConstructionCore.Controllers
 
             myConnection.Close();
             return Json(values);
-
+        /*
+         * Method that insets a new comment in the comment's database
+         */
         }
         [HttpPost]
         [ActionName("Post")]

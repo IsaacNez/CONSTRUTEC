@@ -13,6 +13,9 @@ using System.Web.Http.Cors;
 namespace ConstructionCore.Controllers
 {
     [EnableCors(origins: "*", headers: "*", methods: "*")]
+    /*
+     * Function that returns the all the clients registered at the database
+     */
     public class ClientController : ApiController
     {
         [HttpGet]

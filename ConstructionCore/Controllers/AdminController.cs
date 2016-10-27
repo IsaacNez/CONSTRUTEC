@@ -18,7 +18,10 @@ namespace ConstructionCore.Controllers
     public class AdminController : ApiController
     {
 
-
+        /**
+         * Function that returns the products that matches the given parameters.
+         * @params: String attribute and string id 
+         **/
         [HttpGet]
         [ActionName("Get")]
         public JsonResult<List<Product>> Get(string attribute, string id)
@@ -61,6 +64,9 @@ namespace ConstructionCore.Controllers
             return Json(values);
 
         }
+        /**Add method for the Product controller
+         * @PARAMS product object.
+        **/
         public void AddProduct(Product product)
         {
             System.Diagnostics.Debug.WriteLine("print1");
